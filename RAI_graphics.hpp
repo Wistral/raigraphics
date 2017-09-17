@@ -5,12 +5,12 @@
 #ifndef PROJECT_RAI_GRAPHICS_HPP
 #define PROJECT_RAI_GRAPHICS_HPP
 #include "RAI_keyboard.hpp"
-#include <obj/Background.hpp>
-#include "obj/Object.hpp"
-#include "obj/SuperObject.hpp"
-#include "imp/display.h"
-#include "imp/shader_basic.h"
-#include "imp/shader_background.hpp"
+#include "raiGraphics/obj/Background.hpp"
+#include "raiGraphics/obj/Object.hpp"
+#include "raiGraphics/obj/SuperObject.hpp"
+#include "raiGraphics/imp/display.h"
+#include "raiGraphics/imp/shader_basic.h"
+#include "raiGraphics/imp/shader_background.hpp"
 #include "rai/common/StopWatch.hpp"
 #include <mutex>
 
