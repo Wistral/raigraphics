@@ -66,5 +66,6 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/raiGraphicsConfig.cmake.in
 set(CONF_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 # install raiGraphicsConfig.cmake file to config cmake path
+# TODO follow RAI convention. what is the proper destination?
 install(FILES           ${CMAKE_CURRENT_BINARY_DIR}/raiGraphicsConfig.cmake
         DESTINATION     ${RAI_GRAPHICS_CONFIG_CMAKE_PATH})
