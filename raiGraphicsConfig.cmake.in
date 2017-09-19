@@ -1,0 +1,9 @@
+#                                               -*- cmake -*-
+#
+#  raiGraphicsConfig.cmake(.in)
+#
+
+get_filename_component(RAI_GRPHICS_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+set(RAI_GRAPHICS_INCLUSE_DIRS "@CONF_INCLUDE_DIRS")
+set(RAI_GRAPHICS_LIBRARIES raiGraphics)
+set(RAI_GRAPHICS_EXECUTABLE testRAIGraphics)

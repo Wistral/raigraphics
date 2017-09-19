@@ -37,6 +37,26 @@
 					<DistClean command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="install">
+				<Option working_dir="/home/donghokang/git/raiGraphics/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 install"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="list_install_components">
+				<Option working_dir="/home/donghokang/git/raiGraphics/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 list_install_components"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="rebuild_cache">
 				<Option working_dir="/home/donghokang/git/raiGraphics/cmake-build-debug"/>
 				<Option type="4"/>
@@ -107,28 +127,8 @@
 					<DistClean command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="install">
-				<Option working_dir="/home/donghokang/git/raiGraphics/cmake-build-debug"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 install"/>
-					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="list_install_components">
-				<Option working_dir="/home/donghokang/git/raiGraphics/cmake-build-debug"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 list_install_components"/>
-					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="rai_graphics">
-				<Option output="/home/donghokang/git/raiGraphics/cmake-build-debug/librai_graphics.a" prefix_auto="0" extension_auto="0"/>
+			<Target title="raiGraphics">
+				<Option output="/home/donghokang/git/raiGraphics/cmake-build-debug/libraiGraphics.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/donghokang/git/raiGraphics/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
@@ -146,14 +146,14 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 rai_graphics"/>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 raiGraphics"/>
 					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="rai_graphics/fast">
-				<Option output="/home/donghokang/git/raiGraphics/cmake-build-debug/librai_graphics.a" prefix_auto="0" extension_auto="0"/>
+			<Target title="raiGraphics/fast">
+				<Option output="/home/donghokang/git/raiGraphics/cmake-build-debug/libraiGraphics.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/donghokang/git/raiGraphics/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
@@ -171,7 +171,7 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 rai_graphics/fast"/>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 raiGraphics/fast"/>
 					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j2 -f &quot;/home/donghokang/git/raiGraphics/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
@@ -179,81 +179,84 @@
 			</Target>
 		</Build>
 		<Unit filename="/home/donghokang/git/raiGraphics/RAI_graphics.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/RAI_graphics.hpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/imp/camera.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/imp/display.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/imp/obj_loader.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/imp/shader.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/imp/shader_background.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/imp/shader_basic.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/imp/texture.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/imp/vector3d.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/obj/ANYmal.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/obj/Arrow.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/obj/Background.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/obj/Biped.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/obj/Biped_ghost.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/obj/Biped_simplified.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/obj/CheckerBoard.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/obj/CheckerBoard_half.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/obj/Cone.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/obj/Cylinder.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/obj/Mesh.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/obj/Object.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/obj/Sphere.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/src/obj/SuperObject.cpp">
-			<Option target="rai_graphics"/>
+			<Option target="raiGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/test.cpp">
 			<Option target="testRAIGraphics"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/donghokang/git/raiGraphics/raiGraphicsConfig.cmake.in">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 		<Unit filename="/home/donghokang/git/raiGraphics/../../../../usr/local/share/eigen3/cmake/Eigen3ConfigVersion.cmake">

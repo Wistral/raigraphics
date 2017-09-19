@@ -1,1 +1,1 @@
-/usr/bin/c++  -g  -rdynamic CMakeFiles/testRAIGraphics.dir/test.cpp.o  -o testRAIGraphics librai_graphics.a -lglut -lGLU -lGL -lGLEW -lSDL2 -lassimp -lSOIL -lglog -lfreeimage -lpthread 
+/usr/bin/c++  -g  -rdynamic CMakeFiles/testRAIGraphics.dir/test.cpp.o  -o testRAIGraphics libraiGraphics.a -lglut -lGLU -lGL -lGLEW -lSDL2 -lassimp -lSOIL -lglog -lfreeimage -lpthread 

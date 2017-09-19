@@ -49,14 +49,18 @@ endif()
 
 if("${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/donghokang/git/raiGraphics/cmake-build-debug/lib/librai_graphics.a")
+   "/home/donghokang/git/raiGraphics/cmake-build-debug/lib/libraiGraphics.a")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/donghokang/git/raiGraphics/cmake-build-debug/lib" TYPE STATIC_LIBRARY FILES "/home/donghokang/git/raiGraphics/cmake-build-debug/librai_graphics.a")
+file(INSTALL DESTINATION "/home/donghokang/git/raiGraphics/cmake-build-debug/lib" TYPE STATIC_LIBRARY FILES "/home/donghokang/git/raiGraphics/cmake-build-debug/libraiGraphics.a")
+endif()
+
+if("${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/raiGrphics" TYPE FILE FILES "/home/donghokang/git/raiGraphics/cmake-build-debug/raiGraphicsConfig.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)

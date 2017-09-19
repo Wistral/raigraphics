@@ -63,7 +63,7 @@ CMAKE_BINARY_DIR = /home/donghokang/git/raiGraphics/cmake-build-debug
 # Target rules for target CMakeFiles/testRAIGraphics.dir
 
 # All Build rule for target.
-CMakeFiles/testRAIGraphics.dir/all: CMakeFiles/rai_graphics.dir/all
+CMakeFiles/testRAIGraphics.dir/all: CMakeFiles/raiGraphics.dir/all
 	$(MAKE) -f CMakeFiles/testRAIGraphics.dir/build.make CMakeFiles/testRAIGraphics.dir/depend
 	$(MAKE) -f CMakeFiles/testRAIGraphics.dir/build.make CMakeFiles/testRAIGraphics.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/donghokang/git/raiGraphics/cmake-build-debug/CMakeFiles --progress-num=25,26 "Built target testRAIGraphics"
@@ -97,39 +97,39 @@ clean: CMakeFiles/testRAIGraphics.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/rai_graphics.dir
+# Target rules for target CMakeFiles/raiGraphics.dir
 
 # All Build rule for target.
-CMakeFiles/rai_graphics.dir/all:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/depend
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/donghokang/git/raiGraphics/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24 "Built target rai_graphics"
-.PHONY : CMakeFiles/rai_graphics.dir/all
+CMakeFiles/raiGraphics.dir/all:
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/depend
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/donghokang/git/raiGraphics/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24 "Built target raiGraphics"
+.PHONY : CMakeFiles/raiGraphics.dir/all
 
 # Include target in all.
-all: CMakeFiles/rai_graphics.dir/all
+all: CMakeFiles/raiGraphics.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/rai_graphics.dir/rule: cmake_check_build_system
+CMakeFiles/raiGraphics.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/donghokang/git/raiGraphics/cmake-build-debug/CMakeFiles 24
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/rai_graphics.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/raiGraphics.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/donghokang/git/raiGraphics/cmake-build-debug/CMakeFiles 0
-.PHONY : CMakeFiles/rai_graphics.dir/rule
+.PHONY : CMakeFiles/raiGraphics.dir/rule
 
 # Convenience name for target.
-rai_graphics: CMakeFiles/rai_graphics.dir/rule
+raiGraphics: CMakeFiles/raiGraphics.dir/rule
 
-.PHONY : rai_graphics
-
-# clean rule for target.
-CMakeFiles/rai_graphics.dir/clean:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/clean
-.PHONY : CMakeFiles/rai_graphics.dir/clean
+.PHONY : raiGraphics
 
 # clean rule for target.
-clean: CMakeFiles/rai_graphics.dir/clean
+CMakeFiles/raiGraphics.dir/clean:
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/clean
+.PHONY : CMakeFiles/raiGraphics.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/raiGraphics.dir/clean
 
 .PHONY : clean
 

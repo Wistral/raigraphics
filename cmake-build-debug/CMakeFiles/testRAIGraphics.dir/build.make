@@ -90,7 +90,7 @@ testRAIGraphics_EXTERNAL_OBJECTS =
 
 testRAIGraphics: CMakeFiles/testRAIGraphics.dir/test.cpp.o
 testRAIGraphics: CMakeFiles/testRAIGraphics.dir/build.make
-testRAIGraphics: librai_graphics.a
+testRAIGraphics: libraiGraphics.a
 testRAIGraphics: CMakeFiles/testRAIGraphics.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/donghokang/git/raiGraphics/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable testRAIGraphics"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/testRAIGraphics.dir/link.txt --verbose=$(VERBOSE)

@@ -80,28 +80,6 @@ install/local/fast: preinstall/fast
 	/opt/clion-2017.2.2/bin/cmake/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local/fast
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/opt/clion-2017.2.2/bin/cmake/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-
-.PHONY : rebuild_cache/fast
-
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/opt/clion-2017.2.2/bin/cmake/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
@@ -123,6 +101,28 @@ list_install_components:
 list_install_components/fast: list_install_components
 
 .PHONY : list_install_components/fast
+
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/opt/clion-2017.2.2/bin/cmake/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/opt/clion-2017.2.2/bin/cmake/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -170,17 +170,17 @@ testRAIGraphics/fast:
 .PHONY : testRAIGraphics/fast
 
 #=============================================================================
-# Target rules for targets named rai_graphics
+# Target rules for targets named raiGraphics
 
 # Build rule for target.
-rai_graphics: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 rai_graphics
-.PHONY : rai_graphics
+raiGraphics: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 raiGraphics
+.PHONY : raiGraphics
 
 # fast build rule for target.
-rai_graphics/fast:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/build
-.PHONY : rai_graphics/fast
+raiGraphics/fast:
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/build
+.PHONY : raiGraphics/fast
 
 RAI_graphics.o: RAI_graphics.cpp.o
 
@@ -188,7 +188,7 @@ RAI_graphics.o: RAI_graphics.cpp.o
 
 # target to build an object file
 RAI_graphics.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/RAI_graphics.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/RAI_graphics.cpp.o
 .PHONY : RAI_graphics.cpp.o
 
 RAI_graphics.i: RAI_graphics.cpp.i
@@ -197,7 +197,7 @@ RAI_graphics.i: RAI_graphics.cpp.i
 
 # target to preprocess a source file
 RAI_graphics.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/RAI_graphics.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/RAI_graphics.cpp.i
 .PHONY : RAI_graphics.cpp.i
 
 RAI_graphics.s: RAI_graphics.cpp.s
@@ -206,7 +206,7 @@ RAI_graphics.s: RAI_graphics.cpp.s
 
 # target to generate assembly for a file
 RAI_graphics.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/RAI_graphics.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/RAI_graphics.cpp.s
 .PHONY : RAI_graphics.cpp.s
 
 src/imp/camera.o: src/imp/camera.cpp.o
@@ -215,7 +215,7 @@ src/imp/camera.o: src/imp/camera.cpp.o
 
 # target to build an object file
 src/imp/camera.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/camera.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/camera.cpp.o
 .PHONY : src/imp/camera.cpp.o
 
 src/imp/camera.i: src/imp/camera.cpp.i
@@ -224,7 +224,7 @@ src/imp/camera.i: src/imp/camera.cpp.i
 
 # target to preprocess a source file
 src/imp/camera.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/camera.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/camera.cpp.i
 .PHONY : src/imp/camera.cpp.i
 
 src/imp/camera.s: src/imp/camera.cpp.s
@@ -233,7 +233,7 @@ src/imp/camera.s: src/imp/camera.cpp.s
 
 # target to generate assembly for a file
 src/imp/camera.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/camera.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/camera.cpp.s
 .PHONY : src/imp/camera.cpp.s
 
 src/imp/display.o: src/imp/display.cpp.o
@@ -242,7 +242,7 @@ src/imp/display.o: src/imp/display.cpp.o
 
 # target to build an object file
 src/imp/display.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/display.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/display.cpp.o
 .PHONY : src/imp/display.cpp.o
 
 src/imp/display.i: src/imp/display.cpp.i
@@ -251,7 +251,7 @@ src/imp/display.i: src/imp/display.cpp.i
 
 # target to preprocess a source file
 src/imp/display.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/display.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/display.cpp.i
 .PHONY : src/imp/display.cpp.i
 
 src/imp/display.s: src/imp/display.cpp.s
@@ -260,7 +260,7 @@ src/imp/display.s: src/imp/display.cpp.s
 
 # target to generate assembly for a file
 src/imp/display.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/display.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/display.cpp.s
 .PHONY : src/imp/display.cpp.s
 
 src/imp/obj_loader.o: src/imp/obj_loader.cpp.o
@@ -269,7 +269,7 @@ src/imp/obj_loader.o: src/imp/obj_loader.cpp.o
 
 # target to build an object file
 src/imp/obj_loader.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/obj_loader.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/obj_loader.cpp.o
 .PHONY : src/imp/obj_loader.cpp.o
 
 src/imp/obj_loader.i: src/imp/obj_loader.cpp.i
@@ -278,7 +278,7 @@ src/imp/obj_loader.i: src/imp/obj_loader.cpp.i
 
 # target to preprocess a source file
 src/imp/obj_loader.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/obj_loader.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/obj_loader.cpp.i
 .PHONY : src/imp/obj_loader.cpp.i
 
 src/imp/obj_loader.s: src/imp/obj_loader.cpp.s
@@ -287,7 +287,7 @@ src/imp/obj_loader.s: src/imp/obj_loader.cpp.s
 
 # target to generate assembly for a file
 src/imp/obj_loader.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/obj_loader.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/obj_loader.cpp.s
 .PHONY : src/imp/obj_loader.cpp.s
 
 src/imp/shader.o: src/imp/shader.cpp.o
@@ -296,7 +296,7 @@ src/imp/shader.o: src/imp/shader.cpp.o
 
 # target to build an object file
 src/imp/shader.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/shader.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/shader.cpp.o
 .PHONY : src/imp/shader.cpp.o
 
 src/imp/shader.i: src/imp/shader.cpp.i
@@ -305,7 +305,7 @@ src/imp/shader.i: src/imp/shader.cpp.i
 
 # target to preprocess a source file
 src/imp/shader.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/shader.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/shader.cpp.i
 .PHONY : src/imp/shader.cpp.i
 
 src/imp/shader.s: src/imp/shader.cpp.s
@@ -314,7 +314,7 @@ src/imp/shader.s: src/imp/shader.cpp.s
 
 # target to generate assembly for a file
 src/imp/shader.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/shader.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/shader.cpp.s
 .PHONY : src/imp/shader.cpp.s
 
 src/imp/shader_background.o: src/imp/shader_background.cpp.o
@@ -323,7 +323,7 @@ src/imp/shader_background.o: src/imp/shader_background.cpp.o
 
 # target to build an object file
 src/imp/shader_background.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/shader_background.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/shader_background.cpp.o
 .PHONY : src/imp/shader_background.cpp.o
 
 src/imp/shader_background.i: src/imp/shader_background.cpp.i
@@ -332,7 +332,7 @@ src/imp/shader_background.i: src/imp/shader_background.cpp.i
 
 # target to preprocess a source file
 src/imp/shader_background.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/shader_background.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/shader_background.cpp.i
 .PHONY : src/imp/shader_background.cpp.i
 
 src/imp/shader_background.s: src/imp/shader_background.cpp.s
@@ -341,7 +341,7 @@ src/imp/shader_background.s: src/imp/shader_background.cpp.s
 
 # target to generate assembly for a file
 src/imp/shader_background.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/shader_background.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/shader_background.cpp.s
 .PHONY : src/imp/shader_background.cpp.s
 
 src/imp/shader_basic.o: src/imp/shader_basic.cpp.o
@@ -350,7 +350,7 @@ src/imp/shader_basic.o: src/imp/shader_basic.cpp.o
 
 # target to build an object file
 src/imp/shader_basic.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/shader_basic.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/shader_basic.cpp.o
 .PHONY : src/imp/shader_basic.cpp.o
 
 src/imp/shader_basic.i: src/imp/shader_basic.cpp.i
@@ -359,7 +359,7 @@ src/imp/shader_basic.i: src/imp/shader_basic.cpp.i
 
 # target to preprocess a source file
 src/imp/shader_basic.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/shader_basic.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/shader_basic.cpp.i
 .PHONY : src/imp/shader_basic.cpp.i
 
 src/imp/shader_basic.s: src/imp/shader_basic.cpp.s
@@ -368,7 +368,7 @@ src/imp/shader_basic.s: src/imp/shader_basic.cpp.s
 
 # target to generate assembly for a file
 src/imp/shader_basic.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/shader_basic.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/shader_basic.cpp.s
 .PHONY : src/imp/shader_basic.cpp.s
 
 src/imp/texture.o: src/imp/texture.cpp.o
@@ -377,7 +377,7 @@ src/imp/texture.o: src/imp/texture.cpp.o
 
 # target to build an object file
 src/imp/texture.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/texture.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/texture.cpp.o
 .PHONY : src/imp/texture.cpp.o
 
 src/imp/texture.i: src/imp/texture.cpp.i
@@ -386,7 +386,7 @@ src/imp/texture.i: src/imp/texture.cpp.i
 
 # target to preprocess a source file
 src/imp/texture.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/texture.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/texture.cpp.i
 .PHONY : src/imp/texture.cpp.i
 
 src/imp/texture.s: src/imp/texture.cpp.s
@@ -395,7 +395,7 @@ src/imp/texture.s: src/imp/texture.cpp.s
 
 # target to generate assembly for a file
 src/imp/texture.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/texture.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/texture.cpp.s
 .PHONY : src/imp/texture.cpp.s
 
 src/imp/vector3d.o: src/imp/vector3d.cpp.o
@@ -404,7 +404,7 @@ src/imp/vector3d.o: src/imp/vector3d.cpp.o
 
 # target to build an object file
 src/imp/vector3d.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/vector3d.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/vector3d.cpp.o
 .PHONY : src/imp/vector3d.cpp.o
 
 src/imp/vector3d.i: src/imp/vector3d.cpp.i
@@ -413,7 +413,7 @@ src/imp/vector3d.i: src/imp/vector3d.cpp.i
 
 # target to preprocess a source file
 src/imp/vector3d.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/vector3d.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/vector3d.cpp.i
 .PHONY : src/imp/vector3d.cpp.i
 
 src/imp/vector3d.s: src/imp/vector3d.cpp.s
@@ -422,7 +422,7 @@ src/imp/vector3d.s: src/imp/vector3d.cpp.s
 
 # target to generate assembly for a file
 src/imp/vector3d.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/imp/vector3d.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/imp/vector3d.cpp.s
 .PHONY : src/imp/vector3d.cpp.s
 
 src/obj/ANYmal.o: src/obj/ANYmal.cpp.o
@@ -431,7 +431,7 @@ src/obj/ANYmal.o: src/obj/ANYmal.cpp.o
 
 # target to build an object file
 src/obj/ANYmal.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/ANYmal.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/ANYmal.cpp.o
 .PHONY : src/obj/ANYmal.cpp.o
 
 src/obj/ANYmal.i: src/obj/ANYmal.cpp.i
@@ -440,7 +440,7 @@ src/obj/ANYmal.i: src/obj/ANYmal.cpp.i
 
 # target to preprocess a source file
 src/obj/ANYmal.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/ANYmal.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/ANYmal.cpp.i
 .PHONY : src/obj/ANYmal.cpp.i
 
 src/obj/ANYmal.s: src/obj/ANYmal.cpp.s
@@ -449,7 +449,7 @@ src/obj/ANYmal.s: src/obj/ANYmal.cpp.s
 
 # target to generate assembly for a file
 src/obj/ANYmal.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/ANYmal.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/ANYmal.cpp.s
 .PHONY : src/obj/ANYmal.cpp.s
 
 src/obj/Arrow.o: src/obj/Arrow.cpp.o
@@ -458,7 +458,7 @@ src/obj/Arrow.o: src/obj/Arrow.cpp.o
 
 # target to build an object file
 src/obj/Arrow.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Arrow.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Arrow.cpp.o
 .PHONY : src/obj/Arrow.cpp.o
 
 src/obj/Arrow.i: src/obj/Arrow.cpp.i
@@ -467,7 +467,7 @@ src/obj/Arrow.i: src/obj/Arrow.cpp.i
 
 # target to preprocess a source file
 src/obj/Arrow.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Arrow.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Arrow.cpp.i
 .PHONY : src/obj/Arrow.cpp.i
 
 src/obj/Arrow.s: src/obj/Arrow.cpp.s
@@ -476,7 +476,7 @@ src/obj/Arrow.s: src/obj/Arrow.cpp.s
 
 # target to generate assembly for a file
 src/obj/Arrow.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Arrow.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Arrow.cpp.s
 .PHONY : src/obj/Arrow.cpp.s
 
 src/obj/Background.o: src/obj/Background.cpp.o
@@ -485,7 +485,7 @@ src/obj/Background.o: src/obj/Background.cpp.o
 
 # target to build an object file
 src/obj/Background.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Background.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Background.cpp.o
 .PHONY : src/obj/Background.cpp.o
 
 src/obj/Background.i: src/obj/Background.cpp.i
@@ -494,7 +494,7 @@ src/obj/Background.i: src/obj/Background.cpp.i
 
 # target to preprocess a source file
 src/obj/Background.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Background.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Background.cpp.i
 .PHONY : src/obj/Background.cpp.i
 
 src/obj/Background.s: src/obj/Background.cpp.s
@@ -503,7 +503,7 @@ src/obj/Background.s: src/obj/Background.cpp.s
 
 # target to generate assembly for a file
 src/obj/Background.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Background.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Background.cpp.s
 .PHONY : src/obj/Background.cpp.s
 
 src/obj/Biped.o: src/obj/Biped.cpp.o
@@ -512,7 +512,7 @@ src/obj/Biped.o: src/obj/Biped.cpp.o
 
 # target to build an object file
 src/obj/Biped.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Biped.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Biped.cpp.o
 .PHONY : src/obj/Biped.cpp.o
 
 src/obj/Biped.i: src/obj/Biped.cpp.i
@@ -521,7 +521,7 @@ src/obj/Biped.i: src/obj/Biped.cpp.i
 
 # target to preprocess a source file
 src/obj/Biped.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Biped.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Biped.cpp.i
 .PHONY : src/obj/Biped.cpp.i
 
 src/obj/Biped.s: src/obj/Biped.cpp.s
@@ -530,7 +530,7 @@ src/obj/Biped.s: src/obj/Biped.cpp.s
 
 # target to generate assembly for a file
 src/obj/Biped.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Biped.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Biped.cpp.s
 .PHONY : src/obj/Biped.cpp.s
 
 src/obj/Biped_ghost.o: src/obj/Biped_ghost.cpp.o
@@ -539,7 +539,7 @@ src/obj/Biped_ghost.o: src/obj/Biped_ghost.cpp.o
 
 # target to build an object file
 src/obj/Biped_ghost.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Biped_ghost.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Biped_ghost.cpp.o
 .PHONY : src/obj/Biped_ghost.cpp.o
 
 src/obj/Biped_ghost.i: src/obj/Biped_ghost.cpp.i
@@ -548,7 +548,7 @@ src/obj/Biped_ghost.i: src/obj/Biped_ghost.cpp.i
 
 # target to preprocess a source file
 src/obj/Biped_ghost.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Biped_ghost.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Biped_ghost.cpp.i
 .PHONY : src/obj/Biped_ghost.cpp.i
 
 src/obj/Biped_ghost.s: src/obj/Biped_ghost.cpp.s
@@ -557,7 +557,7 @@ src/obj/Biped_ghost.s: src/obj/Biped_ghost.cpp.s
 
 # target to generate assembly for a file
 src/obj/Biped_ghost.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Biped_ghost.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Biped_ghost.cpp.s
 .PHONY : src/obj/Biped_ghost.cpp.s
 
 src/obj/Biped_simplified.o: src/obj/Biped_simplified.cpp.o
@@ -566,7 +566,7 @@ src/obj/Biped_simplified.o: src/obj/Biped_simplified.cpp.o
 
 # target to build an object file
 src/obj/Biped_simplified.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Biped_simplified.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Biped_simplified.cpp.o
 .PHONY : src/obj/Biped_simplified.cpp.o
 
 src/obj/Biped_simplified.i: src/obj/Biped_simplified.cpp.i
@@ -575,7 +575,7 @@ src/obj/Biped_simplified.i: src/obj/Biped_simplified.cpp.i
 
 # target to preprocess a source file
 src/obj/Biped_simplified.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Biped_simplified.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Biped_simplified.cpp.i
 .PHONY : src/obj/Biped_simplified.cpp.i
 
 src/obj/Biped_simplified.s: src/obj/Biped_simplified.cpp.s
@@ -584,7 +584,7 @@ src/obj/Biped_simplified.s: src/obj/Biped_simplified.cpp.s
 
 # target to generate assembly for a file
 src/obj/Biped_simplified.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Biped_simplified.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Biped_simplified.cpp.s
 .PHONY : src/obj/Biped_simplified.cpp.s
 
 src/obj/CheckerBoard.o: src/obj/CheckerBoard.cpp.o
@@ -593,7 +593,7 @@ src/obj/CheckerBoard.o: src/obj/CheckerBoard.cpp.o
 
 # target to build an object file
 src/obj/CheckerBoard.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/CheckerBoard.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/CheckerBoard.cpp.o
 .PHONY : src/obj/CheckerBoard.cpp.o
 
 src/obj/CheckerBoard.i: src/obj/CheckerBoard.cpp.i
@@ -602,7 +602,7 @@ src/obj/CheckerBoard.i: src/obj/CheckerBoard.cpp.i
 
 # target to preprocess a source file
 src/obj/CheckerBoard.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/CheckerBoard.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/CheckerBoard.cpp.i
 .PHONY : src/obj/CheckerBoard.cpp.i
 
 src/obj/CheckerBoard.s: src/obj/CheckerBoard.cpp.s
@@ -611,7 +611,7 @@ src/obj/CheckerBoard.s: src/obj/CheckerBoard.cpp.s
 
 # target to generate assembly for a file
 src/obj/CheckerBoard.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/CheckerBoard.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/CheckerBoard.cpp.s
 .PHONY : src/obj/CheckerBoard.cpp.s
 
 src/obj/CheckerBoard_half.o: src/obj/CheckerBoard_half.cpp.o
@@ -620,7 +620,7 @@ src/obj/CheckerBoard_half.o: src/obj/CheckerBoard_half.cpp.o
 
 # target to build an object file
 src/obj/CheckerBoard_half.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/CheckerBoard_half.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/CheckerBoard_half.cpp.o
 .PHONY : src/obj/CheckerBoard_half.cpp.o
 
 src/obj/CheckerBoard_half.i: src/obj/CheckerBoard_half.cpp.i
@@ -629,7 +629,7 @@ src/obj/CheckerBoard_half.i: src/obj/CheckerBoard_half.cpp.i
 
 # target to preprocess a source file
 src/obj/CheckerBoard_half.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/CheckerBoard_half.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/CheckerBoard_half.cpp.i
 .PHONY : src/obj/CheckerBoard_half.cpp.i
 
 src/obj/CheckerBoard_half.s: src/obj/CheckerBoard_half.cpp.s
@@ -638,7 +638,7 @@ src/obj/CheckerBoard_half.s: src/obj/CheckerBoard_half.cpp.s
 
 # target to generate assembly for a file
 src/obj/CheckerBoard_half.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/CheckerBoard_half.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/CheckerBoard_half.cpp.s
 .PHONY : src/obj/CheckerBoard_half.cpp.s
 
 src/obj/Cone.o: src/obj/Cone.cpp.o
@@ -647,7 +647,7 @@ src/obj/Cone.o: src/obj/Cone.cpp.o
 
 # target to build an object file
 src/obj/Cone.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Cone.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Cone.cpp.o
 .PHONY : src/obj/Cone.cpp.o
 
 src/obj/Cone.i: src/obj/Cone.cpp.i
@@ -656,7 +656,7 @@ src/obj/Cone.i: src/obj/Cone.cpp.i
 
 # target to preprocess a source file
 src/obj/Cone.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Cone.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Cone.cpp.i
 .PHONY : src/obj/Cone.cpp.i
 
 src/obj/Cone.s: src/obj/Cone.cpp.s
@@ -665,7 +665,7 @@ src/obj/Cone.s: src/obj/Cone.cpp.s
 
 # target to generate assembly for a file
 src/obj/Cone.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Cone.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Cone.cpp.s
 .PHONY : src/obj/Cone.cpp.s
 
 src/obj/Cylinder.o: src/obj/Cylinder.cpp.o
@@ -674,7 +674,7 @@ src/obj/Cylinder.o: src/obj/Cylinder.cpp.o
 
 # target to build an object file
 src/obj/Cylinder.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Cylinder.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Cylinder.cpp.o
 .PHONY : src/obj/Cylinder.cpp.o
 
 src/obj/Cylinder.i: src/obj/Cylinder.cpp.i
@@ -683,7 +683,7 @@ src/obj/Cylinder.i: src/obj/Cylinder.cpp.i
 
 # target to preprocess a source file
 src/obj/Cylinder.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Cylinder.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Cylinder.cpp.i
 .PHONY : src/obj/Cylinder.cpp.i
 
 src/obj/Cylinder.s: src/obj/Cylinder.cpp.s
@@ -692,7 +692,7 @@ src/obj/Cylinder.s: src/obj/Cylinder.cpp.s
 
 # target to generate assembly for a file
 src/obj/Cylinder.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Cylinder.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Cylinder.cpp.s
 .PHONY : src/obj/Cylinder.cpp.s
 
 src/obj/Mesh.o: src/obj/Mesh.cpp.o
@@ -701,7 +701,7 @@ src/obj/Mesh.o: src/obj/Mesh.cpp.o
 
 # target to build an object file
 src/obj/Mesh.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Mesh.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Mesh.cpp.o
 .PHONY : src/obj/Mesh.cpp.o
 
 src/obj/Mesh.i: src/obj/Mesh.cpp.i
@@ -710,7 +710,7 @@ src/obj/Mesh.i: src/obj/Mesh.cpp.i
 
 # target to preprocess a source file
 src/obj/Mesh.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Mesh.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Mesh.cpp.i
 .PHONY : src/obj/Mesh.cpp.i
 
 src/obj/Mesh.s: src/obj/Mesh.cpp.s
@@ -719,7 +719,7 @@ src/obj/Mesh.s: src/obj/Mesh.cpp.s
 
 # target to generate assembly for a file
 src/obj/Mesh.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Mesh.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Mesh.cpp.s
 .PHONY : src/obj/Mesh.cpp.s
 
 src/obj/Object.o: src/obj/Object.cpp.o
@@ -728,7 +728,7 @@ src/obj/Object.o: src/obj/Object.cpp.o
 
 # target to build an object file
 src/obj/Object.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Object.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Object.cpp.o
 .PHONY : src/obj/Object.cpp.o
 
 src/obj/Object.i: src/obj/Object.cpp.i
@@ -737,7 +737,7 @@ src/obj/Object.i: src/obj/Object.cpp.i
 
 # target to preprocess a source file
 src/obj/Object.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Object.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Object.cpp.i
 .PHONY : src/obj/Object.cpp.i
 
 src/obj/Object.s: src/obj/Object.cpp.s
@@ -746,7 +746,7 @@ src/obj/Object.s: src/obj/Object.cpp.s
 
 # target to generate assembly for a file
 src/obj/Object.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Object.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Object.cpp.s
 .PHONY : src/obj/Object.cpp.s
 
 src/obj/Sphere.o: src/obj/Sphere.cpp.o
@@ -755,7 +755,7 @@ src/obj/Sphere.o: src/obj/Sphere.cpp.o
 
 # target to build an object file
 src/obj/Sphere.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Sphere.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Sphere.cpp.o
 .PHONY : src/obj/Sphere.cpp.o
 
 src/obj/Sphere.i: src/obj/Sphere.cpp.i
@@ -764,7 +764,7 @@ src/obj/Sphere.i: src/obj/Sphere.cpp.i
 
 # target to preprocess a source file
 src/obj/Sphere.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Sphere.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Sphere.cpp.i
 .PHONY : src/obj/Sphere.cpp.i
 
 src/obj/Sphere.s: src/obj/Sphere.cpp.s
@@ -773,7 +773,7 @@ src/obj/Sphere.s: src/obj/Sphere.cpp.s
 
 # target to generate assembly for a file
 src/obj/Sphere.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/Sphere.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/Sphere.cpp.s
 .PHONY : src/obj/Sphere.cpp.s
 
 src/obj/SuperObject.o: src/obj/SuperObject.cpp.o
@@ -782,7 +782,7 @@ src/obj/SuperObject.o: src/obj/SuperObject.cpp.o
 
 # target to build an object file
 src/obj/SuperObject.cpp.o:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/SuperObject.cpp.o
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/SuperObject.cpp.o
 .PHONY : src/obj/SuperObject.cpp.o
 
 src/obj/SuperObject.i: src/obj/SuperObject.cpp.i
@@ -791,7 +791,7 @@ src/obj/SuperObject.i: src/obj/SuperObject.cpp.i
 
 # target to preprocess a source file
 src/obj/SuperObject.cpp.i:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/SuperObject.cpp.i
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/SuperObject.cpp.i
 .PHONY : src/obj/SuperObject.cpp.i
 
 src/obj/SuperObject.s: src/obj/SuperObject.cpp.s
@@ -800,7 +800,7 @@ src/obj/SuperObject.s: src/obj/SuperObject.cpp.s
 
 # target to generate assembly for a file
 src/obj/SuperObject.cpp.s:
-	$(MAKE) -f CMakeFiles/rai_graphics.dir/build.make CMakeFiles/rai_graphics.dir/src/obj/SuperObject.cpp.s
+	$(MAKE) -f CMakeFiles/raiGraphics.dir/build.make CMakeFiles/raiGraphics.dir/src/obj/SuperObject.cpp.s
 .PHONY : src/obj/SuperObject.cpp.s
 
 test.o: test.cpp.o
@@ -838,12 +838,12 @@ help:
 	@echo "... depend"
 	@echo "... install/strip"
 	@echo "... install/local"
+	@echo "... install"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... testRAIGraphics"
-	@echo "... install"
-	@echo "... list_install_components"
-	@echo "... rai_graphics"
+	@echo "... raiGraphics"
 	@echo "... RAI_graphics.o"
 	@echo "... RAI_graphics.i"
 	@echo "... RAI_graphics.s"
