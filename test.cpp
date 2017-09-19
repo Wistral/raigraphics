@@ -13,13 +13,13 @@ int main() {
 
   RAI_graphics graphics(800, 600);
 
-//  Obj::Mesh anymalBase(std::string(getenv("RAI_ROOT"))+"/res/anymal_base_1_2.dae", 0.001);
-  Obj::Mesh anymalBase("/home/donghokang/git/raiGraphics/res/anymal_base_1_2.dae", 0.001);
+  Obj::Mesh anymalBase(std::string(getenv("RAI_GRAPHICS_ROOT"))+"/res/anymal_base_1_2.dae", 0.001);
+//  Obj::Mesh anymalBase("/home/donghokang/git/raiGraphics/res/anymal_base_1_2.dae", 0.001);
   anymalBase.setScale(5.0);
   anymalBase.setTransparency(0.3);
 
-//  Obj::Mesh terrain(std::string(getenv("RAI_ROOT"))+"/res/roughterrain.obj");
-  Obj::Mesh terrain("/home/donghokang/git/raiGraphics/res/roughterrain.obj");
+  Obj::Mesh terrain(std::string(getenv("RAI_GRAPHICS_ROOT"))+"/res/roughterrain.obj");
+//  Obj::Mesh terrain("/home/donghokang/git/raiGraphics/res/roughterrain.obj");
   Obj::Sphere sphere(1);
   Obj::Background background("sky");
 
