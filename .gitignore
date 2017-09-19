@@ -11,3 +11,5 @@ cmake-build-default
 *.log
 *~
 *.orig
+
+*Config.cmake

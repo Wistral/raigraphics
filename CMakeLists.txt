@@ -38,14 +38,15 @@ add_executable(testRAIGraphics test.cpp)
 target_link_libraries(testRAIGraphics ${RAI_Graphics})
 
 # install files
-install(FILES           ${objHDRfiles}
-        DESTINATION     ${CMAKE_BINARY_DIR}/include/obj)
-install(FILES           ${impHDRfiles}
-        DESTINATION     ${CMAKE_BINARY_DIR}/include/imp)
-install(FILES           RAI_graphics.hpp RAI_keyboard.hpp
-        DESTINATION     ${CMAKE_BINARY_DIR}/include)
-install(TARGETS         raiGraphics EXPORT RAITargets
-        DESTINATION     ${CMAKE_BINARY_DIR}/lib)
+# TODO why these should be installed?
+#install(FILES           ${objHDRfiles}
+#        DESTINATION     ${CMAKE_BINARY_DIR}/include/obj)
+#install(FILES           ${impHDRfiles}
+#        DESTINATION     ${CMAKE_BINARY_DIR}/include/imp)
+#install(FILES           RAI_graphics.hpp RAI_keyboard.hpp
+#        DESTINATION     ${CMAKE_BINARY_DIR}/include)
+#install(TARGETS         raiGraphics EXPORT RAITargets
+#        DESTINATION     ${CMAKE_BINARY_DIR}/lib)
 
 # set RAI_LINK
 set(RAI_LINK glog gflags CACHE INTERNAL "")
