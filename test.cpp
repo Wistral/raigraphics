@@ -2,7 +2,7 @@
 // Created by jhwangbo on 17. 4. 28.
 //
 
-#include "RAI_graphics.hpp"
+#include "raiGraphics/RAI_graphics.hpp"
 #include "raiGraphics/obj/Mesh.hpp"
 #include "raiGraphics/obj/Sphere.hpp"
 

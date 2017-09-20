@@ -8,9 +8,8 @@ project(raiGraphics)
 # --------------------------------------------------------------------
 # install path
 set(CMAKE_PACKAGE_INSTALL_DIR
-        "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/${PROJ_NAME}/cmake"
-        CACHE PATH "The directory relative to CMAKE_PREFIX_PATH where raiGraphicsConfig.cmake is installed"
-        )
+        "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}/cmake"
+        CACHE PATH "The directory relative to CMAKE_PREFIX_PATH where raiGraphicsConfig.cmake is installed")
 
 #
 #set(PKGCONFIG_INSTALL_DIR
@@ -23,8 +22,8 @@ set(CMAKE_PACKAGE_INSTALL_DIR
 # --------------------------------------------------------------------
 # files
 file(GLOB SRCfiles
-        "RAI_graphics.hpp"
-        "RAI_graphics.cpp"
+        "include/raiGraphics/RAI_graphics.hpp"      # TODO check
+        "src/RAI_graphics.cpp"                      # TODO check
         "src/imp/*.cpp"
         "src/obj/*.cpp"
         )
@@ -61,9 +60,9 @@ target_link_libraries(testRAIGraphics ${RAI_Graphics})
 
 # --------------------------------------------------------------------
 # set RAI_LINK
-set(RAI_GRAPHICS_LINK glog gflags CACHE INTERNAL "")
-set(RAI_GRAPHICS_LINK rai_logger rai_timer rai_graph ${RAI_GRAPHICS_LINK})
-set(RAI_GRAPHICS_LINK ${RAI_Graphics} ${RAI_GRAPHICS_LINK})
+#set(RAI_GRAPHICS_LINK glog gflags CACHE INTERNAL "")
+#set(RAI_GRAPHICS_LINK rai_logger rai_timer rai_graph ${RAI_GRAPHICS_LINK})
+#set(RAI_GRAPHICS_LINK ${RAI_Graphics} ${RAI_GRAPHICS_LINK})
 
 # --------------------------------------------------------------------
 # package raiGraphics

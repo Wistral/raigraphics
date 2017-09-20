@@ -2,7 +2,7 @@
 // Created by jhwangbo on 17. 4. 28.
 //
 
-#include "RAI_graphics.hpp"
+#include "raiGraphics/RAI_graphics.hpp"
 #include "glog/logging.h"
 #include <FreeImage.h>
 #include <thread>
