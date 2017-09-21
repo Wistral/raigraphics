@@ -19,11 +19,16 @@ set(CMAKE_PACKAGE_INSTALL_DIR
 
 #set(RAI_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 
+# ----------------------------------------------------------------------------------------------------------------------
+# names
+set(CONFIG_FILE_NAME ${PROJECT_NAME}Config.cmake)
+set(TARGETS_EXPORT_NAME ${PROJECT_NAME}Targets)
+
 # --------------------------------------------------------------------
 # files
 file(GLOB SRCfiles
-        "include/raiGraphics/RAI_graphics.hpp"      # TODO check
-        "src/RAI_graphics.cpp"                      # TODO check
+        "include/raiGraphics/RAI_graphics.hpp"
+        "src/RAI_graphics.cpp"
         "src/imp/*.cpp"
         "src/obj/*.cpp"
         )
@@ -52,34 +57,31 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # link libraries
 add_library(raiGraphicsLib ${SRCfiles})
-set(RAI_Graphics raiGraphicsLib glut GLU GL GLEW SDL2 assimp SOIL glog freeimage pthread)
+set(raiGraphics raiGraphicsLib glut GLU GL GLEW SDL2 assimp SOIL glog freeimage pthread)
 
 # executable
 add_executable(testRAIGraphics test.cpp)
-target_link_libraries(testRAIGraphics ${RAI_Graphics})
-
-# --------------------------------------------------------------------
-# set RAI_LINK
-#set(RAI_GRAPHICS_LINK glog gflags CACHE INTERNAL "")
-#set(RAI_GRAPHICS_LINK rai_logger rai_timer rai_graph ${RAI_GRAPHICS_LINK})
-#set(RAI_GRAPHICS_LINK ${RAI_Graphics} ${RAI_GRAPHICS_LINK})
+target_link_libraries(testRAIGraphics ${raiGraphics})
 
 # --------------------------------------------------------------------
 # package raiGraphics
 export(PACKAGE ${PROJECT_NAME})
-include(CMakePackageConfigHelpers)  # TODO is this required?
 
 # build tree
 set(CONF_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 # create raiGraphicsConfig.cmake.in
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/raiGraphicsConfig.cmake.in
-        ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/${CONFIG_FILE_NAME}.in
+        ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_FILE_NAME} @ONLY)
 
-# install the export set
-#install(EXPORT  # TODO
-#        DESTINATION ${INSTALL_CMAKE_DIR})
+# install package
+install(TARGETS                 raiGraphicsLib
+        EXPORT                  ${TARGETS_EXPORT_NAME}
+        LIBRARY DESTINATION     lib
+        ARCHIVE DESTINATION     lib
+#        INCLUDES DESTINATION    include
+        )
 
 # install raiGraphicsConfig.cmake file to config cmake path
-install(FILES           ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+install(FILES           ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_FILE_NAME}
         DESTINATION     ${CMAKE_PACKAGE_INSTALL_DIR})
