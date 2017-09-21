@@ -3,7 +3,7 @@ add_definitions(-std=c++11 -pthread)
 set(CMAKE_AUTOMOC ON)
 include(GNUInstallDirs)
 
-project(raiGraphics)
+project(raiGraphicsOpengl)
 
 # --------------------------------------------------------------------
 # install path
@@ -17,7 +17,7 @@ set(CMAKE_PACKAGE_INSTALL_DIR
 #        CACHE PATH "The directory relative to CMAKE_PREFIX_PATH where RAI.pc is installed"
 #        )
 
-#set(RAI_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
+set(RAI_GRAPHICS_OPENGL_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 
 # ----------------------------------------------------------------------------------------------------------------------
 # names
@@ -50,8 +50,6 @@ include_directories( ${EIGEN3_INCLUDE_DIR} )
 link_directories(/usr/lib)
 
 # --------------------------------------------------------------------
-#include(FindPkgConfig) TODO is this required?
-
 # include directory
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
@@ -60,7 +58,7 @@ add_library(raiGraphicsLib ${SRCfiles})
 set(raiGraphics raiGraphicsLib glut GLU GL GLEW SDL2 assimp SOIL glog freeimage pthread)
 
 # executable
-add_executable(testRAIGraphics test.cpp)
+add_executable(testRAIGraphics raiGraphicsTest.cpp)
 target_link_libraries(testRAIGraphics ${raiGraphics})
 
 # --------------------------------------------------------------------
@@ -70,7 +68,7 @@ export(PACKAGE ${PROJECT_NAME})
 # build tree
 set(CONF_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
-# create raiGraphicsConfig.cmake.in
+# create raiGraphicsOpenglConfig.cmake.in
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/${CONFIG_FILE_NAME}.in
         ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_FILE_NAME} @ONLY)
 
