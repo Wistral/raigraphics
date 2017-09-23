@@ -13,12 +13,12 @@ namespace Obj {
 
 Background::Background(std::string filename, std::string filetype) {
   std::cout<<std::string(getenv("RAI_ROOT"))+ "/graphics/res/"<<filename<<std::endl;
-  faces.push_back(std::string(getenv("RAI_ROOT"))+ "/graphics/res/" +filename + "_right."+filetype);
-  faces.push_back(std::string(getenv("RAI_ROOT"))+ "/graphics/res/" +filename + "_left."+filetype);
-  faces.push_back(std::string(getenv("RAI_ROOT"))+ "/graphics/res/" +filename + "_front."+filetype);
-  faces.push_back(std::string(getenv("RAI_ROOT"))+ "/graphics/res/" +filename + "_back."+filetype);
-  faces.push_back(std::string(getenv("RAI_ROOT"))+ "/graphics/res/" +filename + "_top."+filetype);
-  faces.push_back(std::string(getenv("RAI_ROOT"))+ "/graphics/res/" +filename + "_bottom."+filetype);
+  faces.push_back(std::string(getenv("RAI_ROOT"))+ "/res/" +filename + "_right."+filetype);
+  faces.push_back(std::string(getenv("RAI_ROOT"))+ "/res/" +filename + "_left."+filetype);
+  faces.push_back(std::string(getenv("RAI_ROOT"))+ "/res/" +filename + "_front."+filetype);
+  faces.push_back(std::string(getenv("RAI_ROOT"))+ "/res/" +filename + "_back."+filetype);
+  faces.push_back(std::string(getenv("RAI_ROOT"))+ "/res/" +filename + "_top."+filetype);
+  faces.push_back(std::string(getenv("RAI_ROOT"))+ "/res/" +filename + "_bottom."+filetype);
 }
 
 void Background::init() {

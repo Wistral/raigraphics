@@ -13,3 +13,10 @@ cmake-build-default
 *.orig
 
 *Config.cmake
+
+# User-specific stuff:
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
