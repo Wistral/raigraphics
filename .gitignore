@@ -12,6 +12,7 @@ cmake-build-default
 *~
 *.orig
 *.swp
+build/
 
 *Config.cmake
 
