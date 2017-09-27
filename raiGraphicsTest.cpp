@@ -10,6 +10,7 @@ using namespace RAI::Graphics;
 
 int main() {
 
+  // TODO: RAI_ROOT in every file should be changed
   RAI_graphics graphics(800, 600);
 
   Obj::Mesh anymalBase(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT"))+"/res/anymal_base_1_2.dae", 0.001);
