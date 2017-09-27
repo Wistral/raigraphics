@@ -23,6 +23,7 @@ set(RAI_GRAPHICS_OPENGL_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 # names
 set(CONFIG_FILE_NAME ${PROJECT_NAME}Config.cmake)
 set(TARGETS_EXPORT_NAME ${PROJECT_NAME}Targets)
+set(TARGETS_LIB_NAME ${PROJECT_NAME}Lib)
 
 # --------------------------------------------------------------------
 # files
@@ -54,12 +55,12 @@ link_directories(/usr/lib)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # link libraries
-add_library(raiGraphicsLib ${SRCfiles})
-set(raiGraphics raiGraphicsLib glut GLU GL GLEW SDL2 assimp SOIL glog freeimage pthread)
+add_library(${TARGETS_LIB_NAME} ${SRCfiles})
+set(RAI_GRAPHICS_OPENGL_LINK ${TARGETS_LIB_NAME} glut GLU GL GLEW SDL2 assimp SOIL glog freeimage pthread)
 
 # executable
 add_executable(testRAIGraphics raiGraphicsTest.cpp)
-target_link_libraries(testRAIGraphics ${raiGraphics})
+target_link_libraries(testRAIGraphics ${RAI_GRAPHICS_OPENGL_LINK})
 
 # --------------------------------------------------------------------
 # package raiGraphics
@@ -73,7 +74,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/${CONFIG_FILE_NAME}.in
         ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_FILE_NAME} @ONLY)
 
 # install package
-install(TARGETS                 raiGraphicsLib
+install(TARGETS                 ${TARGETS_LIB_NAME}
         EXPORT                  ${TARGETS_EXPORT_NAME}
         LIBRARY DESTINATION     lib
         ARCHIVE DESTINATION     lib
