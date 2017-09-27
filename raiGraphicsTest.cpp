@@ -39,10 +39,16 @@ int main() {
   graphics.setLightProp(lprop);
   graphics.start();
 
+  // exit test app when keyboard 'Q' key pressed
   while(1)
   {
+    const Uint8* keys = graphics.keyboard();
 
+    if (keys[RAI_KEY_Q]) {
+      break;
+    }
   }
+
   graphics.end();
 
   return 0;
