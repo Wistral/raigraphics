@@ -27,22 +27,22 @@ set(TARGETS_LIB_NAME ${PROJECT_NAME}Lib)
 
 # --------------------------------------------------------------------
 # files
-file(GLOB SRCfiles
-        "include/raiGraphics/RAI_graphics.hpp"
+file(GLOB SOURCES
+#        "include/raiGraphics/RAI_graphics.hpp"
         "src/RAI_graphics.cpp"
         "src/imp/*.cpp"
         "src/obj/*.cpp"
         )
 
-file(GLOB objHDRfiles
-        "src/obj/*.hpp"
-        "src/obj/*.h"
-        )
-
-file(GLOB impHDRfiles
-        "src/imp/*.hpp"
-        "src/imp/*.h"
-        )
+#file(GLOB objHDRfiles
+#        "src/obj/*.hpp"
+#        "src/obj/*.h"
+#        )
+#
+#file(GLOB impHDRfiles
+#        "src/imp/*.hpp"
+#        "src/imp/*.h"
+#        )
 
 # --------------------------------------------------------------------
 # package: Eigen3
@@ -55,7 +55,7 @@ link_directories(/usr/lib)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # link libraries
-add_library(${TARGETS_LIB_NAME} ${SRCfiles})
+add_library(${TARGETS_LIB_NAME} SHARED ${SOURCES})
 set(RAI_GRAPHICS_OPENGL_LINK ${TARGETS_LIB_NAME} glut GLU GL GLEW SDL2 assimp SOIL glog freeimage pthread)
 
 # executable
