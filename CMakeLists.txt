@@ -27,12 +27,15 @@ set(TARGETS_LIB_NAME ${PROJECT_NAME}Lib)
 
 # --------------------------------------------------------------------
 # files
-file(GLOB SOURCES
-#        "include/raiGraphics/RAI_graphics.hpp"
-        "src/RAI_graphics.cpp"
-        "src/imp/*.cpp"
-        "src/obj/*.cpp"
-        )
+file(GLOB_RECURSE
+        SOURCE_FILES
+        #        "include/raiGraphics/RAI_graphics.hpp"
+        "src/*.cpp")
+
+file(GLOB_RECURSE
+        HEADER_FILES
+        "include/*.hpp"
+        "include/*.h")
 
 #file(GLOB objHDRfiles
 #        "src/obj/*.hpp"
@@ -55,7 +58,8 @@ link_directories(/usr/lib)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # link libraries
-add_library(${TARGETS_LIB_NAME} SHARED ${SOURCES})
+add_library(${TARGETS_LIB_NAME}
+        SHARED ${SOURCE_FILES} ${HEADER_FILES})
 set(RAI_GRAPHICS_OPENGL_LINK ${TARGETS_LIB_NAME} glut GLU GL GLEW SDL2 assimp SOIL glog freeimage pthread)
 
 # executable
@@ -78,7 +82,7 @@ install(TARGETS                 ${TARGETS_LIB_NAME}
         EXPORT                  ${TARGETS_EXPORT_NAME}
         LIBRARY DESTINATION     lib
         ARCHIVE DESTINATION     lib
-#        INCLUDES DESTINATION    include
+        #        INCLUDES DESTINATION    include
         )
 
 # install raiGraphicsConfig.cmake file to config cmake path
