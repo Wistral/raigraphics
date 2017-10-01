@@ -56,15 +56,11 @@ Frame::Frame(Eigen::Vector3d origin,
 }
 
 void Frame::setPos(Eigen::Vector3d &position) {
-  Frame::origin_ = position;
+  origin_ = position;
 
   xAxisArrow_.setPos(origin_);
   yAxisArrow_.setPos(origin_);
   zAxisArrow_.setPos(origin_);
-
-  objs.push_back(&xAxisArrow_);
-  objs.push_back(&yAxisArrow_);
-  objs.push_back(&zAxisArrow_);
 }
 
 
