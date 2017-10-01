@@ -25,7 +25,7 @@ int main() {
   Obj::Sphere greenSphere(1);
   Obj::Sphere blueSphere(1);
   Obj::Background background("sky");
-  Obj::Frame inertiaFrame(true);
+  Obj::Frame inertiaFrame;
 
   whiteSphere.setColor({1.0, 1.0, 1.0});
   redSphere.setColor({1.0, 0.0, 0.0});

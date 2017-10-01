@@ -16,14 +16,33 @@ namespace Obj {
 class Frame : public SuperObject {
 
  public:
-  Frame(bool colorYn);
+  explicit Frame(Eigen::Vector3d origin = Eigen::Vector3d(0.0, 0.0, 0.0),
+        float arrowBodyLength = 2.0,
+        float arrowHeadLength = 1.0,
+        float arrowBodyRadius = 0.25,
+        float arrowHeadRadius = 0.5,
+        bool colorYn = true);
+
+  void setPos(Eigen::Vector3d &position);
+
   virtual ~Frame();
   void init();
   void destroy();
 
-  Obj::Arrow xAxisArrow;
-  Obj::Arrow yAxisArrow;
-  Obj::Arrow zAxisArrow;
+ private:
+  Eigen::Vector3d origin_;
+  float arrowBodyLength_;
+  float arrowHeadLength_;
+  float arrowBodyRadius_;
+  float arrowHeadRadius_;
+
+  Eigen::Matrix3d xAxisArrowRotMat_;
+  Eigen::Matrix3d yAxisArrowRotMat_;
+  Eigen::Matrix3d zAxisArrowRotMat_;
+
+  Obj::Arrow xAxisArrow_;
+  Obj::Arrow yAxisArrow_;
+  Obj::Arrow zAxisArrow_;
 };
 } // Obj
 } // Graphics

@@ -29,23 +29,12 @@ set(TARGETS_LIB_NAME ${PROJECT_NAME}Lib)
 # files
 file(GLOB_RECURSE
         SOURCE_FILES
-        #        "include/raiGraphics/RAI_graphics.hpp"
         "src/*.cpp")
 
 file(GLOB_RECURSE
         HEADER_FILES
         "include/*.hpp"
         "include/*.h")
-
-#file(GLOB objHDRfiles
-#        "src/obj/*.hpp"
-#        "src/obj/*.h"
-#        )
-#
-#file(GLOB impHDRfiles
-#        "src/imp/*.hpp"
-#        "src/imp/*.h"
-#        )
 
 # --------------------------------------------------------------------
 # package: Eigen3

@@ -8,49 +8,66 @@ namespace RAI {
 namespace Graphics {
 namespace Obj {
 
-Frame::Frame(bool colorYn):
-    xAxisArrow(0.5, 1, 2, 2),
-    yAxisArrow(0.5, 1, 2, 2),
-    zAxisArrow(0.5, 1, 2, 2)
-{
+Frame::Frame(Eigen::Vector3d origin,
+             float arrowBodyLength,
+             float arrowHeadLength,
+             float arrowBodyRadius,
+             float arrowHeadRadius,
+             bool colorYn)
+    : origin_(origin),
+      arrowBodyLength_(arrowBodyLength),
+      arrowHeadLength_(arrowHeadLength),
+      arrowBodyRadius_(arrowBodyRadius),
+      arrowHeadRadius_(arrowHeadRadius),
+      xAxisArrow_(arrowBodyRadius, arrowHeadRadius, arrowBodyLength, arrowHeadLength),
+      yAxisArrow_(arrowBodyRadius, arrowHeadRadius, arrowBodyLength, arrowHeadLength),
+      zAxisArrow_(arrowBodyRadius, arrowHeadRadius, arrowBodyLength, arrowHeadLength) {
 
-  Eigen::Vector3d origin; origin << 0, 0, 0;
+  Frame::xAxisArrowRotMat_ <<   1,  0,  0,
+      0,  1,  0,
+      0,  0,  1;
 
-  Eigen::Matrix3d xAxisArrowRotMat;
-  Eigen::Matrix3d yAxisArrowRotMat;
-  Eigen::Matrix3d zAxisArrowRotMat;
+  Frame::yAxisArrowRotMat_ <<   0, -1,  0,
+      1,  0,  0,
+      0,  0,  1;
 
-  xAxisArrowRotMat <<   1,  0,  0,
-                        0,  1,  0,
-                        0,  0,  1;
-
-  yAxisArrowRotMat <<   0, -1,  0,
-                        1,  0,  0,
-                        0,  0,  1;
-
-  zAxisArrowRotMat <<   0,  0,  -1,
-                        0,  1,  0,
-                        1,  0,  0;
+  Frame::zAxisArrowRotMat_ <<   0,  0,  -1,
+      0,  1,  0,
+      1,  0,  0;
 
   if (colorYn) {
-    xAxisArrow.setColor({1.0, 0.0, 0.0});   // X = R
-    yAxisArrow.setColor({0.0, 1.0, 0.0});   // Y = G
-    zAxisArrow.setColor({0.0, 0.0, 1.0});   // Z = B
+    xAxisArrow_.setColor({1.0, 0.0, 0.0});   // X = R
+    yAxisArrow_.setColor({0.0, 1.0, 0.0});   // Y = G
+    zAxisArrow_.setColor({0.0, 0.0, 1.0});   // Z = B
   }
 
-  xAxisArrow.setOri(xAxisArrowRotMat);
-  yAxisArrow.setOri(yAxisArrowRotMat);
-  zAxisArrow.setOri(zAxisArrowRotMat);
+  xAxisArrow_.setOri(xAxisArrowRotMat_);
+  yAxisArrow_.setOri(yAxisArrowRotMat_);
+  zAxisArrow_.setOri(zAxisArrowRotMat_);
 
-  xAxisArrow.setPos(origin);
-  yAxisArrow.setPos(origin);
-  zAxisArrow.setPos(origin);
+  xAxisArrow_.setPos(origin_);
+  yAxisArrow_.setPos(origin_);
+  zAxisArrow_.setPos(origin_);
 
-  objs.push_back(&xAxisArrow);
-  objs.push_back(&yAxisArrow);
-  objs.push_back(&zAxisArrow);
+  objs.push_back(&xAxisArrow_);
+  objs.push_back(&yAxisArrow_);
+  objs.push_back(&zAxisArrow_);
 
 }
+
+void Frame::setPos(Eigen::Vector3d &position) {
+  Frame::origin_ = position;
+
+  xAxisArrow_.setPos(origin_);
+  yAxisArrow_.setPos(origin_);
+  zAxisArrow_.setPos(origin_);
+
+  objs.push_back(&xAxisArrow_);
+  objs.push_back(&yAxisArrow_);
+  objs.push_back(&zAxisArrow_);
+}
+
+
 
 void Frame::init() {
   for(auto* ob: objs)
@@ -63,10 +80,8 @@ void Frame::destroy() {
     ob->destroy();
   delete shader;
 }
-
 Frame::~Frame() {
 }
-
 
 } // Obj
 } // Graphics
