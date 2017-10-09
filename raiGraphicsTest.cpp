@@ -3,7 +3,7 @@
 //
 
 #include "raiGraphics/RAI_graphics.hpp"
-#include <raiGraphics/obj/Frame.hpp>
+#include <raiGraphics/obj/CoordinateFrame.hpp>
 #include <raiGraphics/obj/Mesh.hpp>
 #include <raiGraphics/obj/Sphere.hpp>
 
@@ -25,7 +25,7 @@ int main() {
   Obj::Sphere greenSphere(1);
   Obj::Sphere blueSphere(1);
   Obj::Background background("sky");
-  Obj::Frame inertiaFrame;
+  Obj::CoordinateFrame inertiaFrame;
 
   whiteSphere.setColor({1.0, 1.0, 1.0});
   redSphere.setColor({1.0, 0.0, 0.0});
