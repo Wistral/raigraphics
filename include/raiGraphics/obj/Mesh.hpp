@@ -16,8 +16,8 @@
 #include <assimp/postprocess.h>
 
 namespace RAI {
-namespace Graphics {
-namespace Obj {
+namespace rai_graphics {
+namespace objects {
 
 struct Vertex {
  public:
@@ -38,7 +38,7 @@ struct Vertex {
 };
 
 
-class Mesh : public RAI::Graphics::Obj::Object {
+class Mesh : public RAI::rai_graphics::objects::Object {
  public:
   Mesh(const std::string& fileName, float scale=1.0f);
   Mesh(Vertex *vertices, unsigned int numVertices, unsigned int *indices, unsigned int numIndices);

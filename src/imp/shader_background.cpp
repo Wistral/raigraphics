@@ -6,7 +6,7 @@
 #include "raiGraphics/imp/shader_background.hpp"
 
 namespace RAI {
-namespace Graphics {
+namespace rai_graphics {
 
 Shader_background::Shader_background() {
   m_program = glCreateProgram();
@@ -39,11 +39,11 @@ void Shader_background::UnBind() {
   glUseProgramObjectARB(0);
 }
 
-void Shader_background::Update(Camera *camera, Light *light, Obj::Object* obj){
+void Shader_background::Update(Camera *camera, Light *light, objects::Object* obj){
   LOG(FATAL) << "Shader_background only works with a background object"<<std::endl;
 }
 
-void Shader_background::Update(Camera *camera, Light *light, Obj::Background* obj) {
+void Shader_background::Update(Camera *camera, Light *light, objects::Background* obj) {
   glm::mat4 MVP;
   camera->GetVP(MVP);
   glm::mat4 Normal;

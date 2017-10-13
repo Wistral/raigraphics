@@ -11,7 +11,7 @@
 #include "iostream"
 
 namespace RAI{
-namespace Graphics{
+namespace rai_graphics{
 
 class Light{
 

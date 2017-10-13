@@ -7,7 +7,7 @@
 #include "glog/logging.h"
 
 namespace RAI {
-namespace Graphics {
+namespace rai_graphics {
 struct OBJIndex {
   unsigned int vertexIndex;
   unsigned int uvIndex;

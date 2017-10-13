@@ -11,8 +11,8 @@
 #include "rai/common/TypeDef.hpp"
 
 namespace RAI {
-namespace Graphics {
-namespace Obj {
+namespace rai_graphics {
+namespace objects {
 
 class SuperObject{
 

@@ -5,7 +5,7 @@
 #include <map>
 
 namespace RAI {
-namespace Graphics {
+namespace rai_graphics {
 
 static bool CompareOBJIndexPtr(const OBJIndex *a, const OBJIndex *b);
 static inline unsigned int FindNextChar(unsigned int start, const char *str, unsigned int length, char token);

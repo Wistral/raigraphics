@@ -6,7 +6,7 @@
 #include "raiGraphics/imp/shader.hpp"
 
 namespace RAI {
-namespace Graphics {
+namespace rai_graphics {
 
 std::string Shader::LoadShader(const std::string &fileName) {
   std::ifstream file;

@@ -8,8 +8,8 @@
 #include "SOIL/SOIL.h"
 
 namespace RAI {
-namespace Graphics {
-namespace Obj {
+namespace rai_graphics {
+namespace objects {
 
 Background::Background(std::string filename, std::string filetype) {
   std::cout<<std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT"))+ "/res/"<<filename<<std::endl;

@@ -9,8 +9,8 @@
 #include "CheckerBoard_half.hpp"
 
 namespace RAI {
-namespace Graphics {
-namespace Obj {
+namespace rai_graphics {
+namespace objects {
 
 class CheckerBoard : public SuperObject {
 

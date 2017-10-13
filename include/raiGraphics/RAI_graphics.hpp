@@ -15,7 +15,7 @@
 #include <mutex>
 
 namespace RAI {
-namespace Graphics {
+namespace rai_graphics {
 
 class RAI_graphics {
  public:
@@ -38,7 +38,7 @@ class RAI_graphics {
   };
 
   struct CameraProp {
-    Obj::Object *toFollow = nullptr;
+    objects::Object *toFollow = nullptr;
     Eigen::Vector3d relativeDist = Eigen::Vector3d::Constant(1);
   };
 
@@ -47,13 +47,13 @@ class RAI_graphics {
   void start();
   void end();
 
-  void addObject(Obj::Object *obj, ShaderType type = RAI_SHADER_BASIC);
-  void addSuperObject(Obj::SuperObject *obj);
-  void addBackground(Obj::Background *back);
+  void addObject(objects::Object *obj, ShaderType type = RAI_SHADER_BASIC);
+  void addSuperObject(objects::SuperObject *obj);
+  void addBackground(objects::Background *back);
   void setFPS(double FPS) { FPS_ = FPS; }
 
-  void removeObject(Obj::Object *obj);
-  void removeSuperObject(Obj::SuperObject *obj);
+  void removeObject(objects::Object *obj);
+  void removeSuperObject(objects::SuperObject *obj);
   void setBackgroundColor(float r, float g, float b, float a);
   void setLightProp(LightProp &prop);
   void setCameraProp(CameraProp &prop);
@@ -70,17 +70,17 @@ class RAI_graphics {
   void draw();
   void *images2Video_inThread(void *obj);
 
-  Obj::Background *background = nullptr;
+  objects::Background *background = nullptr;
   bool backgroundChanged;
 
-  std::vector<Obj::Object *> objs_;
-  std::vector<Obj::SuperObject *> supObjs_;
+  std::vector<objects::Object *> objs_;
+  std::vector<objects::SuperObject *> supObjs_;
 
-  std::vector<Obj::Object *> added_objs_;
-  std::vector<Obj::SuperObject *> added_supObjs_;
+  std::vector<objects::Object *> added_objs_;
+  std::vector<objects::SuperObject *> added_supObjs_;
 
-  std::vector<Obj::Object *> tobeRemoved_objs_;
-  std::vector<Obj::SuperObject *> tobeRemoved_supObjs_;
+  std::vector<objects::Object *> tobeRemoved_objs_;
+  std::vector<objects::SuperObject *> tobeRemoved_supObjs_;
 
   Display *display = nullptr;
   Shader_basic *shader_basic = nullptr;

@@ -4,8 +4,8 @@
 #include "raiGraphics/obj/SuperObject.hpp"
 
 namespace RAI {
-namespace Graphics {
-namespace Obj {
+namespace rai_graphics {
+namespace objects {
 
 void SuperObject::draw(Camera *camera,  Light *light){
   drawSnapshot(camera, light, 1.0);

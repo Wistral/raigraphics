@@ -5,7 +5,7 @@
 #include "glm/gtx/quaternion.hpp"
 #include <glm/gtx/transform.hpp>
 namespace RAI {
-namespace Graphics {
+namespace rai_graphics {
 struct Transform {
  public:
   Transform(const glm::vec3 &pos = glm::vec3(),

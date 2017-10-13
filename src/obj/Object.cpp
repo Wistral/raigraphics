@@ -4,8 +4,8 @@
 #include "raiGraphics/obj/Object.hpp"
 
 namespace RAI {
-namespace Graphics {
-namespace Obj {
+namespace rai_graphics {
+namespace objects {
 
 void Object::draw() {
   std::lock_guard<std::mutex> guard(mtx);

@@ -15,13 +15,13 @@
 #include <fstream>
 
 namespace RAI {
-namespace Graphics {
+namespace rai_graphics {
 class Shader {
 
  public:
   virtual void Bind() = 0;
   virtual void UnBind() = 0;
-  virtual void Update(Camera *camera, Light *light, Obj::Object* obj) = 0;
+  virtual void Update(Camera *camera, Light *light, objects::Object* obj) = 0;
 
  protected:
   std::string LoadShader(const std::string &fileName);

@@ -5,8 +5,8 @@
 #include "raiGraphics/obj/CheckerBoard.hpp"
 
 namespace RAI {
-namespace Graphics {
-namespace Obj {
+namespace rai_graphics {
+namespace objects {
 
 CheckerBoard::CheckerBoard(int gridSize, float width, float length, std::vector<float> color1, std::vector<float> color2):
 board1(gridSize, width, length, color1), board2(gridSize, width, length, color2){

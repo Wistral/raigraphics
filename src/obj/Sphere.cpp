@@ -5,8 +5,8 @@
 #include "raiGraphics/obj/Sphere.hpp"
 
 namespace RAI {
-namespace Graphics {
-namespace Obj {
+namespace rai_graphics {
+namespace objects {
 
 Sphere::Sphere(float radius, int rings) {
   float const R = 1. / (float) (rings - 1);

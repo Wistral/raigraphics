@@ -4,7 +4,7 @@
 #include <glog/logging.h>
 
 namespace RAI {
-namespace Graphics {
+namespace rai_graphics {
 Display::Display(int width, int height, const std::string &title) {
   SDL_Init(SDL_INIT_EVERYTHING);
 

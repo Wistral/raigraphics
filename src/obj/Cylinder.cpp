@@ -6,8 +6,8 @@
 #include "raiGraphics/obj/Cylinder.hpp"
 
 namespace RAI {
-namespace Graphics {
-namespace Obj {
+namespace rai_graphics {
+namespace objects {
 
 Cylinder::Cylinder(float r, float l) {
   int slices = 20;
@@ -91,8 +91,8 @@ Cylinder::Cylinder(float r, float l) {
 //#include "Cylinder.hpp"
 //
 //namespace RAI {
-//namespace Graphics {
-//namespace Obj {
+//namespace rai_graphics {
+//namespace objects {
 //
 //Cylinder::Cylinder(float r,float l) {
 //  int slices = 20;

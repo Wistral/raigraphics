@@ -10,8 +10,8 @@
 #include "Mesh.hpp"
 
 namespace RAI {
-namespace Graphics {
-namespace Obj {
+namespace rai_graphics {
+namespace objects {
 
 class ANYmal : public SuperObject {
 
@@ -22,30 +22,30 @@ class ANYmal : public SuperObject {
   void init();
   void destroy();
   void setPose(std::vector<HomogeneousTransform> &bodyPose);
-  RAI::Graphics::Obj::Object* basePtr(){ return &base; }
+  RAI::rai_graphics::objects::Object* basePtr(){ return &base; }
 
  private:
 
-  RAI::Graphics::Obj::Mesh base;
-  RAI::Graphics::Obj::Mesh hip_lf;
-  RAI::Graphics::Obj::Mesh hip_rf;
-  RAI::Graphics::Obj::Mesh hip_lh;
-  RAI::Graphics::Obj::Mesh hip_rh;
+  RAI::rai_graphics::objects::Mesh base;
+  RAI::rai_graphics::objects::Mesh hip_lf;
+  RAI::rai_graphics::objects::Mesh hip_rf;
+  RAI::rai_graphics::objects::Mesh hip_lh;
+  RAI::rai_graphics::objects::Mesh hip_rh;
 
-  RAI::Graphics::Obj::Mesh thigh_lf;
-  RAI::Graphics::Obj::Mesh thigh_rf;
-  RAI::Graphics::Obj::Mesh thigh_lh;
-  RAI::Graphics::Obj::Mesh thigh_rh;
+  RAI::rai_graphics::objects::Mesh thigh_lf;
+  RAI::rai_graphics::objects::Mesh thigh_rf;
+  RAI::rai_graphics::objects::Mesh thigh_lh;
+  RAI::rai_graphics::objects::Mesh thigh_rh;
 
-  RAI::Graphics::Obj::Mesh shank_lf;
-  RAI::Graphics::Obj::Mesh shank_rf;
-  RAI::Graphics::Obj::Mesh shank_lh;
-  RAI::Graphics::Obj::Mesh shank_rh;
+  RAI::rai_graphics::objects::Mesh shank_lf;
+  RAI::rai_graphics::objects::Mesh shank_rf;
+  RAI::rai_graphics::objects::Mesh shank_lh;
+  RAI::rai_graphics::objects::Mesh shank_rh;
 
-  RAI::Graphics::Obj::Mesh foot_lf;
-  RAI::Graphics::Obj::Mesh foot_rf;
-  RAI::Graphics::Obj::Mesh foot_lh;
-  RAI::Graphics::Obj::Mesh foot_rh;
+  RAI::rai_graphics::objects::Mesh foot_lf;
+  RAI::rai_graphics::objects::Mesh foot_rf;
+  RAI::rai_graphics::objects::Mesh foot_lh;
+  RAI::rai_graphics::objects::Mesh foot_rh;
   std::vector<HomogeneousTransform> defaultPose_;
 };
 

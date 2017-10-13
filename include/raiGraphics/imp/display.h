@@ -5,7 +5,7 @@
 #include <SDL2/SDL.h>
 
 namespace RAI {
-namespace Graphics {
+namespace rai_graphics {
 class Display {
  public:
   Display(int width, int height, const std::string &title);

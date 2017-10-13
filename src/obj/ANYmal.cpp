@@ -6,8 +6,8 @@
 #include "rai/common/TypeDef.hpp"
 
 namespace RAI {
-namespace Graphics {
-namespace Obj {
+namespace rai_graphics {
+namespace objects {
 
 ANYmal::ANYmal():
     base(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_base_1_2.dae", 0.001),

@@ -14,8 +14,8 @@
 #include <GL/glu.h>
 
 namespace RAI {
-namespace Graphics{
-namespace Obj {
+namespace rai_graphics{
+namespace objects {
 
 enum MeshBufferPositions {
   POSITION_VB,

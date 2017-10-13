@@ -8,8 +8,8 @@
 #include <vector>
 
 namespace RAI {
-namespace Graphics {
-namespace Obj {
+namespace rai_graphics {
+namespace objects {
 
 class Sphere : public Object {
 

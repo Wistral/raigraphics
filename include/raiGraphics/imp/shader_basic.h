@@ -4,7 +4,7 @@
 #include "shader.hpp"
 
 namespace RAI {
-namespace Graphics {
+namespace rai_graphics {
 class Shader_basic : public Shader {
  public:
   Shader_basic();
@@ -13,7 +13,7 @@ class Shader_basic : public Shader {
   virtual std::string shaderFileName();
   void Bind();
   void UnBind();
-  void Update(Camera *camera,  Light *light, Obj::Object* obj);
+  void Update(Camera *camera,  Light *light, objects::Object* obj);
 
  protected:
  private:
