@@ -4,7 +4,6 @@
 
 #include "raiGraphics/obj/Cone.hpp"
 
-namespace RAI {
 namespace rai_graphics {
 namespace objects {
 
@@ -37,6 +36,5 @@ Cone::Cone(float r,float l) {
   }
 }
 
-}
-}
-}
+} // object
+} // rai_graphics

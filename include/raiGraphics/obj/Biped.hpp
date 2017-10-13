@@ -20,29 +20,28 @@ class Biped : public SuperObject {
   ~Biped();
   void init();
   void destroy();
-  void setPose(std::vector<HomogeneousTransform> &bodyPose);
-  RAI::rai_graphics::objects::Object* basePtr(){ return &base; }
+  void setPose(std::vector<RAI::HomogeneousTransform> &bodyPose);
+  Object* basePtr(){ return &base; }
 
  private:
 
+  Mesh base;
+  Mesh haa_l;
+  Mesh hfe_l;
+  Mesh thigh_l;
+  Mesh shank_l;
+  Mesh afe_l;
 
-  RAI::rai_graphics::objects::Mesh base;
-  RAI::rai_graphics::objects::Mesh haa_l;
-  RAI::rai_graphics::objects::Mesh hfe_l;
-  RAI::rai_graphics::objects::Mesh thigh_l;
-  RAI::rai_graphics::objects::Mesh shank_l;
-  RAI::rai_graphics::objects::Mesh afe_l;
+  Mesh haa_r;
+  Mesh hfe_r;
+  Mesh thigh_r;
+  Mesh shank_r;
+  Mesh afe_r;
 
-  RAI::rai_graphics::objects::Mesh haa_r;
-  RAI::rai_graphics::objects::Mesh hfe_r;
-  RAI::rai_graphics::objects::Mesh thigh_r;
-  RAI::rai_graphics::objects::Mesh shank_r;
-  RAI::rai_graphics::objects::Mesh afe_r;
+  Mesh foot_l;
+  Mesh foot_r;
 
-  RAI::rai_graphics::objects::Mesh foot_l;
-  RAI::rai_graphics::objects::Mesh foot_r;
-
-  std::vector<HomogeneousTransform> defaultPose_;
+  std::vector<RAI::HomogeneousTransform> defaultPose_;
 };
 
 } // objects

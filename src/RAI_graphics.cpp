@@ -7,7 +7,6 @@
 #include <FreeImage.h>
 #include <thread>
 
-namespace RAI {
 namespace rai_graphics {
 
 typedef void *(RAI_graphics::*Thread2Ptr)(void *);
@@ -277,5 +276,4 @@ const RAI_graphics::MouseInput* RAI_graphics::mouse(){
   return &mouseInput;
 }
 
-}
-}
+} // rai_graphics

@@ -5,7 +5,6 @@
 
 #include "raiGraphics/obj/Cylinder.hpp"
 
-namespace RAI {
 namespace rai_graphics {
 namespace objects {
 
@@ -81,9 +80,9 @@ Cylinder::Cylinder(float r, float l) {
 
 }
 
-}
-}
-}
+} // object
+} // rai_graphics
+
 //
 //// Created by joonho on 19.05.17.
 ////

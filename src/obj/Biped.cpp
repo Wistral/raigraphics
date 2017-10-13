@@ -101,9 +101,9 @@ void Biped::destroy(){
   delete shader;
 }
 
-void Biped::setPose(std::vector<HomogeneousTransform> &bodyPose) {
+void Biped::setPose(std::vector<RAI::HomogeneousTransform> &bodyPose) {
   for (int i = 0; i < objs.size(); i++) {
-    HomogeneousTransform ht = bodyPose[i] * defaultPose_[i];
+    RAI::HomogeneousTransform ht = bodyPose[i] * defaultPose_[i];
     objs[i]->setPose(ht);
   }
 }

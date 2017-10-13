@@ -4,7 +4,6 @@
 
 #include "raiGraphics/obj/Sphere.hpp"
 
-namespace RAI {
 namespace rai_graphics {
 namespace objects {
 
@@ -52,7 +51,5 @@ Sphere::Sphere(float radius, int rings) {
     }
 }
 
-}
-}
-}
-
+} // object
+} // rai_graphics

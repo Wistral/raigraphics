@@ -19,31 +19,31 @@ class Biped_ghost : public SuperObject {
   ~Biped_ghost();
   void init();
   void destroy();
-  void setPose(std::vector<HomogeneousTransform> &bodyPose);
-  RAI::rai_graphics::objects::Object* basePtr(){ return &base; }
-  RAI::rai_graphics::objects::Object* footlPtr(){ return &foot_l; }
-  RAI::rai_graphics::objects::Object* footrPtr(){ return &foot_r; }
+  void setPose(std::vector<RAI::HomogeneousTransform> &bodyPose);
+  Object* basePtr(){ return &base; }
+  Object* footlPtr(){ return &foot_l; }
+  Object* footrPtr(){ return &foot_r; }
 
 
  private:
 
-  RAI::rai_graphics::objects::Mesh base;
-  RAI::rai_graphics::objects::Mesh haa_l;
-  RAI::rai_graphics::objects::Mesh hfe_l;
-  RAI::rai_graphics::objects::Mesh thigh_l;
-  RAI::rai_graphics::objects::Mesh shank_l;
-//  RAI::rai_graphics::objects::Mesh afe_l;
+  Mesh base;
+  Mesh haa_l;
+  Mesh hfe_l;
+  Mesh thigh_l;
+  Mesh shank_l;
+// Mesh afe_l;
 
-  RAI::rai_graphics::objects::Mesh haa_r;
-  RAI::rai_graphics::objects::Mesh hfe_r;
-  RAI::rai_graphics::objects::Mesh thigh_r;
-  RAI::rai_graphics::objects::Mesh shank_r;
-//  RAI::rai_graphics::objects::Mesh afe_r;
+  Mesh haa_r;
+  Mesh hfe_r;
+  Mesh thigh_r;
+  Mesh shank_r;
+//  Mesh afe_r;
 
-  RAI::rai_graphics::objects::Sphere foot_l;
-  RAI::rai_graphics::objects::Sphere foot_r;
+  Sphere foot_l;
+  Sphere foot_r;
 
-  std::vector<HomogeneousTransform> defaultPose_;
+  std::vector<RAI::HomogeneousTransform> defaultPose_;
 };
 
 } // objects

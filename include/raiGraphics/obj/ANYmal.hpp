@@ -20,32 +20,32 @@ class ANYmal : public SuperObject {
   ~ANYmal();
   void init();
   void destroy();
-  void setPose(std::vector<HomogeneousTransform> &bodyPose);
-  RAI::rai_graphics::objects::Object* basePtr(){ return &base; }
+  void setPose(std::vector<RAI::HomogeneousTransform> &bodyPose);
+  Object* basePtr(){ return &base; }
 
  private:
 
-  RAI::rai_graphics::objects::Mesh base;
-  RAI::rai_graphics::objects::Mesh hip_lf;
-  RAI::rai_graphics::objects::Mesh hip_rf;
-  RAI::rai_graphics::objects::Mesh hip_lh;
-  RAI::rai_graphics::objects::Mesh hip_rh;
+  Mesh base;
+  Mesh hip_lf;
+  Mesh hip_rf;
+  Mesh hip_lh;
+  Mesh hip_rh;
 
-  RAI::rai_graphics::objects::Mesh thigh_lf;
-  RAI::rai_graphics::objects::Mesh thigh_rf;
-  RAI::rai_graphics::objects::Mesh thigh_lh;
-  RAI::rai_graphics::objects::Mesh thigh_rh;
+  Mesh thigh_lf;
+  Mesh thigh_rf;
+  Mesh thigh_lh;
+  Mesh thigh_rh;
 
-  RAI::rai_graphics::objects::Mesh shank_lf;
-  RAI::rai_graphics::objects::Mesh shank_rf;
-  RAI::rai_graphics::objects::Mesh shank_lh;
-  RAI::rai_graphics::objects::Mesh shank_rh;
+  Mesh shank_lf;
+  Mesh shank_rf;
+  Mesh shank_lh;
+  Mesh shank_rh;
 
-  RAI::rai_graphics::objects::Mesh foot_lf;
-  RAI::rai_graphics::objects::Mesh foot_rf;
-  RAI::rai_graphics::objects::Mesh foot_lh;
-  RAI::rai_graphics::objects::Mesh foot_rh;
-  std::vector<HomogeneousTransform> defaultPose_;
+  Mesh foot_lf;
+  Mesh foot_rf;
+  Mesh foot_lh;
+  Mesh foot_rh;
+  std::vector<RAI::HomogeneousTransform> defaultPose_;
 };
 
 } // objects

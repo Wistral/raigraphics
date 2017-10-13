@@ -11,7 +11,6 @@ inline bool fileexists (const std::string& name) {
   return (stat (name.c_str(), &buffer) == 0);
 }
 
-namespace RAI {
 namespace rai_graphics {
 namespace objects {
 
@@ -86,6 +85,5 @@ void Mesh::processMesh(aiMesh *mesh, const aiScene *scene) {
   }
 }
 
-}
-}
-}
+} // object
+} // rai_graphics

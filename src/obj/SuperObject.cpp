@@ -3,7 +3,6 @@
 //
 #include "raiGraphics/obj/SuperObject.hpp"
 
-namespace RAI {
 namespace rai_graphics {
 namespace objects {
 
@@ -57,6 +56,5 @@ void SuperObject::drawSnapshot(Camera *camera, Light *light, float transparency)
   }
 }
 
-}
-}
-}
+} // object
+} // rai_graphics

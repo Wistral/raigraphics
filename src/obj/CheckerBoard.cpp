@@ -4,7 +4,6 @@
 
 #include "raiGraphics/obj/CheckerBoard.hpp"
 
-namespace RAI {
 namespace rai_graphics {
 namespace objects {
 
@@ -31,6 +30,5 @@ void CheckerBoard::destroy(){
   delete shader;
 }
 
-}
-}
-}
+} // object
+} // rai_graphics

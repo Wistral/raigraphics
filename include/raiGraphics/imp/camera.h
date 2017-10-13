@@ -21,12 +21,12 @@ struct Camera {
   void GetVP(glm::mat4& vp);
   void GetPos(glm::vec3& position);
   void Control(SDL_Event e);
-  void follow(RAI::rai_graphics::objects::Object* obj, Eigen::Vector3d pos);
+  void follow(rai_graphics::objects::Object* obj, Eigen::Vector3d pos);
 
  protected:
  private:
 
-  RAI::rai_graphics::objects::Object* toFollowObj = nullptr;
+  objects::Object* toFollowObj = nullptr;
   glm::vec4 relativePos;
   glm::vec4 rotationPitcAxis;
   glm::mat4 vp_;

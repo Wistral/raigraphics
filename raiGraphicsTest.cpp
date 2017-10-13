@@ -7,7 +7,7 @@
 #include <raiGraphics/obj/Mesh.hpp>
 #include <raiGraphics/obj/Sphere.hpp>
 
-using namespace RAI::rai_graphics;
+using namespace rai_graphics;
 
 int main() {
 

@@ -4,7 +4,6 @@
 
 #include "raiGraphics/obj/CoordinateFrame.hpp"
 
-namespace RAI {
 namespace rai_graphics {
 namespace objects {
 
@@ -123,4 +122,3 @@ void CoordinateFrame::setPose(Eigen::Vector3d &position, Eigen::Matrix3d &rotati
 
 } // objects
 } // rai_graphics
-} // RAI

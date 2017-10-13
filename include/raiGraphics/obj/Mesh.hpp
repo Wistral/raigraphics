@@ -37,7 +37,7 @@ struct Vertex {
 };
 
 
-class Mesh : public RAI::rai_graphics::objects::Object {
+class Mesh : public Object {
  public:
   Mesh(const std::string& fileName, float scale=1.0f);
   Mesh(Vertex *vertices, unsigned int numVertices, unsigned int *indices, unsigned int numIndices);

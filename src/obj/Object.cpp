@@ -3,7 +3,6 @@
 //
 #include "raiGraphics/obj/Object.hpp"
 
-namespace RAI {
 namespace rai_graphics {
 namespace objects {
 
@@ -188,6 +187,5 @@ void Object::registerToGPU() {
   glBindVertexArray(0);
 }
 
-}
-}
-}
+} // objects
+} // rai_graphics
