@@ -7,7 +7,6 @@
 #include "Object.hpp"
 #include <vector>
 
-namespace RAI {
 namespace rai_graphics {
 namespace objects {
 
@@ -18,8 +17,8 @@ class Sphere : public Object {
   float radius_;
 
 };
-}
-}
-}
+
+} // objects
+} // rai_graphics
 
 #endif //RAI_SPHERE_HPP

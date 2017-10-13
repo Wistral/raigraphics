@@ -14,7 +14,6 @@
 #include "rai/common/StopWatch.hpp"
 #include <mutex>
 
-namespace RAI {
 namespace rai_graphics {
 
 class RAI_graphics {
@@ -116,7 +115,6 @@ class RAI_graphics {
 
 };
 
-}
-}
+} // rai_graphics
 
 #endif //PROJECT_RAI_GRAPHICS_HPP

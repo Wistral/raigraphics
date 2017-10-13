@@ -10,7 +10,6 @@
 #include "math.h"
 #include "rai/common/TypeDef.hpp"
 
-namespace RAI {
 namespace rai_graphics {
 namespace objects {
 
@@ -73,8 +72,8 @@ class Background {
   };
 
 };
-}
-}
-}
+
+} // objects
+} // rai_graphics
 
 #endif //RAI_BACKGROUND_HPP

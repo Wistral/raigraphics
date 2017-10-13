@@ -5,7 +5,6 @@
 #include "raiGraphics/obj/ANYmal.hpp"
 #include "rai/common/TypeDef.hpp"
 
-namespace RAI {
 namespace rai_graphics {
 namespace objects {
 
@@ -93,7 +92,6 @@ void ANYmal::setPose(std::vector<HomogeneousTransform> &bodyPose) {
   }
 }
 
-}
-}
-}
+} // objects
+} // rai_graphics
 

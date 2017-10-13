@@ -5,7 +5,6 @@
 #include <glog/logging.h>
 #include "raiGraphics/imp/shader_background.hpp"
 
-namespace RAI {
 namespace rai_graphics {
 
 Shader_background::Shader_background() {
@@ -52,5 +51,4 @@ void Shader_background::Update(Camera *camera, Light *light, objects::Background
   glUniform1i(glGetUniformLocation(m_program, "skybox"), 0);
 }
 
-}
-}
+} // rai_graphics

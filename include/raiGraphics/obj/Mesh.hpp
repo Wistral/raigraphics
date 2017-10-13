@@ -15,7 +15,6 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-namespace RAI {
 namespace rai_graphics {
 namespace objects {
 
@@ -62,7 +61,7 @@ class Mesh : public RAI::rai_graphics::objects::Object {
   float scale_;
 };
 
-}
-}
-}
+} // objects
+} // rai_graphics
+
 #endif

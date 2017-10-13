@@ -6,8 +6,8 @@
 #define RAI_SHADER_BACKGROUND_HPP
 #include "shader.hpp"
 
-namespace RAI {
 namespace rai_graphics {
+
 class Shader_background : public Shader {
 
  public:
@@ -26,6 +26,7 @@ class Shader_background : public Shader {
   GLuint m_shaders[NUM_SHADERS];
   GLuint m_uniforms[NUM_UNIFORMS];
 };
-}
-}
+
+} // rai_graphics
+
 #endif //RAI_SHADER_BACKGROUND_HPP

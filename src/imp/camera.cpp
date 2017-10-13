@@ -3,8 +3,8 @@
 //
 #include "raiGraphics/imp/camera.h"
 
-namespace RAI {
 namespace rai_graphics {
+
 void Camera::lockCamera() {
   if (camPitch > 90)
     camPitch = 90;
@@ -164,5 +164,4 @@ void Camera::follow(RAI::rai_graphics::objects::Object *obj, Eigen::Vector3d pos
   mtx.unlock();
 }
 
-}
-}
+} // rai_graphics

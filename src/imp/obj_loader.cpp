@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <map>
 
-namespace RAI {
 namespace rai_graphics {
 
 static bool CompareOBJIndexPtr(const OBJIndex *a, const OBJIndex *b);
@@ -367,5 +366,5 @@ static inline std::vector<std::string> SplitString(const std::string &s, char de
 
   return elems;
 }
-}
-}
+
+} // rai_graphics

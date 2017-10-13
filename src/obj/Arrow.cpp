@@ -3,7 +3,6 @@
 //
 #include "raiGraphics/obj/Arrow.hpp"
 
-namespace RAI {
 namespace rai_graphics {
 namespace objects {
 
@@ -74,9 +73,5 @@ Arrow::Arrow(float r1, float r2, float l1, float l2) {
   }
 }
 
+} // object
 }
-}
-}
-
-
-

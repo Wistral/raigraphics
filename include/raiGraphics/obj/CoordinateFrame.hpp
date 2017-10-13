@@ -10,7 +10,6 @@
 #include "rai/common/math/RAI_math.hpp"
 #include <vector>
 
-namespace RAI {
 namespace rai_graphics {
 namespace objects {
 
@@ -55,8 +54,8 @@ class CoordinateFrame : public SuperObject {
   float arrowBodyRadius_;
   float arrowHeadRadius_;
 };
+
 } // objects
 } // rai_graphics
-} // RAI
 
 #endif //RAIGRAPHICSOPENGL_FRAME_HPP

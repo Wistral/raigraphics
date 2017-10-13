@@ -9,7 +9,6 @@
 #include "SuperObject.hpp"
 #include "Mesh.hpp"
 
-namespace RAI {
 namespace rai_graphics {
 namespace objects {
 
@@ -49,9 +48,7 @@ class ANYmal : public SuperObject {
   std::vector<HomogeneousTransform> defaultPose_;
 };
 
-}
-}
-}
-
+} // objects
+} // rai_graphics
 
 #endif //RAI_ANYMAL_HPP

@@ -13,7 +13,6 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-namespace RAI {
 namespace rai_graphics{
 namespace objects {
 
@@ -103,8 +102,7 @@ class Object {
   std::mutex mtx;
 };
 
-}
-}
-}
+} // objects
+} // rai_graphics
 
 #endif //PROJECT_OBJECT_HPP

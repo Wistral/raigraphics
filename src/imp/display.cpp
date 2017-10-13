@@ -3,7 +3,6 @@
 #include <iostream>
 #include <glog/logging.h>
 
-namespace RAI {
 namespace rai_graphics {
 Display::Display(int width, int height, const std::string &title) {
   SDL_Init(SDL_INIT_EVERYTHING);
@@ -58,5 +57,5 @@ void Display::Clear(float r, float g, float b, float a) {
 void Display::SwapBuffers() {
   SDL_GL_SwapWindow(m_window);
 }
-}
-}
+
+} // rai_graphics

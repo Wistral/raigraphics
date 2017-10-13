@@ -10,7 +10,6 @@
 #include "math.h"
 #include "rai/common/TypeDef.hpp"
 
-namespace RAI {
 namespace rai_graphics {
 namespace objects {
 
@@ -22,8 +21,7 @@ class CheckerBoard_half : public Object {
 
 };
 
-}
-}
-}
+} // objects
+} // rai_graphics
 
 #endif //RAI_CHECKERBOARD_HPP

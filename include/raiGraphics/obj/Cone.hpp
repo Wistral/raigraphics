@@ -8,7 +8,6 @@
 #include "Object.hpp"
 #include <vector>
 
-namespace RAI {
 namespace rai_graphics {
 namespace objects {
 
@@ -20,8 +19,8 @@ class Cone: public Object {
  private:
 
 };
-}
-}
-}
+
+} // objects
+} // rai_graphics
 
 #endif //RAI_CONE_HPP

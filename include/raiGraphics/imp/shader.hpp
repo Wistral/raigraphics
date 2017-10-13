@@ -14,8 +14,8 @@
 #include <iostream>
 #include <fstream>
 
-namespace RAI {
 namespace rai_graphics {
+
 class Shader {
 
  public:
@@ -30,6 +30,7 @@ class Shader {
   GLuint m_program;
 
 };
-}
-}
+
+} // rai_graphics
+
 #endif //RAI_SHADER_HPP

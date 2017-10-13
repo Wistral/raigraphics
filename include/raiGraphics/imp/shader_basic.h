@@ -3,8 +3,8 @@
 
 #include "shader.hpp"
 
-namespace RAI {
 namespace rai_graphics {
+
 class Shader_basic : public Shader {
  public:
   Shader_basic();
@@ -23,7 +23,7 @@ class Shader_basic : public Shader {
   GLuint m_shaders[NUM_SHADERS];
   GLuint m_uniforms[NUM_UNIFORMS];
 };
-}
-}
+
+} // rai_graphics
 
 #endif

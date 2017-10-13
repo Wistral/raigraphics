@@ -10,7 +10,6 @@
 #include "mutex"
 #include "iostream"
 
-namespace RAI{
 namespace rai_graphics{
 
 class Light{
@@ -72,7 +71,6 @@ class Light{
   std::mutex mtx;
 };
 
-}
-}
+} // rai_graphics
 
 #endif //PROJECT_LIGHT_HPP

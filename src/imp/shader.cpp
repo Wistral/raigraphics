@@ -5,7 +5,6 @@
 #include <glog/logging.h>
 #include "raiGraphics/imp/shader.hpp"
 
-namespace RAI {
 namespace rai_graphics {
 
 std::string Shader::LoadShader(const std::string &fileName) {
@@ -64,5 +63,4 @@ GLuint Shader::CreateShader(const std::string &text, unsigned int type) {
   return shader;
 }
 
-}
-}
+} // rai_graphics

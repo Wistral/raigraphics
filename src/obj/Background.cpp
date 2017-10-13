@@ -7,7 +7,6 @@
 #include "raiGraphics/obj/Background.hpp"
 #include "SOIL/SOIL.h"
 
-namespace RAI {
 namespace rai_graphics {
 namespace objects {
 
@@ -70,6 +69,5 @@ void Background::draw() {
   glDepthMask(GL_TRUE);
 }
 
-}
-}
-}
+} // object
+} // rai_graphics

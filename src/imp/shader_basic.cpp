@@ -2,7 +2,6 @@
 #include <iostream>
 #include <fstream>
 
-namespace RAI {
 namespace rai_graphics {
 
 Shader_basic::Shader_basic() {
@@ -86,5 +85,4 @@ void Shader_basic::Update(Camera *camera, Light *light, objects::Object* obj) {
   glUniform1f(glGetUniformLocation(m_program,"transparency"),obj->getTransparency());
 }
 
-}
-}
+} // rai_graphics

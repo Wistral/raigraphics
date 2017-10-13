@@ -8,7 +8,6 @@
 #include "SuperObject.hpp"
 #include "CheckerBoard_half.hpp"
 
-namespace RAI {
 namespace rai_graphics {
 namespace objects {
 
@@ -24,9 +23,8 @@ class CheckerBoard : public SuperObject {
   CheckerBoard_half board1, board2;
 };
 
-}
-}
-}
+} // objects
+} // rai_graphics
 
 
 #endif //RAI_CHECKERBOARD_HPP

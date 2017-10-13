@@ -7,7 +7,6 @@
 #include "raiGraphics/obj/Biped_simplified.hpp"
 #include "rai/common/TypeDef.hpp"
 
-namespace RAI {
 namespace rai_graphics {
 namespace objects {
 
@@ -107,6 +106,5 @@ void Biped_simplified::setPose(std::vector<HomogeneousTransform> &bodyPose) {
 
 }
 
-}
-}
+} // object
 }

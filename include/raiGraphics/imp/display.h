@@ -4,8 +4,8 @@
 #include <string>
 #include <SDL2/SDL.h>
 
-namespace RAI {
 namespace rai_graphics {
+
 class Display {
  public:
   Display(int width, int height, const std::string &title);
@@ -23,6 +23,7 @@ class Display {
 
   SDL_GLContext m_glContext;
 };
-}
-}
+
+} // rai_graphics
+
 #endif

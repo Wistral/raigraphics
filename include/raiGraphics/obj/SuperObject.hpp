@@ -10,7 +10,6 @@
 #include "raiGraphics/imp/shader_basic.h"
 #include "rai/common/TypeDef.hpp"
 
-namespace RAI {
 namespace rai_graphics {
 namespace objects {
 
@@ -45,8 +44,7 @@ class SuperObject{
 
 };
 
-}
-}
-}
+} // objects
+} // rai_graphics
 
 #endif //RAI_SUPEROBJECT_HPP

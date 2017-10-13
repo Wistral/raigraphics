@@ -4,8 +4,9 @@
 #include <glm/glm.hpp>
 #include "glm/gtx/quaternion.hpp"
 #include <glm/gtx/transform.hpp>
-namespace RAI {
+
 namespace rai_graphics {
+
 struct Transform {
  public:
   Transform(const glm::vec3 &pos = glm::vec3(),
@@ -41,6 +42,7 @@ struct Transform {
   glm::quat rot;
   glm::vec3 scale;
 };
-}
-}
+
+} // rai_graphics
+
 #endif

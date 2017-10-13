@@ -12,7 +12,6 @@
 #include <raiGraphics/obj/Object.hpp>
 #include "vector3d.h"
 
-namespace RAI {
 namespace rai_graphics {
 struct Camera {
  public:
@@ -50,6 +49,7 @@ struct Camera {
   unsigned switchTime = 0;
 
 };
-}
-}
+
+} // rai_graphics
+
 #endif
