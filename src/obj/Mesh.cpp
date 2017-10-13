@@ -12,7 +12,7 @@ inline bool fileexists (const std::string& name) {
 }
 
 namespace rai_graphics {
-namespace objects {
+namespace object {
 
 Mesh::Mesh(const std::string& fileName, float scale) {
   LOG_IF(FATAL, !fileexists(fileName))<< "could not find the mesh file"<<std::endl;

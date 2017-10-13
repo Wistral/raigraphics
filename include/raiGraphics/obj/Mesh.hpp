@@ -16,7 +16,7 @@
 #include <assimp/postprocess.h>
 
 namespace rai_graphics {
-namespace objects {
+namespace object {
 
 struct Vertex {
  public:
@@ -61,7 +61,7 @@ class Mesh : public Object {
   float scale_;
 };
 
-} // objects
+} // object
 } // rai_graphics
 
 #endif

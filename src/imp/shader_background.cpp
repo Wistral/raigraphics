@@ -38,11 +38,11 @@ void Shader_background::UnBind() {
   glUseProgramObjectARB(0);
 }
 
-void Shader_background::Update(Camera *camera, Light *light, objects::Object* obj){
+void Shader_background::Update(Camera *camera, Light *light, object::Object* obj){
   LOG(FATAL) << "Shader_background only works with a background object"<<std::endl;
 }
 
-void Shader_background::Update(Camera *camera, Light *light, objects::Background* obj) {
+void Shader_background::Update(Camera *camera, Light *light, object::Background* obj) {
   glm::mat4 MVP;
   camera->GetVP(MVP);
   glm::mat4 Normal;

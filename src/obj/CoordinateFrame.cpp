@@ -5,7 +5,7 @@
 #include "raiGraphics/obj/CoordinateFrame.hpp"
 
 namespace rai_graphics {
-namespace objects {
+namespace object {
 
 CoordinateFrame::CoordinateFrame(Eigen::Vector3d origin,
              float arrowBodyLength,
@@ -120,5 +120,5 @@ void CoordinateFrame::setPose(Eigen::Vector3d &position, Eigen::Matrix3d &rotati
   setOri(rotationMat);
 }
 
-} // objects
+} // object
 } // rai_graphics

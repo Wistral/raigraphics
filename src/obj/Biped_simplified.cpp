@@ -8,7 +8,7 @@
 #include "rai/common/TypeDef.hpp"
 
 namespace rai_graphics {
-namespace objects {
+namespace object {
 
 Biped_simplified::Biped_simplified() :
     base(std::string(getenv("RAI_ROOT")) + "/RAI/taskModules/bipedLocomotion/cadModel/biped/Base_V1.dae", 0.001),

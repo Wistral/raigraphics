@@ -14,7 +14,7 @@
 #include <GL/glu.h>
 
 namespace rai_graphics{
-namespace objects {
+namespace object {
 
 enum MeshBufferPositions {
   POSITION_VB,
@@ -102,7 +102,7 @@ class Object {
   std::mutex mtx;
 };
 
-} // objects
+} // object
 } // rai_graphics
 
 #endif //PROJECT_OBJECT_HPP

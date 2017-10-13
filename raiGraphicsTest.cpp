@@ -15,17 +15,17 @@ int main() {
   RAI_graphics graphics(800, 600);
 
 //  TODO anymal will be removed from raiGraphics
-//  objects::Mesh anymalBase(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT"))+"/res/anymal_base_1_2.dae", 0.001);
+//  object::Mesh anymalBase(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT"))+"/res/anymal_base_1_2.dae", 0.001);
 //  anymalBase.setScale(5.0);
 //  anymalBase.setTransparency(1.0);
 
-  objects::Mesh terrain(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT"))+"/res/roughterrain.obj");
-  objects::Sphere whiteSphere(1);
-  objects::Sphere redSphere(1);
-  objects::Sphere greenSphere(1);
-  objects::Sphere blueSphere(1);
-  objects::Background background("sky");
-  objects::CoordinateFrame inertiaFrame;
+  object::Mesh terrain(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT"))+"/res/roughterrain.obj");
+  object::Sphere whiteSphere(1);
+  object::Sphere redSphere(1);
+  object::Sphere greenSphere(1);
+  object::Sphere blueSphere(1);
+  object::Background background("sky");
+  object::CoordinateFrame inertiaFrame;
 
   whiteSphere.setColor({1.0, 1.0, 1.0});
   redSphere.setColor({1.0, 0.0, 0.0});

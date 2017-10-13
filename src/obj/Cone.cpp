@@ -5,7 +5,7 @@
 #include "raiGraphics/obj/Cone.hpp"
 
 namespace rai_graphics {
-namespace objects {
+namespace object {
 
 Cone::Cone(float r,float l) {
   int slices = 20;

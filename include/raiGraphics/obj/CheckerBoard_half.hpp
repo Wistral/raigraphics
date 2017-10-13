@@ -11,7 +11,7 @@
 #include "rai/common/TypeDef.hpp"
 
 namespace rai_graphics {
-namespace objects {
+namespace object {
 
 class CheckerBoard_half : public Object {
 
@@ -21,7 +21,7 @@ class CheckerBoard_half : public Object {
 
 };
 
-} // objects
+} // object
 } // rai_graphics
 
 #endif //RAI_CHECKERBOARD_HPP

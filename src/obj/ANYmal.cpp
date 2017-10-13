@@ -6,7 +6,7 @@
 #include "rai/common/TypeDef.hpp"
 
 namespace rai_graphics {
-namespace objects {
+namespace object {
 
 ANYmal::ANYmal():
     base(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_base_1_2.dae", 0.001),
@@ -92,6 +92,6 @@ void ANYmal::setPose(std::vector<RAI::HomogeneousTransform> &bodyPose) {
   }
 }
 
-} // objects
+} // object
 } // rai_graphics
 

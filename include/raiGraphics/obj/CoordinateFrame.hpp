@@ -11,7 +11,7 @@
 #include <vector>
 
 namespace rai_graphics {
-namespace objects {
+namespace object {
 
 class CoordinateFrame : public SuperObject {
 
@@ -45,9 +45,9 @@ class CoordinateFrame : public SuperObject {
   Eigen::Vector4d yAxisArrowRot_;
   Eigen::Vector4d zAxisArrowRot_;
 
-  objects::Arrow xAxisArrow_;
-  objects::Arrow yAxisArrow_;
-  objects::Arrow zAxisArrow_;
+  object::Arrow xAxisArrow_;
+  object::Arrow yAxisArrow_;
+  object::Arrow zAxisArrow_;
 
   float arrowBodyLength_;
   float arrowHeadLength_;
@@ -55,7 +55,7 @@ class CoordinateFrame : public SuperObject {
   float arrowHeadRadius_;
 };
 
-} // objects
+} // object
 } // rai_graphics
 
 #endif //RAIGRAPHICSOPENGL_FRAME_HPP

@@ -4,7 +4,7 @@
 #include "raiGraphics/obj/Object.hpp"
 
 namespace rai_graphics {
-namespace objects {
+namespace object {
 
 void Object::draw() {
   std::lock_guard<std::mutex> guard(mtx);
@@ -187,5 +187,5 @@ void Object::registerToGPU() {
   glBindVertexArray(0);
 }
 
-} // objects
+} // object
 } // rai_graphics

@@ -11,7 +11,7 @@
 #include "rai/common/TypeDef.hpp"
 
 namespace rai_graphics {
-namespace objects {
+namespace object {
 
 class Background {
 
@@ -73,7 +73,7 @@ class Background {
 
 };
 
-} // objects
+} // object
 } // rai_graphics
 
 #endif //RAI_BACKGROUND_HPP

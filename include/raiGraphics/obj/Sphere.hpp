@@ -8,7 +8,7 @@
 #include <vector>
 
 namespace rai_graphics {
-namespace objects {
+namespace object {
 
 class Sphere : public Object {
 
@@ -18,7 +18,7 @@ class Sphere : public Object {
 
 };
 
-} // objects
+} // object
 } // rai_graphics
 
 #endif //RAI_SPHERE_HPP

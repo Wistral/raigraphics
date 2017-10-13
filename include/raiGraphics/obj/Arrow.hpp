@@ -9,7 +9,7 @@
 #include <vector>
 
 namespace rai_graphics {
-namespace objects {
+namespace object {
 
 class Arrow : public Object {
 
@@ -20,7 +20,7 @@ class Arrow : public Object {
 
 };
 
-} // objects
+} // object
 } // rai_graphics
 
 

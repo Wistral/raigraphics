@@ -11,7 +11,7 @@
 #include "rai/common/TypeDef.hpp"
 
 namespace rai_graphics {
-namespace objects {
+namespace object {
 
 class SuperObject{
 
@@ -44,7 +44,7 @@ class SuperObject{
 
 };
 
-} // objects
+} // object
 } // rai_graphics
 
 #endif //RAI_SUPEROBJECT_HPP

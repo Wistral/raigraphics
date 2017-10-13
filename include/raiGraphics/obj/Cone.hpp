@@ -9,7 +9,7 @@
 #include <vector>
 
 namespace rai_graphics {
-namespace objects {
+namespace object {
 
 class Cone: public Object {
 
@@ -20,7 +20,7 @@ class Cone: public Object {
 
 };
 
-} // objects
+} // object
 } // rai_graphics
 
 #endif //RAI_CONE_HPP

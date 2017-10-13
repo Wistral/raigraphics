@@ -9,7 +9,7 @@
 #include "CheckerBoard_half.hpp"
 
 namespace rai_graphics {
-namespace objects {
+namespace object {
 
 class CheckerBoard : public SuperObject {
 
@@ -23,7 +23,7 @@ class CheckerBoard : public SuperObject {
   CheckerBoard_half board1, board2;
 };
 
-} // objects
+} // object
 } // rai_graphics
 
 

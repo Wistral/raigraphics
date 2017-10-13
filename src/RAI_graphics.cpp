@@ -170,32 +170,32 @@ void RAI_graphics::draw() {
   display->SwapBuffers();
 }
 
-void RAI_graphics::addObject(objects::Object *obj, ShaderType type) {
+void RAI_graphics::addObject(object::Object *obj, ShaderType type) {
   std::lock_guard<std::mutex> guard(mtxinit);
   LOG_IF(FATAL, !obj) << "the object is not created yet";
   added_objs_.push_back(obj);
   added_shaders_.push_back(type);
 }
 
-void RAI_graphics::addSuperObject(objects::SuperObject *obj) {
+void RAI_graphics::addSuperObject(object::SuperObject *obj) {
   std::lock_guard<std::mutex> guard(mtxinit);
   LOG_IF(FATAL, !obj) << "the object is not created yet";
   added_supObjs_.push_back(obj);
 }
 
-void RAI_graphics::addBackground(objects::Background *back) {
+void RAI_graphics::addBackground(object::Background *back) {
   std::lock_guard<std::mutex> guard(mtxinit);
   backgroundChanged = true;
   LOG_IF(FATAL, !back) << "the object is not created yet";
   background = back;
 }
 
-void RAI_graphics::removeObject(objects::Object *obj) {
+void RAI_graphics::removeObject(object::Object *obj) {
   std::lock_guard<std::mutex> guard(mtxinit);
   tobeRemoved_objs_.push_back(obj);
 }
 
-void RAI_graphics::removeSuperObject(objects::SuperObject *obj) {
+void RAI_graphics::removeSuperObject(object::SuperObject *obj) {
   std::lock_guard<std::mutex> guard(mtxinit);
   tobeRemoved_supObjs_.push_back(obj);
 }

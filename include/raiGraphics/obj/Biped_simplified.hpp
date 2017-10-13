@@ -10,7 +10,7 @@
 #include "Sphere.hpp"
 
 namespace rai_graphics {
-namespace objects {
+namespace object {
 
 class Biped_simplified : public SuperObject {
 
@@ -47,7 +47,7 @@ class Biped_simplified : public SuperObject {
   std::vector<RAI::HomogeneousTransform> defaultPose_;
 };
 
-} // objects
+} // object
 } // rai_graphics
 
 #endif //RAI_BIPED_HPP

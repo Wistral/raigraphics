@@ -9,7 +9,7 @@
 #include "raiGraphics/obj/CheckerBoard_half.hpp"
 
 namespace rai_graphics {
-namespace objects {
+namespace object {
 
 CheckerBoard_half::CheckerBoard_half(int gridSize,
                            float width,
@@ -44,6 +44,6 @@ CheckerBoard_half::CheckerBoard_half(int gridSize,
     }
 }
 
-} // objects
+} // object
 } // rai_graphics
 

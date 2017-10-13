@@ -9,7 +9,7 @@
 #include <vector>
 
 namespace rai_graphics {
-namespace objects {
+namespace object {
 
 class Cylinder: public Object {
 
@@ -20,6 +20,6 @@ class Cylinder: public Object {
 
 };
 
-} // objects
+} // object
 } // rai_graphics
 #endif //RAI_CYLINDER_HPP

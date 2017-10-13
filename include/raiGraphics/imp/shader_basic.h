@@ -13,7 +13,7 @@ class Shader_basic : public Shader {
   virtual std::string shaderFileName();
   void Bind();
   void UnBind();
-  void Update(Camera *camera,  Light *light, objects::Object* obj);
+  void Update(Camera *camera,  Light *light, object::Object* obj);
 
  protected:
  private:
