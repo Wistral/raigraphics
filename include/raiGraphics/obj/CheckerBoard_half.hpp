@@ -5,7 +5,7 @@
 #ifndef RAI_CHECKERBOARD_HALF_HPP
 #define RAI_CHECKERBOARD_HALF_HPP
 
-#include "Object.hpp"
+#include "SingleBodyObject.hpp"
 #include <vector>
 #include "math.h"
 #include "rai/common/TypeDef.hpp"
@@ -13,7 +13,7 @@
 namespace rai_graphics {
 namespace object {
 
-class CheckerBoard_half : public Object {
+class CheckerBoard_half : public SingleBodyObject {
 
  public:
 

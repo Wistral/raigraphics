@@ -5,13 +5,13 @@
 #ifndef RAI_ARROW_HPP
 #define RAI_ARROW_HPP
 
-#include "Object.hpp"
+#include "SingleBodyObject.hpp"
 #include <vector>
 
 namespace rai_graphics {
 namespace object {
 
-class Arrow : public Object {
+class Arrow : public SingleBodyObject {
 
  public:
   Arrow(float r1, float r2, float l1, float l2);

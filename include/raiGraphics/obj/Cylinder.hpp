@@ -5,13 +5,13 @@
 #ifndef RAI_CYLINDER_HPP
 #define RAI_CYLINDER_HPP
 
-#include "Object.hpp"
+#include "SingleBodyObject.hpp"
 #include <vector>
 
 namespace rai_graphics {
 namespace object {
 
-class Cylinder: public Object {
+class Cylinder: public SingleBodyObject {
 
  public:
   Cylinder(float r,float l);

@@ -4,13 +4,13 @@
 
 #ifndef RAI_SPHERE_HPP
 #define RAI_SPHERE_HPP
-#include "Object.hpp"
+#include "SingleBodyObject.hpp"
 #include <vector>
 
 namespace rai_graphics {
 namespace object {
 
-class Sphere : public Object {
+class Sphere : public SingleBodyObject {
 
  public:
   Sphere(float radius, int rings=20);

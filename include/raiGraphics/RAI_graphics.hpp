@@ -6,8 +6,8 @@
 #define PROJECT_RAI_GRAPHICS_HPP
 #include "raiGraphics/RAI_keyboard.hpp"
 #include "raiGraphics/obj/Background.hpp"
-#include "raiGraphics/obj/Object.hpp"
-#include "raiGraphics/obj/SuperObject.hpp"
+#include "raiGraphics/obj/SingleBodyObject.hpp"
+#include "raiGraphics/obj/MultiBodyObject.hpp"
 #include "raiGraphics/imp/display.h"
 #include "raiGraphics/imp/shader_basic.h"
 #include "raiGraphics/imp/shader_background.hpp"
@@ -37,7 +37,7 @@ class RAI_graphics {
   };
 
   struct CameraProp {
-    object::Object *toFollow = nullptr;
+    object::SingleBodyObject *toFollow = nullptr;
     Eigen::Vector3d relativeDist = Eigen::Vector3d::Constant(1);
   };
 
@@ -46,13 +46,13 @@ class RAI_graphics {
   void start();
   void end();
 
-  void addObject(object::Object *obj, ShaderType type = RAI_SHADER_BASIC);
-  void addSuperObject(object::SuperObject *obj);
+  void addObject(object::SingleBodyObject *obj, ShaderType type = RAI_SHADER_BASIC);
+  void addSuperObject(object::MultiBodyObject *obj);
   void addBackground(object::Background *back);
   void setFPS(double FPS) { FPS_ = FPS; }
 
-  void removeObject(object::Object *obj);
-  void removeSuperObject(object::SuperObject *obj);
+  void removeObject(object::SingleBodyObject *obj);
+  void removeSuperObject(object::MultiBodyObject *obj);
   void setBackgroundColor(float r, float g, float b, float a);
   void setLightProp(LightProp &prop);
   void setCameraProp(CameraProp &prop);
@@ -72,14 +72,14 @@ class RAI_graphics {
   object::Background *background = nullptr;
   bool backgroundChanged;
 
-  std::vector<object::Object *> objs_;
-  std::vector<object::SuperObject *> supObjs_;
+  std::vector<object::SingleBodyObject *> objs_;
+  std::vector<object::MultiBodyObject *> supObjs_;
 
-  std::vector<object::Object *> added_objs_;
-  std::vector<object::SuperObject *> added_supObjs_;
+  std::vector<object::SingleBodyObject *> added_objs_;
+  std::vector<object::MultiBodyObject *> added_supObjs_;
 
-  std::vector<object::Object *> tobeRemoved_objs_;
-  std::vector<object::SuperObject *> tobeRemoved_supObjs_;
+  std::vector<object::SingleBodyObject *> tobeRemoved_objs_;
+  std::vector<object::MultiBodyObject *> tobeRemoved_supObjs_;
 
   Display *display = nullptr;
   Shader_basic *shader_basic = nullptr;

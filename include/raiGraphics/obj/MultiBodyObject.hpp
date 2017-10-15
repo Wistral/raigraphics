@@ -5,15 +5,16 @@
 #ifndef RAI_SUPEROBJECT_HPP
 #define RAI_SUPEROBJECT_HPP
 
-#include "Object.hpp"
+#include "SingleBodyObject.hpp"
 #include "raiGraphics/imp/shader.hpp"
 #include "raiGraphics/imp/shader_basic.h"
+#include "raiGraphics/obj/Object.hpp"
 #include "rai/common/TypeDef.hpp"
 
 namespace rai_graphics {
 namespace object {
 
-class SuperObject{
+class MultiBodyObject: public Object {
 
  public:
 
@@ -34,7 +35,7 @@ class SuperObject{
   void drawSnapshot(Camera *camera,  Light *light, float transparency);
 
   bool visible = true;
-  std::vector<Object*> objs;
+  std::vector<SingleBodyObject*> objs;
   Shader* shader = nullptr;
   std::vector<std::vector<Transform> > ghosts;
   std::vector<Transform> currentPose;

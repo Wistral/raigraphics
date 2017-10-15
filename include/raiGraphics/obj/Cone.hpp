@@ -5,13 +5,13 @@
 #ifndef RAI_CONE_HPP
 #define RAI_CONE_HPP
 
-#include "Object.hpp"
+#include "SingleBodyObject.hpp"
 #include <vector>
 
 namespace rai_graphics {
 namespace object {
 
-class Cone: public Object {
+class Cone: public SingleBodyObject {
 
  public:
   Cone(float r,float l);

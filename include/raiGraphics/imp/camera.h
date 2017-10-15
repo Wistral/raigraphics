@@ -9,7 +9,7 @@
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <raiGraphics/obj/Object.hpp>
+#include <raiGraphics/obj/SingleBodyObject.hpp>
 #include "vector3d.h"
 
 namespace rai_graphics {
@@ -21,12 +21,12 @@ struct Camera {
   void GetVP(glm::mat4& vp);
   void GetPos(glm::vec3& position);
   void Control(SDL_Event e);
-  void follow(rai_graphics::object::Object* obj, Eigen::Vector3d pos);
+  void follow(rai_graphics::object::SingleBodyObject* obj, Eigen::Vector3d pos);
 
  protected:
  private:
 
-  object::Object* toFollowObj = nullptr;
+  object::SingleBodyObject* toFollowObj = nullptr;
   glm::vec4 relativePos;
   glm::vec4 rotationPitcAxis;
   glm::mat4 vp_;
