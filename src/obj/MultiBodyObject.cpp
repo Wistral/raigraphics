@@ -1,12 +1,12 @@
 //
 // Created by jhwangbo on 01.05.17.
 //
-#include "raiGraphics/obj/SuperObject.hpp"
+#include "raiGraphics/obj/MultiBodyObject.hpp"
 
 namespace rai_graphics {
 namespace object {
 
-void SuperObject::draw(Camera *camera,  Light *light){
+void MultiBodyObject::draw(Camera *camera,  Light *light){
   drawSnapshot(camera, light, 1.0);
 //  turnOnGhost(true);
 //  for(auto& ghost : ghosts) {
@@ -16,13 +16,13 @@ void SuperObject::draw(Camera *camera,  Light *light){
 //  turnOnGhost(false);
 }
 
-void SuperObject::showGhosts(int maxGhosts, float transparency){
+void MultiBodyObject::showGhosts(int maxGhosts, float transparency){
   ghostTransparency = transparency;
   maxGhostN = maxGhosts;
   ghosts.reserve(maxGhosts);
 }
 
-void SuperObject::addGhostsNow() {
+void MultiBodyObject::addGhostsNow() {
   if (ghosts.size() < maxGhostN) {
     std::vector<Transform> ghost(objs.size());
     ghosts.push_back(ghost);
@@ -31,22 +31,22 @@ void SuperObject::addGhostsNow() {
   oldestGhost = (oldestGhost + 1) % maxGhostN;
 }
 
-void SuperObject::setTrans(std::vector<Transform>& trans){
+void MultiBodyObject::setTrans(std::vector<Transform>& trans){
   for(int i = 0; i < objs.size(); i++)
     objs[i]->setTempTransform(trans[i]);
 }
 
-void SuperObject::getTrans(std::vector<Transform>& trans){
+void MultiBodyObject::getTrans(std::vector<Transform>& trans){
   for(int i = 0; i < objs.size(); i++)
     objs[i]->getTransform(trans[i]);
 }
 
-void SuperObject::turnOnGhost(bool ghostOn) {
+void MultiBodyObject::turnOnGhost(bool ghostOn) {
   for(auto& ob: objs)
     ob->usingTempTransform(ghostOn);
 }
 
-void SuperObject::drawSnapshot(Camera *camera, Light *light, float transparency){
+void MultiBodyObject::drawSnapshot(Camera *camera, Light *light, float transparency){
   for(int i = 0; i < objs.size(); i++){
     objs[i]->setTransparency(transparency);
     shader->Bind();

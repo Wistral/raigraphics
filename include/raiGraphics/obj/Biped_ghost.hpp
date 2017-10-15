@@ -4,14 +4,14 @@
 
 
 #include <rai/common/TypeDef.hpp>
-#include "SuperObject.hpp"
+#include "MultiBodyObject.hpp"
 #include "Mesh.hpp"
 #include "Sphere.hpp"
 
 namespace rai_graphics {
 namespace object {
 
-class Biped_ghost : public SuperObject {
+class Biped_ghost : public MultiBodyObject {
 
  public:
 
@@ -20,9 +20,9 @@ class Biped_ghost : public SuperObject {
   void init();
   void destroy();
   void setPose(std::vector<RAI::HomogeneousTransform> &bodyPose);
-  Object* basePtr(){ return &base; }
-  Object* footlPtr(){ return &foot_l; }
-  Object* footrPtr(){ return &foot_r; }
+  SingleBodyObject* basePtr(){ return &base; }
+  SingleBodyObject* footlPtr(){ return &foot_l; }
+  SingleBodyObject* footrPtr(){ return &foot_r; }
 
 
  private:

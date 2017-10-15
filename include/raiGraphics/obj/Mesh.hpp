@@ -9,7 +9,7 @@
 #include "Eigen/Core"
 #include "raiGraphics/imp/transform.h"
 #include "raiGraphics/imp/Light.hpp"
-#include "Object.hpp"
+#include "SingleBodyObject.hpp"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -37,7 +37,7 @@ struct Vertex {
 };
 
 
-class Mesh : public Object {
+class Mesh : public SingleBodyObject {
  public:
   Mesh(const std::string& fileName, float scale=1.0f);
   Mesh(Vertex *vertices, unsigned int numVertices, unsigned int *indices, unsigned int numIndices);

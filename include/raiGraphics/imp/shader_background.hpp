@@ -17,7 +17,7 @@ class Shader_background : public Shader {
   void Bind();
   void UnBind();
   void Update(Camera *camera, Light *light, object::Background* obj);
-  void Update(Camera *camera, Light *light, object::Object* obj);
+  void Update(Camera *camera, Light *light, object::SingleBodyObject* obj);
 
  private:
   static const unsigned int NUM_SHADERS = 2;

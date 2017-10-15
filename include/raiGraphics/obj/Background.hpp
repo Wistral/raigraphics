@@ -5,7 +5,7 @@
 #ifndef RAI_BACKGROUND_HPP
 #define RAI_BACKGROUND_HPP
 
-#include "Object.hpp"
+#include "raiGraphics/obj/SingleBodyObject.hpp"
 #include <vector>
 #include "math.h"
 #include "rai/common/TypeDef.hpp"

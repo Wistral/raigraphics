@@ -154,7 +154,7 @@ void Camera::Control(SDL_Event e) {
   switchTime++;
 }
 
-void Camera::follow(object::Object *obj, Eigen::Vector3d pos) {
+void Camera::follow(object::SingleBodyObject *obj, Eigen::Vector3d pos) {
   mtx.lock();
   toFollowObj = obj;
   relativePos = glm::vec4(pos[0], pos[1], pos[2], 0);

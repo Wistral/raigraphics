@@ -6,13 +6,13 @@
 #define RAI_ANYMAL_HPP
 
 #include <rai/common/TypeDef.hpp>
-#include "SuperObject.hpp"
+#include "MultiBodyObject.hpp"
 #include "Mesh.hpp"
 
 namespace rai_graphics {
 namespace object {
 
-class ANYmal : public SuperObject {
+class ANYmal : public MultiBodyObject {
 
  public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -21,7 +21,7 @@ class ANYmal : public SuperObject {
   void init();
   void destroy();
   void setPose(std::vector<RAI::HomogeneousTransform> &bodyPose);
-  Object* basePtr(){ return &base; }
+  SingleBodyObject* basePtr(){ return &base; }
 
  private:
 

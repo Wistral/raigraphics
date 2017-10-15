@@ -5,13 +5,13 @@
 #ifndef RAI_CHECKERBOARD_HPP
 #define RAI_CHECKERBOARD_HPP
 
-#include "SuperObject.hpp"
+#include "MultiBodyObject.hpp"
 #include "CheckerBoard_half.hpp"
 
 namespace rai_graphics {
 namespace object {
 
-class CheckerBoard : public SuperObject {
+class CheckerBoard : public MultiBodyObject {
 
  public:
 

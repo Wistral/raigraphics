@@ -5,7 +5,7 @@
 #ifndef RAIGRAPHICSOPENGL_FRAME_HPP
 #define RAIGRAPHICSOPENGL_FRAME_HPP
 
-#include "SuperObject.hpp"
+#include "MultiBodyObject.hpp"
 #include "Arrow.hpp"
 #include "rai/common/math/RAI_math.hpp"
 #include <vector>
@@ -13,7 +13,7 @@
 namespace rai_graphics {
 namespace object {
 
-class CoordinateFrame : public SuperObject {
+class CoordinateFrame : public MultiBodyObject {
 
  public:
   explicit CoordinateFrame(Eigen::Vector3d origin = Eigen::Vector3d(0.0, 0.0, 0.0),

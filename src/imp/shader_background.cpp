@@ -38,7 +38,7 @@ void Shader_background::UnBind() {
   glUseProgramObjectARB(0);
 }
 
-void Shader_background::Update(Camera *camera, Light *light, object::Object* obj){
+void Shader_background::Update(Camera *camera, Light *light, object::SingleBodyObject* obj){
   LOG(FATAL) << "Shader_background only works with a background object"<<std::endl;
 }
 

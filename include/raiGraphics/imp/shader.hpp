@@ -9,7 +9,7 @@
 #include <GL/glew.h>
 #include "transform.h"
 #include "Light.hpp"
-#include "raiGraphics/obj/Object.hpp"
+#include "raiGraphics/obj/SingleBodyObject.hpp"
 #include "camera.h"
 #include <iostream>
 #include <fstream>
@@ -21,7 +21,7 @@ class Shader {
  public:
   virtual void Bind() = 0;
   virtual void UnBind() = 0;
-  virtual void Update(Camera *camera, Light *light, object::Object* obj) = 0;
+  virtual void Update(Camera *camera, Light *light, object::SingleBodyObject* obj) = 0;
 
  protected:
   std::string LoadShader(const std::string &fileName);
