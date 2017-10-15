@@ -11,10 +11,10 @@ using namespace rai_graphics;
 
 int main() {
 
-  // TODO: RAI_ROOT in every file should be changed
+  // TODO: RAI_ROOT in every file should be changed (now only task module left)
   RAI_graphics graphics(800, 600);
 
-//  TODO anymal will be removed from raiGraphics
+//  TODO anymal will be removed from raiGraphics?
 //  object::Mesh anymalBase(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT"))+"/res/anymal_base_1_2.dae", 0.001);
 //  anymalBase.setScale(5.0);
 //  anymalBase.setTransparency(1.0);

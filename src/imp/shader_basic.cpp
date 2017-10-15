@@ -6,8 +6,8 @@ namespace rai_graphics {
 
 Shader_basic::Shader_basic() {
   m_program = glCreateProgram();
-  m_shaders[0] = CreateShader(LoadShader(std::string(getenv("RAI_ROOT")) + "/graphics/res/" + shaderFileName() + ".vs"), GL_VERTEX_SHADER);
-  m_shaders[1] = CreateShader(LoadShader(std::string(getenv("RAI_ROOT")) + "/graphics/res/" + shaderFileName() + ".fs"), GL_FRAGMENT_SHADER);
+  m_shaders[0] = CreateShader(LoadShader(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/" + shaderFileName() + ".vs"), GL_VERTEX_SHADER);
+  m_shaders[1] = CreateShader(LoadShader(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/" + shaderFileName() + ".fs"), GL_FRAGMENT_SHADER);
 
   for (unsigned int i = 0; i < NUM_SHADERS; i++)
     glAttachShader(m_program, m_shaders[i]);
