@@ -3,9 +3,12 @@
 //
 
 #include "raiGraphics/RAI_graphics.hpp"
-#include <raiGraphics/obj/CoordinateFrame.hpp>
-#include <raiGraphics/obj/Mesh.hpp>
-#include <raiGraphics/obj/Sphere.hpp>
+#include "raiGraphics/obj/CoordinateFrame.hpp"
+//#include <raiGraphics/obj/Mesh.hpp>
+#include "raiGraphics/obj/Sphere.hpp"
+#include "raiGraphics/obj/Cone.hpp"
+#include "raiGraphics/obj/Box.hpp"
+#include "raiGraphics/obj/Cylinder.hpp"
 
 using namespace rai_graphics;
 
@@ -14,41 +17,37 @@ int main() {
   // TODO: RAI_ROOT in every file should be changed (now only task module left)
   RAI_graphics graphics(800, 600);
 
-//  TODO anymal will be removed from raiGraphics?
-//  object::Mesh anymalBase(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT"))+"/res/anymal_base_1_2.dae", 0.001);
-//  anymalBase.setScale(5.0);
-//  anymalBase.setTransparency(1.0);
+//  object::Mesh terrain(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT"))+"/res/roughterrain.obj");
 
-  object::Mesh terrain(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT"))+"/res/roughterrain.obj");
+  // graphical primitives
   object::Sphere whiteSphere(1);
-  object::Sphere redSphere(1);
-  object::Sphere greenSphere(1);
-  object::Sphere blueSphere(1);
+  object::Cone redCone(1, 2);
+  object::Box greenBox(2, 2, 2);
+  object::Cylinder blueCylinder(1, 2);
   object::Background background("sky");
   object::CoordinateFrame inertiaFrame;
 
   whiteSphere.setColor({1.0, 1.0, 1.0});
-  redSphere.setColor({1.0, 0.0, 0.0});
-  greenSphere.setColor({0.0, 1.0, 0.0});
-  blueSphere.setColor({0.0, 0.0, 1.0});
-  terrain.setColor({0.7, 0.2, 0.2});
+  redCone.setColor({1.0, 0.0, 0.0});
+  greenBox.setColor({0.0, 1.0, 0.0});
+  blueCylinder.setColor({0.0, 0.0, 1.0});
+//  terrain.setColor({0.7, 0.2, 0.2});
 
   Eigen::Vector3d whiteSpherePosition; whiteSpherePosition << 0, 0, 0;
-  Eigen::Vector3d redSpherePosition; redSpherePosition << 5, 0, 0;
-  Eigen::Vector3d blueSpherePosition; blueSpherePosition << 0, 5, 0;
-  Eigen::Vector3d greenSpherePosition; greenSpherePosition << 0, 0, 5;
+  Eigen::Vector3d redConePosition; redConePosition << 5, 0, -1;
+  Eigen::Vector3d greenBoxPosition; greenBoxPosition << 0, 5, 0;
+  Eigen::Vector3d blueCylinderPosition; blueCylinderPosition << 0, 0, 5;
 
-//  whiteSphere.setPos(whiteSpherePosition);
-  redSphere.setPos(redSpherePosition);
-  greenSphere.setPos(blueSpherePosition);
-  blueSphere.setPos(greenSpherePosition);
+  whiteSphere.setPos(whiteSpherePosition);
+  redCone.setPos(redConePosition);
+  blueCylinder.setPos(blueCylinderPosition);
+  greenBox.setPos(greenBoxPosition);
+
   graphics.addBackground(&background);
-//  graphics.addObject(&terrain);
-//  graphics.addObject(&anymalBase);
   graphics.addObject(&whiteSphere);
-  graphics.addObject(&redSphere);
-  graphics.addObject(&greenSphere);
-  graphics.addObject(&blueSphere);
+  graphics.addObject(&redCone);
+  graphics.addObject(&greenBox);
+  graphics.addObject(&blueCylinder);
   graphics.addSuperObject(&inertiaFrame);
 
   RAI_graphics::LightProp lprop;

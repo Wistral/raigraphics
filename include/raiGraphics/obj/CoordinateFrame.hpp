@@ -27,7 +27,7 @@ class CoordinateFrame : public MultiBodyObject {
   void setPose(Eigen::Vector3d &position, Eigen::Matrix3d &rotationMat);
   void setPos(Eigen::Vector3d &position);
   void setOri(Eigen::Vector4d &quat);
-  void setOri(Eigen::Matrix3d &quat);
+  void setOri(Eigen::Matrix3d &rotationMat);
 
   virtual ~CoordinateFrame();
   void init();
@@ -36,10 +36,6 @@ class CoordinateFrame : public MultiBodyObject {
  private:
   Eigen::Vector3d origin_;
   Eigen::Vector4d rotation_;
-
-//  Eigen::Matrix3d xAxisArrowRotMat_;
-//  Eigen::Matrix3d yAxisArrowRotMat_;
-//  Eigen::Matrix3d zAxisArrowRotMat_;
 
   Eigen::Vector4d xAxisArrowRot_;
   Eigen::Vector4d yAxisArrowRot_;
