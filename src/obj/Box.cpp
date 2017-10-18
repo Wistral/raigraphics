@@ -12,104 +12,69 @@ rai_graphics::object::Box::Box(float xLength, float yLength, float zLength) {
 
   // up
   positions.push_back(glm::vec3(xHalfLength, yHalfLength, zHalfLength));
-  normals.push_back(glm::vec3(0,0,1));
+  normals.push_back(glm::vec3(xHalfLength,yHalfLength,zHalfLength));
   positions.push_back(glm::vec3(-xHalfLength, yHalfLength, zHalfLength));
-  normals.push_back(glm::vec3(0,0,1));
+  normals.push_back(glm::vec3(-xHalfLength, yHalfLength, zHalfLength));
   positions.push_back(glm::vec3(-xHalfLength, -yHalfLength, zHalfLength));
-  normals.push_back(glm::vec3(0,0,1));
+  normals.push_back(glm::vec3(-xHalfLength, -yHalfLength, zHalfLength));
   positions.push_back(glm::vec3(xHalfLength, -yHalfLength, zHalfLength));
-  normals.push_back(glm::vec3(0,0,1));
-
-  indices.push_back(0);
-  indices.push_back(1);
-  indices.push_back(2);
-  indices.push_back(0);
-  indices.push_back(2);
-  indices.push_back(3);
+  normals.push_back(glm::vec3(xHalfLength, -yHalfLength, zHalfLength));
 
   // down
   positions.push_back(glm::vec3(xHalfLength, yHalfLength, -zHalfLength));
-  normals.push_back(glm::vec3(0,0,-1));
+  normals.push_back(glm::vec3(xHalfLength, yHalfLength, -zHalfLength));
   positions.push_back(glm::vec3(-xHalfLength, yHalfLength, -zHalfLength));
-  normals.push_back(glm::vec3(0,0,-1));
+  normals.push_back(glm::vec3(-xHalfLength, yHalfLength, -zHalfLength));
   positions.push_back(glm::vec3(-xHalfLength, -yHalfLength, -zHalfLength));
-  normals.push_back(glm::vec3(0,0,-1));
+  normals.push_back(glm::vec3(-xHalfLength, -yHalfLength, -zHalfLength));
   positions.push_back(glm::vec3(xHalfLength, -yHalfLength, -zHalfLength));
-  normals.push_back(glm::vec3(0,0,-1));
+  normals.push_back(glm::vec3(xHalfLength, -yHalfLength, -zHalfLength));
 
+  // up
+  indices.push_back(0);
+  indices.push_back(1);
+  indices.push_back(2);
+  indices.push_back(2);
+  indices.push_back(3);
+  indices.push_back(0);
+
+  // down
   indices.push_back(4);
-  indices.push_back(5);
-  indices.push_back(6);
-  indices.push_back(4);
-  indices.push_back(6);
   indices.push_back(7);
-
-  // left
-  positions.push_back(glm::vec3(xHalfLength, -yHalfLength, zHalfLength));
-  normals.push_back(glm::vec3(0,-1,0));
-  positions.push_back(glm::vec3(-xHalfLength, -yHalfLength, zHalfLength));
-  normals.push_back(glm::vec3(0,-1,0));
-  positions.push_back(glm::vec3(-xHalfLength, -yHalfLength, -zHalfLength));
-  normals.push_back(glm::vec3(0,-1,0));
-  positions.push_back(glm::vec3(xHalfLength, -yHalfLength, -zHalfLength));
-  normals.push_back(glm::vec3(0,-1,0));
-
-  indices.push_back(8);
-  indices.push_back(9);
-  indices.push_back(10);
-  indices.push_back(8);
-  indices.push_back(10);
-  indices.push_back(11);
-
-  // right
-  positions.push_back(glm::vec3(xHalfLength, yHalfLength, zHalfLength));
-  normals.push_back(glm::vec3(0,1,0));
-  positions.push_back(glm::vec3(-xHalfLength, yHalfLength, zHalfLength));
-  normals.push_back(glm::vec3(0,1,0));
-  positions.push_back(glm::vec3(-xHalfLength, yHalfLength, -zHalfLength));
-  normals.push_back(glm::vec3(0,1,0));
-  positions.push_back(glm::vec3(xHalfLength, yHalfLength, -zHalfLength));
-  normals.push_back(glm::vec3(0,1,0));
-
-  indices.push_back(12);
-  indices.push_back(13);
-  indices.push_back(14);
-  indices.push_back(12);
-  indices.push_back(14);
-  indices.push_back(15);
+  indices.push_back(6);
+  indices.push_back(4);
+  indices.push_back(6);
+  indices.push_back(5);
 
   // front
-  positions.push_back(glm::vec3(xHalfLength, yHalfLength, zHalfLength));
-  normals.push_back(glm::vec3(1,0,0));
-  positions.push_back(glm::vec3(xHalfLength, -yHalfLength, zHalfLength));
-  normals.push_back(glm::vec3(1,0,0));
-  positions.push_back(glm::vec3(xHalfLength, -yHalfLength, -zHalfLength));
-  normals.push_back(glm::vec3(1,0,0));
-  positions.push_back(glm::vec3(xHalfLength, yHalfLength, -zHalfLength));
-  normals.push_back(glm::vec3(1,0,0));
-
-  indices.push_back(16);
-  indices.push_back(17);
-  indices.push_back(18);
-  indices.push_back(16);
-  indices.push_back(18);
-  indices.push_back(19);
+  indices.push_back(0);
+  indices.push_back(3);
+  indices.push_back(4);
+  indices.push_back(3);
+  indices.push_back(7);
+  indices.push_back(4);
 
   // back
-  positions.push_back(glm::vec3(-xHalfLength, yHalfLength, zHalfLength));
-  normals.push_back(glm::vec3(-1,0,0));
-  positions.push_back(glm::vec3(-xHalfLength, -yHalfLength, zHalfLength));
-  normals.push_back(glm::vec3(-1,0,0));
-  positions.push_back(glm::vec3(-xHalfLength, -yHalfLength, -zHalfLength));
-  normals.push_back(glm::vec3(-1,0,0));
-  positions.push_back(glm::vec3(-xHalfLength, yHalfLength, -zHalfLength));
-  normals.push_back(glm::vec3(-1,0,0));
+  indices.push_back(2);
+  indices.push_back(5);
+  indices.push_back(6);
+  indices.push_back(1);
+  indices.push_back(5);
+  indices.push_back(2);
 
-  indices.push_back(20);
-  indices.push_back(21);
-  indices.push_back(22);
-  indices.push_back(20);
-  indices.push_back(22);
-  indices.push_back(23);
+  // right
+  indices.push_back(0);
+  indices.push_back(5);
+  indices.push_back(1);
+  indices.push_back(0);
+  indices.push_back(4);
+  indices.push_back(5);
 
+  // left
+  indices.push_back(6);
+  indices.push_back(7);
+  indices.push_back(3);
+  indices.push_back(2);
+  indices.push_back(6);
+  indices.push_back(3);
 }
