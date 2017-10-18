@@ -144,6 +144,14 @@ void SingleBodyObject::getShiness(float& shine) {
   shine = shininess;
 }
 
+const float *SingleBodyObject::getVertexPositions() const {
+  return &positions[0].x;
+}
+
+unsigned long SingleBodyObject::getVertexNumber() {
+  return positions.size();
+}
+
 void SingleBodyObject::registerToGPU() {
   m_numIndices = indices.size();
 

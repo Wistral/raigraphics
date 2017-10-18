@@ -36,48 +36,40 @@ class SingleBodyObject: public Object {
   virtual void destroy();
 
   void setPose(Eigen::Vector3d &position, Eigen::Matrix3d &rotationMat);
-
   void setPose(Eigen::Vector3d &position, Eigen::Vector4d &quat);
-
-  void setPos(Eigen::Vector3d &position);
-
-  void setOri(Eigen::Vector4d &quat);
-
-  void setOri(Eigen::Matrix3d &rotationMat);
-
   void setPose(Eigen::Matrix4d &ht);
 
+  void setPos(Eigen::Vector3d &position);
+  void setOri(Eigen::Vector4d &quat);
+  void setOri(Eigen::Matrix3d &rotationMat);
+
   void setTransform(Transform& trans);
-
   void setLightProp(std::vector<float>& amb, std::vector<float>& diff, std::vector<float>& spec, float shine);
-
   void setColor(std::vector<float> colorL);
-
   void setTransparency(float transparency);
 
   float getTransparency();
 
-  void setVisibility(bool visibility) {visible = visibility;}
-
-  void setScale(double scale);
-
-  void setScale(double scale1,double scale2,double scale3);
-
   glm::mat4 getScale();
-
-  bool isVisible() {return visible;}
-
   void getTransform(Transform& trans);
-
-  void setTempTransform(Transform& trans);
-
-  void usingTempTransform(bool utt) {tempTransformOn = utt;};
 
   void getColor(std::vector<float>& clr);
   void getLightPropAmb(std::vector<float>& amb);
   void getLightPropDiff(std::vector<float>& diff);
   void getLightPropSpec(std::vector<float>& spec);
   void getShiness(float& shine);
+  const float *getVertexPositions() const;
+  unsigned long getVertexNumber();
+  bool isVisible() {return visible;}
+
+  unsigned int getM_numIndices() const;
+  void setVisibility(bool visibility) {visible = visibility;}
+  void setScale(double scale);
+  void setScale(double scale1,double scale2,double scale3);
+
+  void setTempTransform(Transform& trans);
+
+  void usingTempTransform(bool utt) {tempTransformOn = utt;};
 
  protected:
   void registerToGPU();
