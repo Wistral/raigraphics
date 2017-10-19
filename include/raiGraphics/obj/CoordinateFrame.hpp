@@ -17,16 +17,18 @@ class CoordinateFrame : public MultiBodyObject {
 
  public:
   explicit CoordinateFrame(Eigen::Vector3d origin = Eigen::Vector3d(0.0, 0.0, 0.0),
-        float arrowBodyLength = 2.0,
-        float arrowHeadLength = 1.0,
-        float arrowBodyRadius = 0.25,
-        float arrowHeadRadius = 0.5,
-        bool colorYn = true);
+                           float arrowBodyLength = 2.0,
+                           float arrowHeadLength = 1.0,
+                           float arrowBodyRadius = 0.25,
+                           float arrowHeadRadius = 0.5,
+                           bool colorYn = true);
 
   void setPose(Eigen::Vector3d &position, Eigen::Vector4d &quat);
+  void setPose(Eigen::Vector3d &position, Eigen::Quaterniond &quat);
   void setPose(Eigen::Vector3d &position, Eigen::Matrix3d &rotationMat);
   void setPos(Eigen::Vector3d &position);
   void setOri(Eigen::Vector4d &quat);
+  void setOri(Eigen::Quaterniond &quat);
   void setOri(Eigen::Matrix3d &rotationMat);
 
   virtual ~CoordinateFrame();

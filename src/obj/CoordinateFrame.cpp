@@ -8,11 +8,11 @@ namespace rai_graphics {
 namespace object {
 
 CoordinateFrame::CoordinateFrame(Eigen::Vector3d origin,
-             float arrowBodyLength,
-             float arrowHeadLength,
-             float arrowBodyRadius,
-             float arrowHeadRadius,
-             bool colorYn)
+                                 float arrowBodyLength,
+                                 float arrowHeadLength,
+                                 float arrowBodyRadius,
+                                 float arrowHeadRadius,
+                                 bool colorYn)
     : origin_(origin),
       arrowBodyLength_(arrowBodyLength),
       arrowHeadLength_(arrowHeadLength),
@@ -98,6 +98,7 @@ CoordinateFrame::~CoordinateFrame() {
 }
 
 void CoordinateFrame::setOri(Eigen::Vector4d &quat) {
+  // TODO
 //  xAxisArrow_.setPos(quat * xAxisArrowRot_);
 //  yAxisArrow_.setPos(quat * yAxisArrowRot_);
 //  zAxisArrow_.setPos(quat * zAxisArrowRot_);
@@ -114,6 +115,13 @@ void CoordinateFrame::setOri(Eigen::Matrix3d &rotationMat) {
 void CoordinateFrame::setPose(Eigen::Vector3d &position, Eigen::Vector4d &quat) {
   setPos(position);
   setOri(quat);
+}
+void CoordinateFrame::setPose(Eigen::Vector3d &position, Eigen::Quaterniond &quat) {
+  setPos(position);
+  setOri(quat);
+}
+void CoordinateFrame::setOri(Eigen::Quaterniond &quat) {
+  // TODO
 }
 void CoordinateFrame::setPose(Eigen::Vector3d &position, Eigen::Matrix3d &rotationMat) {
   setPos(position);
