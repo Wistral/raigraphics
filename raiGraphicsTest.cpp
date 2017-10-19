@@ -17,8 +17,6 @@ int main() {
   // TODO: RAI_ROOT in every file should be changed (now only task module left)
   RAI_graphics graphics(800, 600);
 
-//  object::Mesh terrain(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT"))+"/res/roughterrain.obj");
-
   // graphical primitives
   object::Sphere whiteSphere(1);
   object::Cone redCone(1, 2);
@@ -27,21 +25,33 @@ int main() {
   object::Background background("sky");
   object::CoordinateFrame inertiaFrame;
 
+  Eigen::Vector3d bodyFrameOrigin1(10.0, 0.0, 0.0);
+  Eigen::Quaterniond bodyFrameQuat1(0.9239, 0.3827, 0, 0);
+  object::CoordinateFrame bodyFrame1(bodyFrameOrigin1, bodyFrameQuat1);
+  Eigen::Vector3d bodyFrameOrigin2(0.0, 10.0, 0.0);
+  Eigen::Quaterniond bodyFrameQuat2(0.9239, 0, 0.3827, 0);
+  object::CoordinateFrame bodyFrame2(bodyFrameOrigin2, bodyFrameQuat2);
+  Eigen::Vector3d bodyFrameOrigin3(0.0, 0.0, 10.0);
+  Eigen::Quaterniond bodyFrameQuat3(0.9239, 0, 0, 0.3827);
+  object::CoordinateFrame bodyFrame3(bodyFrameOrigin3, bodyFrameQuat3);
+
   whiteSphere.setColor({1.0, 1.0, 1.0});
   redCone.setColor({1.0, 0.0, 0.0});
   greenBox.setColor({0.0, 1.0, 0.0});
   blueCylinder.setColor({0.0, 0.0, 1.0});
-//  terrain.setColor({0.7, 0.2, 0.2});
 
   Eigen::Vector3d whiteSpherePosition; whiteSpherePosition << 0, 0, 0;
-  Eigen::Vector3d redConePosition; redConePosition << 5, 0, -1;
-  Eigen::Vector3d greenBoxPosition; greenBoxPosition << 0, 5, 0;
-  Eigen::Vector3d blueCylinderPosition; blueCylinderPosition << 0, 0, 5;
+  Eigen::Vector3d redConePosition; redConePosition << 10, 0, 0;
+  Eigen::Quaterniond redConeQuaternion(0.9239, 0.3827, 0, 0);
+  Eigen::Vector3d greenBoxPosition; greenBoxPosition << 0, 10, 0;
+  Eigen::Quaterniond greenBoxQuaternion(0.9239, 0, 0.3827, 0);
+  Eigen::Vector3d blueCylinderPosition; blueCylinderPosition << 0, 0, 10;
+  Eigen::Quaterniond blueCylinderQuaternion(0.9239, 0, 0, 0.3827);
 
   whiteSphere.setPos(whiteSpherePosition);
-  redCone.setPos(redConePosition);
-  blueCylinder.setPos(blueCylinderPosition);
-  greenBox.setPos(greenBoxPosition);
+  redCone.setPose(redConePosition, redConeQuaternion);
+  greenBox.setPose(greenBoxPosition, greenBoxQuaternion);
+  blueCylinder.setPose(blueCylinderPosition, blueCylinderQuaternion);
 
   graphics.addBackground(&background);
   graphics.addObject(&whiteSphere);
@@ -49,10 +59,12 @@ int main() {
   graphics.addObject(&greenBox);
   graphics.addObject(&blueCylinder);
   graphics.addSuperObject(&inertiaFrame);
+  graphics.addSuperObject(&bodyFrame1);
+  graphics.addSuperObject(&bodyFrame2);
+  graphics.addSuperObject(&bodyFrame3);
 
   RAI_graphics::LightProp lprop;
   RAI_graphics::CameraProp cprop;
-//  cprop.toFollow = &anymalBase;
   cprop.toFollow = &whiteSphere;
   Eigen::Vector3d relPos; relPos << 20, 0, 0;
   cprop.relativeDist = relPos;

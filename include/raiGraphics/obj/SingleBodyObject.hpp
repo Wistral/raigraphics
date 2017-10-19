@@ -35,15 +35,16 @@ class SingleBodyObject: public Object {
 
   virtual void destroy();
 
-  void setPose(Eigen::Vector3d &position, Eigen::Matrix3d &rotationMat);
-  void setPose(Eigen::Vector3d &position, Eigen::Vector4d &quat);
+  void setPose(Eigen::Vector3d &position, Eigen::Matrix3d &quaternionAsVector);
+  void setPose(Eigen::Vector3d &position, Eigen::Vector4d &quaternionAsVector);
   void setPose(Eigen::Vector3d &position, Eigen::Quaterniond &quat);
   void setPose(Eigen::Matrix4d &ht);
 
-  void setPos(Eigen::Vector3d &position);
+  void setOri(Eigen::Vector4d &quaternionAsVector);
+  void setOri(Eigen::Matrix3d &quaternionAsVector);
   void setOri(Eigen::Quaterniond &quat);
-  void setOri(Eigen::Vector4d &quat);
-  void setOri(Eigen::Matrix3d &rotationMat);
+
+  void setPos(Eigen::Vector3d &position);
 
   void setTransform(Transform& trans);
   void setLightProp(std::vector<float>& amb, std::vector<float>& diff, std::vector<float>& spec, float shine);

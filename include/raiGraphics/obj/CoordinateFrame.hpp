@@ -16,20 +16,26 @@ namespace object {
 class CoordinateFrame : public MultiBodyObject {
 
  public:
-  explicit CoordinateFrame(Eigen::Vector3d origin = Eigen::Vector3d(0.0, 0.0, 0.0),
+  explicit CoordinateFrame(Eigen::Vector3d origin = {0.0, 0.0, 0.0},
                            float arrowBodyLength = 2.0,
                            float arrowHeadLength = 1.0,
                            float arrowBodyRadius = 0.25,
-                           float arrowHeadRadius = 0.5,
-                           bool colorYn = true);
+                           float arrowHeadRadius = 0.5);
 
-  void setPose(Eigen::Vector3d &position, Eigen::Vector4d &quat);
-  void setPose(Eigen::Vector3d &position, Eigen::Quaterniond &quat);
-  void setPose(Eigen::Vector3d &position, Eigen::Matrix3d &rotationMat);
+  CoordinateFrame(Eigen::Vector3d &origin,
+                  Eigen::Quaterniond &rotation,
+                  float arrowBodyLength = 2.0,
+                  float arrowHeadLength = 1.0,
+                  float arrowBodyRadius = 0.25,
+                  float arrowHeadRadius = 0.5);
+
+  void setPose(Eigen::Vector3d &position, Eigen::Vector4d &quaternionAsVectorWB);
+  void setPose(Eigen::Vector3d &position, Eigen::Matrix3d &quaternionAsVectorWB);
+  void setPose(Eigen::Vector3d &position, Eigen::Quaterniond &quaternionWB);
   void setPos(Eigen::Vector3d &position);
-  void setOri(Eigen::Vector4d &quat);
-  void setOri(Eigen::Quaterniond &quat);
-  void setOri(Eigen::Matrix3d &rotationMat);
+  void setOri(Eigen::Vector4d &rotationMatrixWB);
+  void setOri(Eigen::Matrix3d &rotationMatrixWB);
+  void setOri(Eigen::Quaterniond &quaternionWB);
 
   virtual ~CoordinateFrame();
   void init();
@@ -37,11 +43,17 @@ class CoordinateFrame : public MultiBodyObject {
 
  private:
   Eigen::Vector3d origin_;
-  Eigen::Vector4d rotation_;
+  Eigen::Quaterniond rotation_;
 
-  Eigen::Vector4d xAxisArrowRot_;
-  Eigen::Vector4d yAxisArrowRot_;
-  Eigen::Vector4d zAxisArrowRot_;
+  // arrow axis quternion w.r.t. world frame
+  Eigen::Quaterniond WxAxisArrowQuaternion_;
+  Eigen::Quaterniond WyAxisArrowQuaternion_;
+  Eigen::Quaterniond WzAxisArrowQuaternion_;
+
+  // arrow axis quaternion w.r.t. body frame
+  const Eigen::Quaterniond BxAxisArrowQuaternion_ = {1, 0, 0, 0};
+  const Eigen::Quaterniond ByAxisArrowQuaternion_ = {1/sqrt(2), 0, 0, 1/sqrt(2)};
+  const Eigen::Quaterniond BzAxisArrowQuaternion_ = {1/sqrt(2), 0, -1/sqrt(2), 0};
 
   object::Arrow xAxisArrow_;
   object::Arrow yAxisArrow_;

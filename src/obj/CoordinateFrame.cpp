@@ -11,9 +11,9 @@ CoordinateFrame::CoordinateFrame(Eigen::Vector3d origin,
                                  float arrowBodyLength,
                                  float arrowHeadLength,
                                  float arrowBodyRadius,
-                                 float arrowHeadRadius,
-                                 bool colorYn)
+                                 float arrowHeadRadius)
     : origin_(origin),
+      rotation_({1, 0, 0, 0}),
       arrowBodyLength_(arrowBodyLength),
       arrowHeadLength_(arrowHeadLength),
       arrowBodyRadius_(arrowBodyRadius),
@@ -22,51 +22,59 @@ CoordinateFrame::CoordinateFrame(Eigen::Vector3d origin,
       yAxisArrow_(arrowBodyRadius, arrowHeadRadius, arrowBodyLength, arrowHeadLength),
       zAxisArrow_(arrowBodyRadius, arrowHeadRadius, arrowBodyLength, arrowHeadLength) {
 
-  Eigen::Matrix3d xAxisArrowRotMat;
-  xAxisArrowRotMat <<   1,  0,  0,
-      0,  1,  0,
-      0,  0,  1;
+  WxAxisArrowQuaternion_ = rotation_ * BxAxisArrowQuaternion_;
+  WyAxisArrowQuaternion_ = rotation_ * ByAxisArrowQuaternion_;
+  WzAxisArrowQuaternion_ = rotation_ * BzAxisArrowQuaternion_;
 
-  Eigen::Matrix3d yAxisArrowRotMat;
-  yAxisArrowRotMat <<   0, -1,  0,
-      1,  0,  0,
-      0,  0,  1;
+  xAxisArrow_.setOri(WxAxisArrowQuaternion_);
+  yAxisArrow_.setOri(WyAxisArrowQuaternion_);
+  zAxisArrow_.setOri(WzAxisArrowQuaternion_);
 
-  Eigen::Matrix3d zAxisArrowRotMat;
-  zAxisArrowRotMat <<   0,  0,  -1,
-      0,  1,  0,
-      1,  0,  0;
+  xAxisArrow_.setPos(origin);
+  yAxisArrow_.setPos(origin);
+  zAxisArrow_.setPos(origin);
 
-  Eigen::Quaternion<double> xAxisArrowQuat = Eigen::Quaternion<double>(xAxisArrowRotMat);
-  Eigen::Quaternion<double> yAxisArrowQuat = Eigen::Quaternion<double>(yAxisArrowRotMat);
-  Eigen::Quaternion<double> zAxisArrowQuat = Eigen::Quaternion<double>(zAxisArrowRotMat);
+  xAxisArrow_.setColor({1.0, 0.0, 0.0});   // X = R
+  yAxisArrow_.setColor({0.0, 1.0, 0.0});   // Y = G
+  zAxisArrow_.setColor({0.0, 0.0, 1.0});   // Z = B
 
-  if (colorYn) {
-    xAxisArrow_.setColor({1.0, 0.0, 0.0});   // X = R
-    yAxisArrow_.setColor({0.0, 1.0, 0.0});   // Y = G
-    zAxisArrow_.setColor({0.0, 0.0, 1.0});   // Z = B
-  }
+  objs.push_back(&xAxisArrow_);
+  objs.push_back(&yAxisArrow_);
+  objs.push_back(&zAxisArrow_);
 
-  xAxisArrowRot_ << xAxisArrowQuat.w(),
-      xAxisArrowQuat.x(),
-      xAxisArrowQuat.y(),
-      xAxisArrowQuat.z();
-  yAxisArrowRot_ << yAxisArrowQuat.w(),
-      yAxisArrowQuat.x(),
-      yAxisArrowQuat.y(),
-      yAxisArrowQuat.z();
-  zAxisArrowRot_ << xAxisArrowQuat.w(),
-      zAxisArrowQuat.x(),
-      zAxisArrowQuat.y(),
-      zAxisArrowQuat.z();
+}
 
-  xAxisArrow_.setOri(xAxisArrowRot_);
-  yAxisArrow_.setOri(yAxisArrowRot_);
-  zAxisArrow_.setOri(zAxisArrowRot_);
+CoordinateFrame::CoordinateFrame(Eigen::Vector3d &origin,
+                                 Eigen::Quaterniond &rotation,
+                                 float arrowBodyLength,
+                                 float arrowHeadLength,
+                                 float arrowBodyRadius,
+                                 float arrowHeadRadius)
+    : origin_(origin),
+      rotation_(rotation),
+      arrowBodyLength_(arrowBodyLength),
+      arrowHeadLength_(arrowHeadLength),
+      arrowBodyRadius_(arrowBodyRadius),
+      arrowHeadRadius_(arrowHeadRadius),
+      xAxisArrow_(arrowBodyRadius, arrowHeadRadius, arrowBodyLength, arrowHeadLength),
+      yAxisArrow_(arrowBodyRadius, arrowHeadRadius, arrowBodyLength, arrowHeadLength),
+      zAxisArrow_(arrowBodyRadius, arrowHeadRadius, arrowBodyLength, arrowHeadLength) {
 
-  xAxisArrow_.setPos(origin_);
-  yAxisArrow_.setPos(origin_);
-  zAxisArrow_.setPos(origin_);
+  WxAxisArrowQuaternion_ = rotation * BxAxisArrowQuaternion_;
+  WyAxisArrowQuaternion_ = rotation * ByAxisArrowQuaternion_;
+  WzAxisArrowQuaternion_ = rotation * BzAxisArrowQuaternion_;
+
+  xAxisArrow_.setOri(WxAxisArrowQuaternion_);
+  yAxisArrow_.setOri(WyAxisArrowQuaternion_);
+  zAxisArrow_.setOri(WzAxisArrowQuaternion_);
+
+  xAxisArrow_.setPos(origin);
+  yAxisArrow_.setPos(origin);
+  zAxisArrow_.setPos(origin);
+
+  xAxisArrow_.setColor({1.0, 0.0, 0.0});   // X = R
+  yAxisArrow_.setColor({0.0, 1.0, 0.0});   // Y = G
+  zAxisArrow_.setColor({0.0, 0.0, 1.0});   // Z = B
 
   objs.push_back(&xAxisArrow_);
   objs.push_back(&yAxisArrow_);
@@ -97,35 +105,34 @@ void CoordinateFrame::destroy() {
 CoordinateFrame::~CoordinateFrame() {
 }
 
-void CoordinateFrame::setOri(Eigen::Vector4d &quat) {
-  // TODO
-//  xAxisArrow_.setPos(quat * xAxisArrowRot_);
-//  yAxisArrow_.setPos(quat * yAxisArrowRot_);
-//  zAxisArrow_.setPos(quat * zAxisArrowRot_);
+void CoordinateFrame::setOri(Eigen::Quaterniond &quaternionWB) {
+  rotation_ = quaternionWB;
+  WxAxisArrowQuaternion_ = quaternionWB * BxAxisArrowQuaternion_;
+  WyAxisArrowQuaternion_ = quaternionWB * ByAxisArrowQuaternion_;
+  WzAxisArrowQuaternion_ = quaternionWB * BzAxisArrowQuaternion_;
 }
-void CoordinateFrame::setOri(Eigen::Matrix3d &rotationMat) {
-  Eigen::Quaternion<double> quatFromRotMat = Eigen::Quaternion<double>(rotationMat);
-  Eigen::Vector4d quat;
-  quat << quatFromRotMat.w(),
-      quatFromRotMat.x(),
-      quatFromRotMat.y(),
-      quatFromRotMat.z();
-  setOri(quat);
+void CoordinateFrame::setOri(Eigen::Vector4d &quaternionAsVectorWB) {
+  Eigen::Quaterniond quaternion(quaternionAsVectorWB(0),
+                                quaternionAsVectorWB(1),
+                                quaternionAsVectorWB(2),
+                                quaternionAsVectorWB(3));
+  setOri(quaternion);
 }
-void CoordinateFrame::setPose(Eigen::Vector3d &position, Eigen::Vector4d &quat) {
+void CoordinateFrame::setOri(Eigen::Matrix3d &rotationMatrixWB) {
+  Eigen::Quaterniond quaternion(rotationMatrixWB);
+  setOri(quaternion);
+}
+void CoordinateFrame::setPose(Eigen::Vector3d &position, Eigen::Matrix3d &rotationMatrixWB) {
   setPos(position);
-  setOri(quat);
+  setOri(rotationMatrixWB);
 }
-void CoordinateFrame::setPose(Eigen::Vector3d &position, Eigen::Quaterniond &quat) {
+void CoordinateFrame::setPose(Eigen::Vector3d &position, Eigen::Vector4d &quaternionAsVectorWB) {
   setPos(position);
-  setOri(quat);
+  setOri(quaternionAsVectorWB);
 }
-void CoordinateFrame::setOri(Eigen::Quaterniond &quat) {
-  // TODO
-}
-void CoordinateFrame::setPose(Eigen::Vector3d &position, Eigen::Matrix3d &rotationMat) {
+void CoordinateFrame::setPose(Eigen::Vector3d &position, Eigen::Quaterniond &quaternionWB) {
   setPos(position);
-  setOri(rotationMat);
+  setOri(quaternionWB);
 }
 
 } // object

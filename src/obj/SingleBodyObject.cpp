@@ -32,9 +32,26 @@ void SingleBodyObject::setPose(Eigen::Vector3d &position, Eigen::Matrix3d &rotat
   transform.SetPos(pos);
 }
 
-void SingleBodyObject::setPose(Eigen::Vector3d &position, Eigen::Vector4d &quat) {
+void SingleBodyObject::setPose(Eigen::Vector3d &position, Eigen::Vector4d &quaternionAsVector) {
   std::lock_guard<std::mutex> guard(mtx);
-  glm::quat quatglm = glm::quat(quat(0), quat(1), quat(2), quat(3));
+  glm::quat quatglm = glm::quat(quaternionAsVector(0),
+                                quaternionAsVector(1),
+                                quaternionAsVector(2),
+                                quaternionAsVector(3));
+  glm::vec3 pos(position(0), position(1), position(2));
+  transform.SetRot(quatglm);
+  transform.SetPos(pos);
+}
+
+void SingleBodyObject::setPose(Eigen::Matrix4d &ht) {
+  Eigen::Vector3d pos = ht.topRightCorner(3, 1);
+  Eigen::Matrix3d rot = ht.topLeftCorner(3, 3);
+  setPose(pos, rot);
+}
+
+void SingleBodyObject::setPose(Eigen::Vector3d &position, Eigen::Quaterniond &quat) {
+  std::lock_guard<std::mutex> guard(mtx);
+  glm::quat quatglm = glm::quat(quat.w(), quat.x(), quat.y(), quat.z());
   glm::vec3 pos(position(0), position(1), position(2));
   transform.SetRot(quatglm);
   transform.SetPos(pos);
@@ -46,17 +63,12 @@ void SingleBodyObject::setPos(Eigen::Vector3d &position) {
   transform.SetPos(pos);
 }
 
-void SingleBodyObject::setPose(Eigen::Vector3d &position, Eigen::Quaterniond &quat) {
+void SingleBodyObject::setOri(Eigen::Vector4d &quaternionAsVector) {
   std::lock_guard<std::mutex> guard(mtx);
-  glm::quat quatglm = glm::quat(quat.w(), quat.x(), quat.y(), quat.z());
-  glm::vec3 pos(position(0), position(1), position(2));
-  transform.SetRot(quatglm);
-  transform.SetPos(pos);
-}
-
-void SingleBodyObject::setOri(Eigen::Vector4d &quat) {
-  std::lock_guard<std::mutex> guard(mtx);
-  glm::quat quatglm = glm::quat(quat(0), quat(1), quat(2), quat(3));
+  glm::quat quatglm = glm::quat(quaternionAsVector(0),
+                                quaternionAsVector(1),
+                                quaternionAsVector(2),
+                                quaternionAsVector(3));
   transform.SetRot(quatglm);
 }
 
@@ -71,12 +83,6 @@ void SingleBodyObject::setOri(Eigen::Matrix3d &rotationMat) {
   Eigen::Quaternion<double> quat(rotationMat);
   glm::quat quatglm = glm::quat(quat.w(), quat.x(), quat.y(), quat.z());
   transform.SetRot(quatglm);
-}
-
-void SingleBodyObject::setPose(Eigen::Matrix4d &ht) {
-  Eigen::Vector3d pos = ht.topRightCorner(3, 1);
-  Eigen::Matrix3d rot = ht.topLeftCorner(3, 3);
-  setPose(pos, rot);
 }
 
 void SingleBodyObject::setTransform(Transform& trans) {
