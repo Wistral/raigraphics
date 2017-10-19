@@ -46,9 +46,23 @@ void SingleBodyObject::setPos(Eigen::Vector3d &position) {
   transform.SetPos(pos);
 }
 
+void SingleBodyObject::setPose(Eigen::Vector3d &position, Eigen::Quaterniond &quat) {
+  std::lock_guard<std::mutex> guard(mtx);
+  glm::quat quatglm = glm::quat(quat.w(), quat.x(), quat.y(), quat.z());
+  glm::vec3 pos(position(0), position(1), position(2));
+  transform.SetRot(quatglm);
+  transform.SetPos(pos);
+}
+
 void SingleBodyObject::setOri(Eigen::Vector4d &quat) {
   std::lock_guard<std::mutex> guard(mtx);
   glm::quat quatglm = glm::quat(quat(0), quat(1), quat(2), quat(3));
+  transform.SetRot(quatglm);
+}
+
+void SingleBodyObject::setOri(Eigen::Quaterniond &quat) {
+  std::lock_guard<std::mutex> guard(mtx);
+  glm::quat quatglm = glm::quat(quat.w(), quat.x(), quat.y(), quat.z());
   transform.SetRot(quatglm);
 }
 
@@ -151,7 +165,6 @@ const float *SingleBodyObject::getVertexPositions() const {
 unsigned long SingleBodyObject::getVertexNumber() {
   return positions.size();
 }
-
 void SingleBodyObject::registerToGPU() {
   m_numIndices = indices.size();
 

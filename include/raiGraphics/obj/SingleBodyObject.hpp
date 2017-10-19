@@ -37,9 +37,11 @@ class SingleBodyObject: public Object {
 
   void setPose(Eigen::Vector3d &position, Eigen::Matrix3d &rotationMat);
   void setPose(Eigen::Vector3d &position, Eigen::Vector4d &quat);
+  void setPose(Eigen::Vector3d &position, Eigen::Quaterniond &quat);
   void setPose(Eigen::Matrix4d &ht);
 
   void setPos(Eigen::Vector3d &position);
+  void setOri(Eigen::Quaterniond &quat);
   void setOri(Eigen::Vector4d &quat);
   void setOri(Eigen::Matrix3d &rotationMat);
 
