@@ -53,6 +53,11 @@ int main() {
   greenBox.setPose(greenBoxPosition, greenBoxQuaternion);
   blueCylinder.setPose(blueCylinderPosition, blueCylinderQuaternion);
 
+  object::Arrow directionArrow(0.1, 0.2, 4, 0.2);
+  directionArrow.setColor({1.0, 1.0, 0.0});
+  Eigen::Vector3d directionVector(0.0, 0.0, -1.0);
+  directionArrow.representVector(directionVector);
+
   graphics.addBackground(&background);
   graphics.addObject(&whiteSphere);
   graphics.addObject(&redCone);
@@ -62,6 +67,7 @@ int main() {
   graphics.addSuperObject(&bodyFrame1);
   graphics.addSuperObject(&bodyFrame2);
   graphics.addSuperObject(&bodyFrame3);
+  graphics.addObject(&directionArrow);
 
   RAI_graphics::LightProp lprop;
   RAI_graphics::CameraProp cprop;

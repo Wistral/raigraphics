@@ -73,5 +73,26 @@ Arrow::Arrow(float r1, float r2, float l1, float l2) {
   }
 }
 
+void Arrow::representVector(Eigen::Vector3d directionVector) {
+  Eigen::Quaterniond rotation = quaternionForDirectionVector(directionVector);
+  setOri(rotation);
+}
+void Arrow::representVector(Eigen::Vector3d origin, Eigen::Vector3d directionVector) {
+  Eigen::Quaterniond rotation = quaternionForDirectionVector(directionVector);
+  setPose(origin, rotation);
+}
+
+Eigen::Quaterniond Arrow::quaternionForDirectionVector(const Eigen::Vector3d &directionVector) const {
+  double theta = atan2(directionVector(1), directionVector(0));
+  double sqrt_x2y2 = sqrt(directionVector(0) * directionVector(0)
+                              + directionVector(1) * directionVector(1));
+  double phi = atan2(directionVector(2), sqrt_x2y2);
+
+  Eigen::Quaterniond rotationZ(cos(theta/2), 0, 0, sin(theta/2));
+  Eigen::Quaterniond rotationY(cos(phi/2), 0, -sin(phi/2), 0);
+  Eigen::Quaterniond rotation = rotationZ * rotationY;
+  return rotation;
+}
+
 } // object
 }
