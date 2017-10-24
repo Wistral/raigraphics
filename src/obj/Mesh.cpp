@@ -39,6 +39,16 @@ Mesh::Mesh(Vertex *vertices, unsigned int numVertices, unsigned int *indicesL, u
     indices.push_back(indicesL[i]);
 }
 
+Mesh::Mesh(const float *vertices, unsigned int numVertices, const unsigned int *indicesL, unsigned int numIndices) {
+  for (unsigned int i = 0; i < numVertices; i++) {
+    glm::vec3 vertexVector(vertices[i * 4], vertices[i * 4 + 1], vertices[i * 4 + 2]);
+    positions.push_back(vertexVector);
+  }
+
+  for (unsigned int i = 0; i < numIndices; i++)
+    indices.push_back(indicesL[i]);
+}
+
 Mesh::~Mesh() {}
 
 void Mesh::recursiveProcess(aiNode *node, const aiScene *scene) {
@@ -53,7 +63,6 @@ void Mesh::recursiveProcess(aiNode *node, const aiScene *scene) {
     recursiveProcess(node->mChildren[i], scene);
   }
 }
-
 void Mesh::processMesh(aiMesh *mesh, const aiScene *scene) {
   aiColor4D col;
   aiMaterial *mat = scene->mMaterials[mesh->mMaterialIndex];
