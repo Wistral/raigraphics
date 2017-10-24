@@ -147,6 +147,18 @@ void RAI_graphics::draw() {
     shaders_[i]->Update(camera, light, objs_[i]);
     objs_[i]->draw();
     shaders_[i]->UnBind();
+
+    // draw ghost
+    // TODO code refine
+    objs_[i]->usingTempTransform(true);
+    for(auto& ghost : objs_[i]->getGhosts()) {
+      objs_[i]->setTempTransform(ghost);
+      shaders_[i]->Bind();
+      shaders_[i]->Update(camera, light, objs_[i]);
+      objs_[i]->draw();
+      shaders_[i]->UnBind();
+    }
+    objs_[i]->usingTempTransform(false);
   }
 
   if (saveSnapShot) {

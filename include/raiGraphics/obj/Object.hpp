@@ -9,7 +9,9 @@ namespace rai_graphics {
 namespace object {
 
 class Object {
+ public:
 
+ protected:
 };
 
 } // object

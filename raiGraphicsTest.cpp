@@ -69,6 +69,15 @@ int main() {
   graphics.addSuperObject(&bodyFrame3);
   graphics.addObject(&directionArrow);
 
+  // ghost objects
+  Eigen::Vector3d ghostVector1; ghostVector1 << 10, 0, 0;
+  Eigen::Quaterniond ghostQuaternion1(1.0, 0, 0, 0);
+  directionArrow.addGhost(ghostVector1, ghostQuaternion1);
+
+  Eigen::Vector3d ghostVector2; ghostVector2 << 0, 10, 0;
+  Eigen::Quaterniond ghostQuaternion2(0.7071, 0, 0, 0.7071);
+  directionArrow.addGhost(ghostVector2, ghostQuaternion1);
+
   RAI_graphics::LightProp lprop;
   RAI_graphics::CameraProp cprop;
   cprop.toFollow = &whiteSphere;

@@ -7,5 +7,5 @@
 namespace rai_graphics {
 namespace object {
 
-}
-}
+} // object
+} // rai_graphics

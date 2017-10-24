@@ -97,6 +97,18 @@ class SingleBodyObject: public Object {
   GLuint m_vertexArrayBuffers[NUM_BUFFERS];
   unsigned int m_numIndices;
   std::mutex mtx;
+
+
+  // TODO code refine(inheritance)
+ public:
+  void addGhost(Eigen::Vector3d &position, Eigen::Quaterniond &quat);
+  void drawGhosts();
+  std::vector<Transform> & getGhosts();
+ protected:
+//  void drawSnapshot(Camera *camera,  Light *light, float transparency);
+  std::vector<Transform> ghosts;
+//  Shader* shader = nullptr;
+
 };
 
 } // object
