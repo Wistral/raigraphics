@@ -214,10 +214,13 @@ void SingleBodyObject::registerToGPU() {
   glBindVertexArray(0);
 }
 
-void SingleBodyObject::drawGhosts() {
+void SingleBodyObject::addGhost(Eigen::Vector3d &position) {
+  Transform ghostTransform;
+  glm::vec3 pos(position(0), position(1), position(2));
+  ghostTransform.SetPos(pos);
 
+  ghosts.push_back(ghostTransform);
 }
-
 void SingleBodyObject::addGhost(Eigen::Vector3d &position, Eigen::Quaterniond &quat) {
   Transform ghostTransform;
   glm::quat quatglm = glm::quat(quat.w(), quat.x(), quat.y(), quat.z());
@@ -229,6 +232,9 @@ void SingleBodyObject::addGhost(Eigen::Vector3d &position, Eigen::Quaterniond &q
 }
 std::vector<Transform> & SingleBodyObject::getGhosts() {
   return ghosts;
+}
+void SingleBodyObject::clearGhost() {
+  ghosts.clear();
 }
 
 //void SingleBodyObject::drawSnapshot(Camera *camera, Light *light, float transparency) {

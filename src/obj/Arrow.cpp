@@ -73,11 +73,11 @@ Arrow::Arrow(float r1, float r2, float l1, float l2) {
   }
 }
 
-void Arrow::representVector(Eigen::Vector3d directionVector) {
+void Arrow::representVector(Eigen::Vector3d &directionVector) {
   Eigen::Quaterniond rotation = quaternionForDirectionVector(directionVector);
   setOri(rotation);
 }
-void Arrow::representVector(Eigen::Vector3d origin, Eigen::Vector3d directionVector) {
+void Arrow::representVector(Eigen::Vector3d &origin, Eigen::Vector3d &directionVector) {
   Eigen::Quaterniond rotation = quaternionForDirectionVector(directionVector);
   setPose(origin, rotation);
 }
@@ -92,6 +92,16 @@ Eigen::Quaterniond Arrow::quaternionForDirectionVector(const Eigen::Vector3d &di
   Eigen::Quaterniond rotationY(cos(phi/2), 0, -sin(phi/2), 0);
   Eigen::Quaterniond rotation = rotationZ * rotationY;
   return rotation;
+}
+void Arrow::addGhostWithVector(Eigen::Vector3d &position, Eigen::Vector3d &directionVector) {
+  Eigen::Quaterniond quat = quaternionForDirectionVector(directionVector);
+  glm::quat quatglm = glm::quat(quat.w(), quat.x(), quat.y(), quat.z());
+  glm::vec3 pos(position(0), position(1), position(2));
+
+  Transform ghostTransform;
+  ghostTransform.SetRot(quatglm);
+  ghostTransform.SetPos(pos);
+  ghosts.push_back(ghostTransform);
 }
 
 } // object

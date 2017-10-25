@@ -101,8 +101,10 @@ class SingleBodyObject: public Object {
 
   // TODO code refine(inheritance)
  public:
-  void addGhost(Eigen::Vector3d &position, Eigen::Quaterniond &quat);
-  void drawGhosts();
+  virtual void addGhost(Eigen::Vector3d &position);
+  virtual void addGhost(Eigen::Vector3d &position, Eigen::Quaterniond &quat);
+  void clearGhost();
+
   std::vector<Transform> & getGhosts();
  protected:
 //  void drawSnapshot(Camera *camera,  Light *light, float transparency);
