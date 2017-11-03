@@ -110,6 +110,10 @@ void CoordinateFrame::setOri(Eigen::Quaterniond &quaternionWB) {
   WxAxisArrowQuaternion_ = quaternionWB * BxAxisArrowQuaternion_;
   WyAxisArrowQuaternion_ = quaternionWB * ByAxisArrowQuaternion_;
   WzAxisArrowQuaternion_ = quaternionWB * BzAxisArrowQuaternion_;
+
+  xAxisArrow_.setOri(WxAxisArrowQuaternion_);
+  yAxisArrow_.setOri(WyAxisArrowQuaternion_);
+  zAxisArrow_.setOri(WzAxisArrowQuaternion_);
 }
 void CoordinateFrame::setOri(Eigen::Vector4d &quaternionAsVectorWB) {
   Eigen::Quaterniond quaternion(quaternionAsVectorWB(0),
