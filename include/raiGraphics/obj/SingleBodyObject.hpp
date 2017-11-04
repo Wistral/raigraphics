@@ -74,6 +74,8 @@ class SingleBodyObject: public Object {
 
   void usingTempTransform(bool utt) {tempTransformOn = utt;};
 
+  ShaderType defaultShader = object::RAI_SHADER_BASIC;
+
  protected:
   void registerToGPU();
   Transform transform;
@@ -83,9 +85,9 @@ class SingleBodyObject: public Object {
   std::vector<float> color_ = {0.7, 0.7, 0.7};
   std::vector<float> amb_m = {0.3, 0.3, 0.3};
   std::vector<float> diff_m = {1.0,1.0,1.0};
-  std::vector<float> spec_m = {1,1,1};
+  std::vector<float> spec_m = {0.3,0.3,0.3};
   float transparency_ = 1.0;
-  float shininess = 100;
+  float shininess = 50;
   std::vector<glm::vec3> colorsCoords;
   bool visible = true;
   std::vector<glm::vec3> positions;

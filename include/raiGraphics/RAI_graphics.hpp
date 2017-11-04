@@ -10,6 +10,7 @@
 #include "raiGraphics/obj/MultiBodyObject.hpp"
 #include "raiGraphics/imp/display.h"
 #include "raiGraphics/imp/shader_basic.h"
+#include "raiGraphics/imp/shader_flat.h"
 #include "raiGraphics/imp/shader_background.hpp"
 #include "rai/common/StopWatch.hpp"
 #include <mutex>
@@ -19,13 +20,10 @@ namespace rai_graphics {
 class RAI_graphics {
  public:
 
-  enum ShaderType {
-    RAI_SHADER_BASIC
-  };
 
   struct LightProp {
-    std::vector<float>  pos_light = {-100.0,0.0,10.0},
-                        amb_light = {0.5, 0.5, 0.5},
+    std::vector<float>  pos_light = {-1000.0,0.0,100.0},
+                        amb_light = {0.2, 0.2, 0.2},
                         diff_light = {1, 1, 1},
                         spec_light = {0.7, 0.7, 0.7};
   };
@@ -46,7 +44,7 @@ class RAI_graphics {
   void start();
   void end();
 
-  void addObject(object::SingleBodyObject *obj, ShaderType type = RAI_SHADER_BASIC);
+  void addObject(object::SingleBodyObject *obj, object::ShaderType type = object::RAI_SHADER_OBJECT_DEFAULT);
   void addSuperObject(object::MultiBodyObject *obj);
   void addBackground(object::Background *back);
   void setFPS(double FPS) { FPS_ = FPS; }
@@ -83,9 +81,10 @@ class RAI_graphics {
 
   Display *display = nullptr;
   Shader_basic *shader_basic = nullptr;
+  Shader_flat *shader_flat = nullptr;
   Shader_background *shader_background = nullptr;
   std::vector<Shader *> shaders_;
-  std::vector<ShaderType> added_shaders_;
+  std::vector<object::ShaderType> added_shaders_;
 
   unsigned imageCounter = 0;
   bool areThereimagesTosave = false;

@@ -5,30 +5,31 @@
 #include "raiGraphics/obj/Box.hpp"
 rai_graphics::object::Box::Box(float xLength, float yLength, float zLength) {
   // origin is on the center of box
+  defaultShader = object::RAI_SHADER_FLAT;
 
   float xHalfLength = xLength/2;
   float yHalfLength = yLength/2;
   float zHalfLength = zLength/2;
 
   // up
-  positions.push_back(glm::vec3(xHalfLength, yHalfLength, zHalfLength));
-  normals.push_back(glm::vec3(xHalfLength,yHalfLength,zHalfLength));
-  positions.push_back(glm::vec3(-xHalfLength, yHalfLength, zHalfLength));
-  normals.push_back(glm::vec3(-xHalfLength, yHalfLength, zHalfLength));
-  positions.push_back(glm::vec3(-xHalfLength, -yHalfLength, zHalfLength));
-  normals.push_back(glm::vec3(-xHalfLength, -yHalfLength, zHalfLength));
-  positions.push_back(glm::vec3(xHalfLength, -yHalfLength, zHalfLength));
-  normals.push_back(glm::vec3(xHalfLength, -yHalfLength, zHalfLength));
+  positions.emplace_back(glm::vec3(xHalfLength, yHalfLength, zHalfLength));
+  normals.emplace_back(glm::vec3(xHalfLength,yHalfLength,zHalfLength));
+  positions.emplace_back(glm::vec3(-xHalfLength, yHalfLength, zHalfLength));
+  normals.emplace_back(glm::vec3(-xHalfLength, yHalfLength, zHalfLength));
+  positions.emplace_back(glm::vec3(-xHalfLength, -yHalfLength, zHalfLength));
+  normals.emplace_back(glm::vec3(-xHalfLength, -yHalfLength, zHalfLength));
+  positions.emplace_back(glm::vec3(xHalfLength, -yHalfLength, zHalfLength));
+  normals.emplace_back(glm::vec3(xHalfLength, -yHalfLength, zHalfLength));
 
   // down
-  positions.push_back(glm::vec3(xHalfLength, yHalfLength, -zHalfLength));
-  normals.push_back(glm::vec3(xHalfLength, yHalfLength, -zHalfLength));
-  positions.push_back(glm::vec3(-xHalfLength, yHalfLength, -zHalfLength));
-  normals.push_back(glm::vec3(-xHalfLength, yHalfLength, -zHalfLength));
-  positions.push_back(glm::vec3(-xHalfLength, -yHalfLength, -zHalfLength));
-  normals.push_back(glm::vec3(-xHalfLength, -yHalfLength, -zHalfLength));
-  positions.push_back(glm::vec3(xHalfLength, -yHalfLength, -zHalfLength));
-  normals.push_back(glm::vec3(xHalfLength, -yHalfLength, -zHalfLength));
+  positions.emplace_back(glm::vec3(xHalfLength, yHalfLength, -zHalfLength));
+  normals.emplace_back(glm::vec3(xHalfLength, yHalfLength, -zHalfLength));
+  positions.emplace_back(glm::vec3(-xHalfLength, yHalfLength, -zHalfLength));
+  normals.emplace_back(glm::vec3(-xHalfLength, yHalfLength, -zHalfLength));
+  positions.emplace_back(glm::vec3(-xHalfLength, -yHalfLength, -zHalfLength));
+  normals.emplace_back(glm::vec3(-xHalfLength, -yHalfLength, -zHalfLength));
+  positions.emplace_back(glm::vec3(xHalfLength, -yHalfLength, -zHalfLength));
+  normals.emplace_back(glm::vec3(xHalfLength, -yHalfLength, -zHalfLength));
 
   // up
   indices.push_back(0);

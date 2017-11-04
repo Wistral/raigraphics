@@ -10,15 +10,15 @@ Arrow::Arrow(float r1, float r2, float l1, float l2) {
   int slices = 20;
   int position = 0;
 //  bottom
-  positions.push_back(glm::vec3(0, 0, 0));
-  normals.push_back(glm::vec3(-1, 0, 0));
+  positions.emplace_back(glm::vec3(0, 0, 0));
+  normals.emplace_back(glm::vec3(-1, 0, 0));
 
   for (int i = 0; i < slices; i++) {
     float theta = 2 * M_PI / slices * i;
     float y = r1 * std::cos(theta);
     float z = r1 * std::sin(theta);
-    positions.push_back(glm::vec3(0, y, z));
-    normals.push_back(glm::vec3(-r1, y, z));
+    positions.emplace_back(glm::vec3(0, y, z));
+    normals.emplace_back(glm::vec3(-1, 0, 0));
   }
   for (int i = 1; i < slices + 1; i++) {
     indices.push_back(0);
@@ -26,45 +26,66 @@ Arrow::Arrow(float r1, float r2, float l1, float l2) {
     indices.push_back(i);
   }
   position = slices;
+
+  for (int i = 0; i < slices; i++) {
+    float theta = 2 * M_PI / slices * i;
+    float y = r1 * std::cos(theta);
+    float z = r1 * std::sin(theta);
+    positions.emplace_back(glm::vec3(0, y, z));
+    normals.emplace_back(glm::vec3(0, y, z));
+  }
+
 //side
   for (int i = 0; i < slices; i++) {
     float theta = 2 * M_PI / slices * i;
     float y = r1 * std::cos(theta);
     float z = r1 * std::sin(theta);
-    positions.push_back(glm::vec3(l1, y, z));
-    normals.push_back(glm::vec3(0, y, z));
+    positions.emplace_back(glm::vec3(l1, y, z));
+    normals.emplace_back(glm::vec3(0, y, z));
   }
   for (int i = 1; i < slices + 1; i++) {
-    indices.push_back(i);
-    indices.push_back(i % slices + 1);
-    indices.push_back(position+ i);
-
     indices.push_back(position + i);
-    indices.push_back(i % slices + 1);
     indices.push_back(position + i % slices + 1);
-  }
+    indices.push_back(2*position+ i);
 
+    indices.push_back(2*position + i);
+    indices.push_back(position + i % slices + 1);
+    indices.push_back(2*position + i % slices + 1);
+  }
+  position += slices;
 //Head bottom
-  positions.push_back(glm::vec3(l1, 0, 0));
-  normals.push_back(glm::vec3(1 , 0, 0));
-  position += slices + 1;
+  positions.emplace_back(glm::vec3(l1, 0, 0));
+  normals.emplace_back(glm::vec3(1 , 0, 0));
 
   for (int i = 0; i < slices; i++) {
     float theta = 2 * M_PI / slices * i;
     float y = r2 * std::cos(theta);
     float z = r2 * std::sin(theta);
-    positions.push_back(glm::vec3(l1, y, z));
-    normals.push_back(glm::vec3(l2, y, z));
+    positions.emplace_back(glm::vec3(l1, y, z));
+    normals.emplace_back(glm::vec3(-1,0,0));
   }
+
+  position += slices + 1;
+
   for (int i = 1; i < slices + 1; i++) {
     indices.push_back(position);
     indices.push_back(i % slices + 1+ position);
     indices.push_back(i + position);
   }
 
+  for (int i = 0; i < slices; i++) {
+    float theta = 2 * M_PI / slices * i;
+    float y = r2 * std::cos(theta);
+    float z = r2 * std::sin(theta);
+    positions.emplace_back(glm::vec3(l1, y, z));
+    normals.emplace_back(glm::vec3(0,y,z));
+  }
+
+  position += slices;
+
   //Head
-  positions.push_back(glm::vec3(l1 + l2, 0, 0));
-  normals.push_back(glm::vec3(1 , 0, 0));
+  positions.emplace_back(glm::vec3(l1 + l2, 0, 0));
+  normals.emplace_back(glm::vec3(1 , 0, 0));
 
   for (int i = 1; i < slices + 1; i++) {
     indices.push_back(i +position);

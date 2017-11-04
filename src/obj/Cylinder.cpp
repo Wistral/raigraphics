@@ -21,7 +21,7 @@ Cylinder::Cylinder(float r, float l) {
     float x = -r * std::sin(theta);
     positions.push_back(glm::vec3(x, y, 0));
 //    normals.push_back(glm::vec3(x, y, -l/2));
-    normals.push_back(glm::vec3(x, y, -1));
+    normals.push_back(glm::vec3(0, 0, -1));
   }
   for (int i = 1; i < slices + 1; i++) {
     indices.push_back(0);
@@ -35,7 +35,7 @@ Cylinder::Cylinder(float r, float l) {
     float y = r * std::cos(theta);
     float x = -r * std::sin(theta);
     positions.push_back(glm::vec3(x, y, l));
-    normals.push_back(glm::vec3(x, y, 1));
+    normals.push_back(glm::vec3(0, 0, 1));
     //    normals.push_back(glm::vec3(x, y, l/2));
   }
   positions.push_back(glm::vec3(0, 0, l));
@@ -62,6 +62,24 @@ Cylinder::Cylinder(float r, float l) {
     float y = r * std::cos(theta);
     float x = -r * std::sin(theta);
     positions.push_back(glm::vec3(x, y, 0));
+//    normals.push_back(glm::vec3(x, y, -l/2));
+    normals.push_back(glm::vec3(x, y, -1));
+  }
+
+  for (int i = 0; i < slices; i++) {
+    float theta = 2 * M_PI / slices * i;
+    float y = r * std::cos(theta);
+    float x = -r * std::sin(theta);
+    positions.push_back(glm::vec3(x, y, l));
+    normals.push_back(glm::vec3(x, y, 1));
+    //    normals.push_back(glm::vec3(x, y, l/2));
+  }
+
+  for (int i = 0; i < slices; i++) {
+    float theta = 2 * M_PI / slices * i;
+    float y = r * std::cos(theta);
+    float x = -r * std::sin(theta);
+    positions.push_back(glm::vec3(x, y, 0));
     normals.push_back(glm::vec3(x, y, 0));
     positions.push_back(glm::vec3(x, y, l));
     normals.push_back(glm::vec3(x, y, 0));
@@ -69,13 +87,13 @@ Cylinder::Cylinder(float r, float l) {
   }
 
   for (int i = 0; i < slices; i++) {
-    indices.push_back(position + 2 * i);
-    indices.push_back(position + (2 * (i + 1))%(2*slices));
-    indices.push_back(position + 2 * i + 1);
+    indices.push_back(2*slices+position + 2 * i);
+    indices.push_back(2*slices+position + (2 * (i + 1))%(2*slices));
+    indices.push_back(2*slices+position + 2 * i + 1);
 
-    indices.push_back(position + 2 * i + 1);
-    indices.push_back(position + (2 * (i + 1))%(2*slices));
-    indices.push_back(position + (2 * (i + 1) + 1)%(2*slices));
+    indices.push_back(2*slices+position + 2 * i + 1);
+    indices.push_back(2*slices+position + (2 * (i + 1))%(2*slices));
+    indices.push_back(2*slices+position + (2 * (i + 1) + 1)%(2*slices));
   }
 
 }
