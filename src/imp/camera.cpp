@@ -45,9 +45,13 @@ void Camera::update() {
   offset.y = ly * 10;
   offset.z = lz * 10;
 
-  if (mi)
-    vp_ = projection * glm::lookAt(pos, pos + offset, up);
-  else {
+  if (mi) {
+    glm::vec3 alternateUp(1, 0, 0);
+    if (relativePos.x * relativePos.x + relativePos.y * relativePos.y < 1e-4)
+      vp_ = projection * glm::lookAt(pos, pos + offset, alternateUp);
+    else
+      vp_ = projection * glm::lookAt(pos, pos + offset, up);
+  } else {
     Transform trans;
     toFollowObj->getTransform(trans);
     vp_ = projection * glm::lookAt(*trans.GetPos() + glm::vec3(relativePos), *trans.GetPos(), up);
@@ -85,6 +89,7 @@ void Camera::Control(SDL_Event e) {
       SDL_GetMouseState(&tmpx, &tmpy);
       camYaw += camAngularSpeed * (tmpx - prevMx);
       camPitch += camAngularSpeed * (tmpy - prevMy);
+      camPitch = std::min(std::max(camPitch, -89.5f), 89.5f);
     }
 
     Uint32 mbuttonState = SDL_GetMouseState(&prevMx, &prevMy);
