@@ -7,6 +7,8 @@ namespace rai_graphics {
 namespace object {
 
 Arrow::Arrow(float r1, float r2, float l1, float l2) {
+  defaultShader = object::RAI_SHADER_FLAT;
+
   int slices = 20;
   int position = 0;
 //  bottom

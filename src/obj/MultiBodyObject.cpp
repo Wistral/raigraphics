@@ -49,10 +49,10 @@ void MultiBodyObject::turnOnGhost(bool ghostOn) {
 void MultiBodyObject::drawSnapshot(Camera *camera, Light *light, float transparency){
   for(int i = 0; i < objs.size(); i++){
     objs[i]->setTransparency(transparency);
-    shader->Bind();
-    shader->Update(camera, light, objs[i]);
+    shader[i]->Bind();
+    shader[i]->Update(camera, light, objs[i]);
     objs[i]->draw();
-    shader->UnBind();
+    shader[i]->UnBind();
   }
 }
 

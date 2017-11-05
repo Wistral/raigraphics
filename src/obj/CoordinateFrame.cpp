@@ -2,6 +2,7 @@
 // Created by kangd on 28.09.17.
 //
 
+#include <raiGraphics/imp/shader_flat.h>
 #include "raiGraphics/obj/CoordinateFrame.hpp"
 
 namespace rai_graphics {
@@ -93,13 +94,15 @@ void CoordinateFrame::setPos(Eigen::Vector3d &position) {
 void CoordinateFrame::init() {
   for(auto* ob: objs)
     ob->init();
-  shader = new Shader_basic;
+  for(auto* ob: objs)
+    shader.push_back(new Shader_basic);
 }
 
 void CoordinateFrame::destroy() {
   for(auto* ob: objs)
     ob->destroy();
-  delete shader;
+  for(auto* sh: shader)
+    delete sh;
 }
 
 CoordinateFrame::~CoordinateFrame() {

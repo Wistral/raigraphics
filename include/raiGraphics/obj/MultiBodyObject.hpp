@@ -36,7 +36,7 @@ class MultiBodyObject: public Object {
 
   bool visible = true;
   std::vector<SingleBodyObject*> objs;
-  Shader* shader = nullptr;
+  std::vector<Shader*> shader;
   std::vector<std::vector<Transform> > ghosts;
   std::vector<Transform> currentPose;
   float ghostTransparency;

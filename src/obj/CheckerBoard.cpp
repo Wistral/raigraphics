@@ -2,6 +2,7 @@
 // Created by jhwangbo on 01.05.17.
 //
 
+#include <raiGraphics/imp/shader_flat.h>
 #include "raiGraphics/obj/CheckerBoard.hpp"
 
 namespace rai_graphics {
@@ -21,13 +22,16 @@ CheckerBoard::~CheckerBoard(){
 void CheckerBoard::init(){
   for(auto* ob: objs)
     ob->init();
-  shader = new Shader_basic;
+
+  for(auto* ob: objs)
+    shader.push_back(new Shader_basic);
 }
 
 void CheckerBoard::destroy(){
   for(auto* ob: objs)
     ob->destroy();
-  delete shader;
+  for(auto* sh: shader)
+    delete sh;
 }
 
 } // object

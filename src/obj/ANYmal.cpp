@@ -76,13 +76,15 @@ ANYmal::~ANYmal(){}
 void ANYmal::init(){
   for(auto* body: objs)
     body->init();
-  shader = new Shader_basic;
+  for(auto* body: objs)
+    shader.push_back(new Shader_basic);
 }
 
 void ANYmal::destroy(){
   for(auto* body: objs)
     body->destroy();
-  delete shader;
+  for(auto* sh: shader)
+    delete sh;
 }
 
 void ANYmal::setPose(std::vector<RAI::HomogeneousTransform> &bodyPose) {
