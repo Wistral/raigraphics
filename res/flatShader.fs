@@ -1,8 +1,9 @@
 #version 400
-varying vec3 position0;
 
+varying vec3 position0;
 varying vec3 colorCoord0;
 varying vec3 camPos;
+varying vec3 normal0;
 
 uniform vec3 colorMono;
 uniform vec3 lightPos;
@@ -21,14 +22,15 @@ void main()
 {
     vec3 X = dFdx(position0);
     vec3 Y = dFdy(position0);
-    vec3 normal=normalize(cross(X,Y));
+
+    vec3 facenormal=normalize(cross(X,Y));
 
     float dist=length(position0-lightPos);   //distance from light-source to surface
     float att=1.0;    //attenuation (constant,linear,quadric)
     vec3 ambient=mambient*lambient; //the ambient light
 
     vec3 surf2light=normalize(lightPos-position0);
-    vec3 norm=normalize(normal);
+    vec3 norm=normalize(facenormal);
     float dcont=max(0.0,dot(norm,surf2light));
     vec3 diffuse=dcont*(mdiffuse*ldiffuse);
 

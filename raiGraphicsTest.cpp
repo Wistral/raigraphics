@@ -58,7 +58,7 @@ int main() {
 
   object::Arrow directionArrow(0.1, 0.2, 4, 0.2);
   directionArrow.setColor({1.0, 1.0, 0.0});
-  Eigen::Vector3d directionVector(0.0, 0.0, -1.0);
+  Eigen::Vector3d directionVector(0.0, 0.0, 1.0);
   directionArrow.representVector(directionVector);
 
   graphics.addBackground(&background);
@@ -67,11 +67,11 @@ int main() {
   graphics.addObject(&redCone);
   graphics.addObject(&greenBox);
   graphics.addObject(&blueCylinder);
+  graphics.addObject(&directionArrow);
   graphics.addSuperObject(&inertiaFrame);
   graphics.addSuperObject(&bodyFrame1);
   graphics.addSuperObject(&bodyFrame2);
   graphics.addSuperObject(&bodyFrame3);
-  graphics.addObject(&directionArrow);
 
   // ghost objects
   Eigen::Vector3d ghostVector1; ghostVector1 << 10, 0, 10;

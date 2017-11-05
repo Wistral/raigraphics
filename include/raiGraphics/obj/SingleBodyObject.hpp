@@ -76,6 +76,8 @@ class SingleBodyObject: public Object {
 
   ShaderType defaultShader = object::RAI_SHADER_BASIC;
 
+  bool reflectable = true;
+
  protected:
   void registerToGPU();
   Transform transform;

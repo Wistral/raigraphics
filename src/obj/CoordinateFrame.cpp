@@ -22,27 +22,7 @@ CoordinateFrame::CoordinateFrame(Eigen::Vector3d origin,
       xAxisArrow_(arrowBodyRadius, arrowHeadRadius, arrowBodyLength, arrowHeadLength),
       yAxisArrow_(arrowBodyRadius, arrowHeadRadius, arrowBodyLength, arrowHeadLength),
       zAxisArrow_(arrowBodyRadius, arrowHeadRadius, arrowBodyLength, arrowHeadLength) {
-
-  WxAxisArrowQuaternion_ = rotation_ * BxAxisArrowQuaternion_;
-  WyAxisArrowQuaternion_ = rotation_ * ByAxisArrowQuaternion_;
-  WzAxisArrowQuaternion_ = rotation_ * BzAxisArrowQuaternion_;
-
-  xAxisArrow_.setOri(WxAxisArrowQuaternion_);
-  yAxisArrow_.setOri(WyAxisArrowQuaternion_);
-  zAxisArrow_.setOri(WzAxisArrowQuaternion_);
-
-  xAxisArrow_.setPos(origin);
-  yAxisArrow_.setPos(origin);
-  zAxisArrow_.setPos(origin);
-
-  xAxisArrow_.setColor({1.0, 0.0, 0.0});   // X = R
-  yAxisArrow_.setColor({0.0, 1.0, 0.0});   // Y = G
-  zAxisArrow_.setColor({0.0, 0.0, 1.0});   // Z = B
-
-  objs.push_back(&xAxisArrow_);
-  objs.push_back(&yAxisArrow_);
-  objs.push_back(&zAxisArrow_);
-
+  initChildren();
 }
 
 CoordinateFrame::CoordinateFrame(Eigen::Vector3d &origin,
@@ -60,18 +40,21 @@ CoordinateFrame::CoordinateFrame(Eigen::Vector3d &origin,
       xAxisArrow_(arrowBodyRadius, arrowHeadRadius, arrowBodyLength, arrowHeadLength),
       yAxisArrow_(arrowBodyRadius, arrowHeadRadius, arrowBodyLength, arrowHeadLength),
       zAxisArrow_(arrowBodyRadius, arrowHeadRadius, arrowBodyLength, arrowHeadLength) {
+  initChildren();
+}
 
-  WxAxisArrowQuaternion_ = rotation * BxAxisArrowQuaternion_;
-  WyAxisArrowQuaternion_ = rotation * ByAxisArrowQuaternion_;
-  WzAxisArrowQuaternion_ = rotation * BzAxisArrowQuaternion_;
+void CoordinateFrame::initChildren() {
+  WxAxisArrowQuaternion_ = rotation_ * BxAxisArrowQuaternion_;
+  WyAxisArrowQuaternion_ = rotation_ * ByAxisArrowQuaternion_;
+  WzAxisArrowQuaternion_ = rotation_ * BzAxisArrowQuaternion_;
 
   xAxisArrow_.setOri(WxAxisArrowQuaternion_);
   yAxisArrow_.setOri(WyAxisArrowQuaternion_);
   zAxisArrow_.setOri(WzAxisArrowQuaternion_);
 
-  xAxisArrow_.setPos(origin);
-  yAxisArrow_.setPos(origin);
-  zAxisArrow_.setPos(origin);
+  xAxisArrow_.setPos(origin_);
+  yAxisArrow_.setPos(origin_);
+  zAxisArrow_.setPos(origin_);
 
   xAxisArrow_.setColor({1.0, 0.0, 0.0});   // X = R
   yAxisArrow_.setColor({0.0, 1.0, 0.0});   // Y = G
@@ -80,7 +63,7 @@ CoordinateFrame::CoordinateFrame(Eigen::Vector3d &origin,
   objs.push_back(&xAxisArrow_);
   objs.push_back(&yAxisArrow_);
   objs.push_back(&zAxisArrow_);
-
+  reflectable = false;
 }
 
 void CoordinateFrame::setPos(Eigen::Vector3d &position) {

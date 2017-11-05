@@ -15,7 +15,7 @@ class CheckerBoard : public MultiBodyObject {
 
  public:
 
-  CheckerBoard(int gridSize, float width, float length, float reflectanceI, std::vector<float> color1={0.1,0.1,0.1}, std::vector<float> color2={0.9,0.9,0.9});
+  CheckerBoard(float gridSize, float width, float length, float reflectanceI, std::vector<float> color1={0,0,0}, std::vector<float> color2={1,1,1});
   void init();
   void destroy();
 

@@ -138,13 +138,14 @@ void RAI_graphics::draw() {
   display->Clear(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
   camera->update();
 
+  /// draw checkerboard and reflections
   if(checkerboard) {
     for (auto *sob: supObjs_)
-      if(sob->isVisible()) sob->draw(camera, light, 1.0, true);
-
+      if(sob->isVisible() && sob->reflectable)
+        sob->draw(camera, light, 1.0, true);
 
     for (int i = 0; i < objs_.size(); i++) {
-      if(!objs_[i]->isVisible()) continue;
+      if(!objs_[i]->isVisible() || !objs_[i]->reflectable) continue;
       shaders_[i]->Bind();
       shaders_[i]->Update(camera, light, objs_[i], true);
       objs_[i]->draw();

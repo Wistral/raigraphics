@@ -11,7 +11,7 @@
 namespace rai_graphics {
 namespace object {
 
-CheckerBoard_half::CheckerBoard_half(int gridSize,
+CheckerBoard_half::CheckerBoard_half(float gridSize,
                            float width,
                            float length,
                            std::vector<float> color) {

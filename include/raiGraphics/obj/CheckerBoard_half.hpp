@@ -17,7 +17,7 @@ class CheckerBoard_half : public SingleBodyObject {
 
  public:
 
-  CheckerBoard_half(int gridSize, float width, float length, std::vector<float> color1);
+  CheckerBoard_half(float gridSize, float width, float length, std::vector<float> color1);
 
 };
 

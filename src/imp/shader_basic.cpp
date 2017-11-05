@@ -77,6 +77,8 @@ void Shader_basic::Update(Camera *camera, Light *light, object::SingleBodyObject
   camera->GetVP(MVP);
   glm::vec3 CamPos;
   camera->GetPos(CamPos);
+  glm::vec4 posl_g(posl[0], posl[1], posl[2], 1);
+  glm::vec4 lightInCamFrame = zflip * posl_g;
   MVP = MVP * zflip * trans.GetM() * scale;
   glm::mat4 Normal = zflip * trans.GetModel() * scale;
   glm::vec4 test;
@@ -86,7 +88,7 @@ void Shader_basic::Update(Camera *camera, Light *light, object::SingleBodyObject
   glUniformMatrix4fv(glGetUniformLocation(m_program, "Normal"), 1, GL_FALSE, &Normal[0][0]);
   glUniform3f(glGetUniformLocation(m_program, "cameraPos"), CamPos.x, CamPos.y, CamPos.z);
   glUniform3f(glGetUniformLocation(m_program,"colorMono"),clr[0],clr[1],clr[2]);
-  glUniform3f(glGetUniformLocation(m_program,"lightPos"),posl[0],posl[1],posl[2]);
+  glUniform3f(glGetUniformLocation(m_program,"lightPos"),lightInCamFrame[0],lightInCamFrame[1],lightInCamFrame[2]);
   glUniform3f(glGetUniformLocation(m_program,"mambient"),amb[0],amb[1],amb[2]);
   glUniform3f(glGetUniformLocation(m_program,"mdiffuse"),diff[0],diff[1],diff[2]);
   glUniform3f(glGetUniformLocation(m_program,"mspecular"),spec[0],spec[1],spec[2]);

@@ -29,6 +29,7 @@ class CoordinateFrame : public MultiBodyObject {
                   float arrowBodyRadius = 0.25,
                   float arrowHeadRadius = 0.5);
 
+
   void setPose(Eigen::Vector3d &position, Eigen::Vector4d &quaternionAsVectorWB);
   void setPose(Eigen::Vector3d &position, Eigen::Matrix3d &quaternionAsVectorWB);
   void setPose(Eigen::Vector3d &position, Eigen::Quaterniond &quaternionWB);
@@ -42,6 +43,9 @@ class CoordinateFrame : public MultiBodyObject {
   void destroy();
 
  private:
+
+  void initChildren();
+
   Eigen::Vector3d origin_;
   Eigen::Quaterniond rotation_;
 

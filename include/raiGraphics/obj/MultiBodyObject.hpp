@@ -27,6 +27,7 @@ class MultiBodyObject: public Object {
   void showGhosts(int maxGhosts, float transparency);
   void addGhostsNow();
 
+  bool reflectable = true;
  protected:
 
   void setTrans(std::vector<Transform>& trans);

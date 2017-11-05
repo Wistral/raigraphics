@@ -25,7 +25,7 @@ class RAI_graphics {
   struct LightProp {
     std::vector<float>  pos_light = {-1000.0,0.0,100.0},
                         amb_light = {0.2, 0.2, 0.2},
-                        diff_light = {1, 1, 1},
+                        diff_light = {0.7, 0.7, 0.7},
                         spec_light = {0.7, 0.7, 0.7};
   };
 
