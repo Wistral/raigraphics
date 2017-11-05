@@ -9,7 +9,7 @@ namespace rai_graphics {
 namespace object {
 
 CheckerBoard::CheckerBoard(float gridSize, float width, float length, float reflectanceI, std::vector<float> color1, std::vector<float> color2):
-board1(gridSize, width, length, color1), board2(gridSize, width, length, color2){
+board1(gridSize, floorf(width/gridSize), floorf(length/gridSize), color1), board2(gridSize, floorf(width/gridSize), floorf(length/gridSize), color2){
   objs.push_back(&board1);
   objs.push_back(&board2);
   Eigen::Vector3d pos; pos<<gridSize, 0,0;

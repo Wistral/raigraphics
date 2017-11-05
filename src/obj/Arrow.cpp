@@ -8,6 +8,7 @@ namespace object {
 
 Arrow::Arrow(float r1, float r2, float l1, float l2) {
   defaultShader = object::RAI_SHADER_BASIC;
+  reflectable = false;
 
   unsigned slices = 20;
   unsigned position = 0;

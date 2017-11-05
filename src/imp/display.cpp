@@ -20,7 +20,7 @@ Display::Display(int width, int height, const std::string &title) {
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 
   SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-  SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 2);
+  SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 8);
 
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 

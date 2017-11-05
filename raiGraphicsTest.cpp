@@ -23,7 +23,7 @@ int main() {
   object::Box greenBox(2, 2, 2);
   object::Cylinder blueCylinder(1, 2);
   object::Background background("sky");
-  object::CheckerBoard grnd(10, 200, 200, 0.9, {0,0,0}, {1,1,1});
+  object::CheckerBoard grnd(4, 2000, 2000, 0.9, {0,0,0}, {1,1,1});
   Eigen::Vector3d bodyFrameOrigin(0.0, 0.0, 10.0);
   Eigen::Quaterniond bodyFrameQuat(1, 0, 0, 0);
   object::CoordinateFrame inertiaFrame(bodyFrameOrigin, bodyFrameQuat);
