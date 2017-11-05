@@ -15,6 +15,7 @@ uniform mat4 MVP;
 uniform mat4 Normal;
 uniform vec3 cameraPos;
 uniform vec3 colorMono;
+uniform vec4 clipingPlane;
 
 void main()
 {
@@ -23,6 +24,8 @@ void main()
 	texCoord0 = texCoord;
 	colorCoord0 = colorMono;
 	normal0 = (Normal * vec4(normal, 0.0)).xyz;
-
 	camPos = cameraPos;
+	vec4 position_w = Normal * vec4(position, 1.0);
+   	gl_ClipDistance[0] = dot( clipingPlane, position_w);
+
 }

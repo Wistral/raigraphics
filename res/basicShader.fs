@@ -16,6 +16,7 @@ uniform vec3 lambient;  //gl_LightSource[0]
 uniform vec3 ldiffuse;
 uniform vec3 lspecular;
 uniform float transparency;
+uniform vec4 clipingPlane;
 
 void main()
 {
@@ -35,4 +36,5 @@ void main()
         vec3 specular=scont*lspecular*mspecular;
 
         gl_FragColor=vec4(colorMono * (ambient+diffuse+specular)*att,transparency);  //<- don't forget the paranthesis (ambient+diffuse+specular)
+
 }

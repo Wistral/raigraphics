@@ -6,8 +6,8 @@
 namespace rai_graphics {
 namespace object {
 
-void MultiBodyObject::draw(Camera *camera,  Light *light){
-  drawSnapshot(camera, light, 1.0);
+void MultiBodyObject::draw(Camera *camera,  Light *light, float transparency, bool isReflection){
+  drawSnapshot(camera, light, transparency, isReflection);
 //  turnOnGhost(true);
 //  for(auto& ghost : ghosts) {
 //    setTrans(ghost);
@@ -46,11 +46,11 @@ void MultiBodyObject::turnOnGhost(bool ghostOn) {
     ob->usingTempTransform(ghostOn);
 }
 
-void MultiBodyObject::drawSnapshot(Camera *camera, Light *light, float transparency){
-  for(int i = 0; i < objs.size(); i++){
+void MultiBodyObject::drawSnapshot(Camera *camera, Light *light, float transparency, bool isReflection){
+  for(int i = 0; i < objs.size(); i++) {
     objs[i]->setTransparency(transparency);
     shader[i]->Bind();
-    shader[i]->Update(camera, light, objs[i]);
+    shader[i]->Update(camera, light, objs[i], isReflection);
     objs[i]->draw();
     shader[i]->UnBind();
   }

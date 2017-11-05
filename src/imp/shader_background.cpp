@@ -38,11 +38,12 @@ void Shader_background::UnBind() {
   glUseProgramObjectARB(0);
 }
 
-void Shader_background::Update(Camera *camera, Light *light, object::SingleBodyObject* obj){
+void Shader_background::Update(Camera *camera, Light *light, object::SingleBodyObject* obj, bool isReflection){
   LOG(FATAL) << "Shader_background only works with a background object"<<std::endl;
 }
 
 void Shader_background::Update(Camera *camera, Light *light, object::Background* obj) {
+  glCullFace(GL_BACK);
   glm::mat4 MVP;
   camera->GetVP(MVP);
   glm::mat4 Normal;

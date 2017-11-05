@@ -23,15 +23,16 @@ int main() {
   object::Box greenBox(2, 2, 2);
   object::Cylinder blueCylinder(1, 2);
   object::Background background("sky");
+  object::CheckerBoard grnd(10, 200, 200, 0.9, {0,0,0}, {1,1,1});
   object::CoordinateFrame inertiaFrame;
 
-  Eigen::Vector3d bodyFrameOrigin1(10.0, 0.0, 0.0);
+  Eigen::Vector3d bodyFrameOrigin1(10.0, 0.0, 10.0);
   Eigen::Quaterniond bodyFrameQuat1(0.9239, 0.3827, 0, 0);
   object::CoordinateFrame bodyFrame1(bodyFrameOrigin1, bodyFrameQuat1);
-  Eigen::Vector3d bodyFrameOrigin2(0.0, 10.0, 0.0);
+  Eigen::Vector3d bodyFrameOrigin2(0.0, 10.0, 10.0);
   Eigen::Quaterniond bodyFrameQuat2(0.9239, 0, 0.3827, 0);
   object::CoordinateFrame bodyFrame2(bodyFrameOrigin2, bodyFrameQuat2);
-  Eigen::Vector3d bodyFrameOrigin3(0.0, 0.0, 10.0);
+  Eigen::Vector3d bodyFrameOrigin3(0.0, 0.0, 20.0);
   Eigen::Quaterniond bodyFrameQuat3(0.9239, 0, 0, 0.3827);
   object::CoordinateFrame bodyFrame3(bodyFrameOrigin3, bodyFrameQuat3);
 
@@ -40,12 +41,12 @@ int main() {
   greenBox.setColor({0.0, 1.0, 0.0});
   blueCylinder.setColor({0.0, 0.0, 1.0});
 
-  Eigen::Vector3d whiteSpherePosition; whiteSpherePosition << 0, 0, 0;
-  Eigen::Vector3d redConePosition; redConePosition << 10, 0, 0;
+  Eigen::Vector3d whiteSpherePosition; whiteSpherePosition << 0, 0, -10;
+  Eigen::Vector3d redConePosition; redConePosition << 10, 0, 10;
   Eigen::Quaterniond redConeQuaternion(0.9239, 0.3827, 0, 0);
-  Eigen::Vector3d greenBoxPosition; greenBoxPosition << 0, 10, 0;
+  Eigen::Vector3d greenBoxPosition; greenBoxPosition << 0, 10, 10;
   Eigen::Quaterniond greenBoxQuaternion(0.9239, 0, 0.3827, 0);
-  Eigen::Vector3d blueCylinderPosition; blueCylinderPosition << 0, 0, 10;
+  Eigen::Vector3d blueCylinderPosition; blueCylinderPosition << 0, 0, 20;
   Eigen::Quaterniond blueCylinderQuaternion(0.9239, 0, 0, 0.3827);
 
   whiteSphere.setPos(whiteSpherePosition);
@@ -59,6 +60,7 @@ int main() {
   directionArrow.representVector(directionVector);
 
   graphics.addBackground(&background);
+  graphics.addCheckerBoard(&grnd);
   graphics.addObject(&whiteSphere);
   graphics.addObject(&redCone);
   graphics.addObject(&greenBox);
@@ -70,11 +72,11 @@ int main() {
   graphics.addObject(&directionArrow);
 
   // ghost objects
-  Eigen::Vector3d ghostVector1; ghostVector1 << 10, 0, 0;
+  Eigen::Vector3d ghostVector1; ghostVector1 << 10, 0, 10;
   Eigen::Quaterniond ghostQuaternion1(1.0, 0, 0, 0);
   directionArrow.addGhost(ghostVector1, ghostQuaternion1);
 
-  Eigen::Vector3d ghostVector2; ghostVector2 << 0, 10, 0;
+  Eigen::Vector3d ghostVector2; ghostVector2 << 0, 10, 10;
   Eigen::Quaterniond ghostQuaternion2(0.7071, 0, 0, 0.7071);
   directionArrow.addGhost(ghostVector2, ghostQuaternion1);
 

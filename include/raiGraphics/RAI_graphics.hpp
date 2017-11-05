@@ -14,6 +14,7 @@
 #include "raiGraphics/imp/shader_background.hpp"
 #include "rai/common/StopWatch.hpp"
 #include <mutex>
+#include <raiGraphics/obj/CheckerBoard.hpp>
 
 namespace rai_graphics {
 
@@ -47,6 +48,8 @@ class RAI_graphics {
   void addObject(object::SingleBodyObject *obj, object::ShaderType type = object::RAI_SHADER_OBJECT_DEFAULT);
   void addSuperObject(object::MultiBodyObject *obj);
   void addBackground(object::Background *back);
+  void addCheckerBoard(object::CheckerBoard *back);
+
   void setFPS(double FPS) { FPS_ = FPS; }
 
   void removeObject(object::SingleBodyObject *obj);
@@ -68,7 +71,9 @@ class RAI_graphics {
   void *images2Video_inThread(void *obj);
 
   object::Background *background = nullptr;
-  bool backgroundChanged;
+  object::CheckerBoard *checkerboard = nullptr;
+
+  bool backgroundChanged = false, checkerboardChanged = false;
 
   std::vector<object::SingleBodyObject *> objs_;
   std::vector<object::MultiBodyObject *> supObjs_;

@@ -45,7 +45,7 @@ void Shader_flat::UnBind() {
 }
 
 
-void Shader_flat::Update(Camera *camera, Light *light, object::SingleBodyObject* obj) {
+void Shader_flat::Update(Camera *camera, Light *light, object::SingleBodyObject* obj, bool isreflection) {
   Transform trans;
   std::vector<float> clr, amb, diff, spec, ambl, diffl, specl, posl;
   float shine;
@@ -63,12 +63,19 @@ void Shader_flat::Update(Camera *camera, Light *light, object::SingleBodyObject*
   light->getSpecular(specl);
   light->getPosition(posl);
 
-  glm::mat4 MVP;
+  glm::mat4 MVP, zflip;
+  if(isreflection){
+    zflip[2][2]=-1;
+    glCullFace(GL_FRONT);
+  } else {
+    glCullFace(GL_BACK);
+  }
+
   camera->GetVP(MVP);
   glm::vec3 CamPos;
   camera->GetPos(CamPos);
-  MVP = MVP * trans.GetM() * scale;
-  glm::mat4 Normal = trans.GetModel();
+  MVP = MVP * zflip * trans.GetM() * scale;
+  glm::mat4 Normal = zflip * trans.GetModel();
 
   glUniformMatrix4fv(glGetUniformLocation(m_program, "MVP"), 1, GL_FALSE, &MVP[0][0]);
   glUniformMatrix4fv(glGetUniformLocation(m_program, "Normal"), 1, GL_FALSE, &Normal[0][0]);

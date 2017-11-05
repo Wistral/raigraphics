@@ -21,7 +21,7 @@ class Shader {
  public:
   virtual void Bind() = 0;
   virtual void UnBind() = 0;
-  virtual void Update(Camera *camera, Light *light, object::SingleBodyObject* obj) = 0;
+  virtual void Update(Camera *camera, Light *light, object::SingleBodyObject* obj, bool isreflection) = 0;
 
  protected:
   std::string LoadShader(const std::string &fileName);

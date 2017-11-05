@@ -71,7 +71,10 @@ void* RAI_graphics::loop(void *obj){
 
 void RAI_graphics::init() {
   if (background && backgroundChanged) background->init();
+  if (checkerboard && checkerboardChanged) checkerboard->init();
+
   backgroundChanged = false;
+  checkerboardChanged = false;
 
   mtxLight.lock();
   if (lightPropChanged) {
@@ -135,20 +138,14 @@ void RAI_graphics::draw() {
   display->Clear(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
   camera->update();
 
-  if (background) {
-    shader_background->Bind();
-    shader_background->Update(camera, light, background);
-    background->draw();
-    shader_background->UnBind();
-  }
-
   for (auto *sob: supObjs_)
-    if(sob->isVisible()) sob->draw(camera, light);
+    if(sob->isVisible()) sob->draw(camera, light, 1.0, false);
+
 
   for (int i = 0; i < objs_.size(); i++) {
     if(!objs_[i]->isVisible()) continue;
     shaders_[i]->Bind();
-    shaders_[i]->Update(camera, light, objs_[i]);
+    shaders_[i]->Update(camera, light, objs_[i], false);
     objs_[i]->draw();
     shaders_[i]->UnBind();
 
@@ -158,11 +155,48 @@ void RAI_graphics::draw() {
     for(auto& ghost : objs_[i]->getGhosts()) {
       objs_[i]->setTempTransform(ghost);
       shaders_[i]->Bind();
-      shaders_[i]->Update(camera, light, objs_[i]);
+      shaders_[i]->Update(camera, light, objs_[i], false);
       objs_[i]->draw();
       shaders_[i]->UnBind();
     }
     objs_[i]->usingTempTransform(false);
+  }
+
+  if(checkerboard) {
+
+
+    for (auto *sob: supObjs_)
+      if(sob->isVisible()) sob->draw(camera, light, 1.0, true);
+
+
+    for (int i = 0; i < objs_.size(); i++) {
+      if(!objs_[i]->isVisible()) continue;
+      shaders_[i]->Bind();
+      shaders_[i]->Update(camera, light, objs_[i], true);
+      objs_[i]->draw();
+      shaders_[i]->UnBind();
+
+      // draw ghost
+      // TODO code refine
+      objs_[i]->usingTempTransform(true);
+      for(auto& ghost : objs_[i]->getGhosts()) {
+        objs_[i]->setTempTransform(ghost);
+        shaders_[i]->Bind();
+        shaders_[i]->Update(camera, light, objs_[i], true);
+        objs_[i]->draw();
+        shaders_[i]->UnBind();
+      }
+      objs_[i]->usingTempTransform(false);
+    }
+
+    checkerboard->draw(camera, light, checkerboard->reflectance, false);
+  }
+
+  if (background) {
+    shader_background->Bind();
+    shader_background->Update(camera, light, background);
+    background->draw();
+    shader_background->UnBind();
   }
 
   if (saveSnapShot) {
@@ -206,6 +240,11 @@ void RAI_graphics::addBackground(object::Background *back) {
   backgroundChanged = true;
   LOG_IF(FATAL, !back) << "the object is not created yet";
   background = back;
+}
+
+void RAI_graphics::addCheckerBoard(object::CheckerBoard *back){
+  checkerboard = back;
+  checkerboardChanged = true;
 }
 
 void RAI_graphics::removeObject(object::SingleBodyObject *obj) {

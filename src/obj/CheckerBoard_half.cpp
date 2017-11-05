@@ -16,6 +16,7 @@ CheckerBoard_half::CheckerBoard_half(int gridSize,
                            float length,
                            std::vector<float> color) {
 
+  amb_m = {0.7,0.7,0.7};
   for(int i=-width/2/gridSize; i<width/2/gridSize; i++)
     for(int j=-length/2/gridSize; j<length/2/gridSize; j++){
       positions.push_back(glm::vec3(j*gridSize, i*gridSize, 0));
