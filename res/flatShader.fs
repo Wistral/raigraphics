@@ -2,7 +2,7 @@
 varying vec3 position0;
 
 varying vec3 colorCoord0;
-varying vec3 viewDirection0;
+varying vec3 camPos;
 
 uniform vec3 colorMono;
 uniform vec3 lightPos;
@@ -32,13 +32,11 @@ void main()
     float dcont=max(0.0,dot(norm,surf2light));
     vec3 diffuse=dcont*(mdiffuse*ldiffuse);
 
-    vec3 surf2view=normalize(-position0);
-    vec3 reflection=reflect(-surf2light,norm);
+    vec3 surf2view=normalize(position0-camPos);
+    vec3 reflection=reflect(surf2light,norm);
 
     float scont=pow(max(0.0,dot(surf2view,reflection)),shininess);
     vec3 specular=scont*lspecular*mspecular;
-
-    vec3 reflectedDirection = reflect(viewDirection0, norm);
 
     gl_FragColor=vec4(colorMono * (ambient+diffuse+specular)*att,transparency);  //<- don't forget the paranthesis (ambient+diffuse+specular)
 }
