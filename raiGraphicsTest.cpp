@@ -24,7 +24,9 @@ int main() {
   object::Cylinder blueCylinder(1, 2);
   object::Background background("sky");
   object::CheckerBoard grnd(10, 200, 200, 0.9, {0,0,0}, {1,1,1});
-  object::CoordinateFrame inertiaFrame;
+  Eigen::Vector3d bodyFrameOrigin(0.0, 0.0, 10.0);
+  Eigen::Quaterniond bodyFrameQuat(1, 0, 0, 0);
+  object::CoordinateFrame inertiaFrame(bodyFrameOrigin, bodyFrameQuat);
 
   Eigen::Vector3d bodyFrameOrigin1(10.0, 0.0, 10.0);
   Eigen::Quaterniond bodyFrameQuat1(0.9239, 0.3827, 0, 0);
@@ -41,7 +43,7 @@ int main() {
   greenBox.setColor({0.0, 1.0, 0.0});
   blueCylinder.setColor({0.0, 0.0, 1.0});
 
-  Eigen::Vector3d whiteSpherePosition; whiteSpherePosition << 0, 0, -10;
+  Eigen::Vector3d whiteSpherePosition; whiteSpherePosition << 0, 0, 10;
   Eigen::Vector3d redConePosition; redConePosition << 10, 0, 10;
   Eigen::Quaterniond redConeQuaternion(0.9239, 0.3827, 0, 0);
   Eigen::Vector3d greenBoxPosition; greenBoxPosition << 0, 10, 10;
