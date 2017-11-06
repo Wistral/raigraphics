@@ -20,6 +20,7 @@ class Background {
   Background(std::string filename = "", std::string filetype = "jpg");
   void init();
   void draw();
+  void destroy();
 
  private:
   std::vector<std::string> faces;

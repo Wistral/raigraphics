@@ -62,10 +62,15 @@ void* RAI_graphics::loop(void *obj){
   for (auto* ob: objs_)
     ob->destroy();
 
+  if(checkerboard)
+    checkerboard->destroy();
+
+  if(background)
+    background->destroy();
+
   delete display;
   delete camera;
   delete shader_background;
-  delete checkerboard;
   delete shader_basic;
   delete shader_flat;
 }

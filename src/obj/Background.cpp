@@ -33,6 +33,11 @@ void Background::init() {
   glBindVertexArray(0);
 }
 
+void Background::destroy() {
+  glDeleteBuffers(1, &skyboxVAO);
+  glDeleteVertexArrays(1, &skyboxVAO);
+}
+
 GLuint Background::loadCubemap(std::vector<std::string>& faces)
 {
   GLuint textureID;
