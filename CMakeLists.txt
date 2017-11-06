@@ -11,12 +11,6 @@ set(CMAKE_PACKAGE_INSTALL_DIR
         "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}/cmake"
         CACHE PATH "The directory relative to CMAKE_PREFIX_PATH where raiGraphicsConfig.cmake is installed")
 
-#
-#set(PKGCONFIG_INSTALL_DIR
-#        "/${CMAKE_INSTALL_DATADIR}/pkgconfig"
-#        CACHE PATH "The directory relative to CMAKE_PREFIX_PATH where RAI.pc is installed"
-#        )
-
 set(RAI_GRAPHICS_OPENGL_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -41,6 +35,9 @@ file(GLOB_RECURSE
 find_package( Eigen3 REQUIRED )
 include_directories( ${EIGEN3_INCLUDE_DIR} )
 link_directories(/usr/lib)
+
+find_package(raiCommon CONFIG REQUIRED)
+include_directories(${RAI_COMMON_INCLUDE_DIR})
 
 # --------------------------------------------------------------------
 # include directory

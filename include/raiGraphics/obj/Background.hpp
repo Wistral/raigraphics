@@ -8,7 +8,7 @@
 #include "raiGraphics/obj/SingleBodyObject.hpp"
 #include <vector>
 #include "math.h"
-#include "rai/common/TypeDef.hpp"
+#include "raiCommon/TypeDef.hpp"
 
 namespace rai_graphics {
 namespace object {

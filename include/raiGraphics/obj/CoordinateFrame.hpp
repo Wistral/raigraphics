@@ -7,7 +7,7 @@
 
 #include "MultiBodyObject.hpp"
 #include "Arrow.hpp"
-#include "rai/common/math/RAI_math.hpp"
+#include "raiCommon/math/RAI_math.hpp"
 #include <vector>
 
 namespace rai_graphics {

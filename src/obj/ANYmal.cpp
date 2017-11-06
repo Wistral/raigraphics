@@ -1,9 +1,9 @@
 //
 // Created by jhwangbo on 17. 5. 3.
 //
-#include <rai/common/math/RAI_math.hpp>
+#include <raiCommon/math/RAI_math.hpp>
 #include "raiGraphics/obj/ANYmal.hpp"
-#include "rai/common/TypeDef.hpp"
+#include "raiCommon/TypeDef.hpp"
 
 namespace rai_graphics {
 namespace object {
@@ -26,6 +26,9 @@ ANYmal::ANYmal():
     foot_rf(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT"))  + "/res/ANYmal/anymal_optoforce.dae", 0.001),
     foot_lh(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT"))  + "/res/ANYmal/anymal_optoforce.dae", 0.001),
     foot_rh(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT"))  + "/res/ANYmal/anymal_optoforce.dae", 0.001){
+
+  reflectable = true;
+
   objs.push_back(&base);
 
   objs.push_back(&hip_lf);
@@ -55,20 +58,20 @@ ANYmal::ANYmal():
 
   /// manual adjustment
   /// hip
-  RAI::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[1], M_PI*0.5);
-  RAI::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[4], M_PI*0.5);
-  RAI::Math::MathFunc::rotateHTabout_x_axis(defaultPose_[4], M_PI);
-  RAI::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[7], -M_PI*0.5);
-  RAI::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[10], -M_PI*0.5);
-  RAI::Math::MathFunc::rotateHTabout_x_axis(defaultPose_[10], M_PI);
+  rai::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[1], M_PI*0.5);
+  rai::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[4], M_PI*0.5);
+  rai::Math::MathFunc::rotateHTabout_x_axis(defaultPose_[4], M_PI);
+  rai::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[7], -M_PI*0.5);
+  rai::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[10], -M_PI*0.5);
+  rai::Math::MathFunc::rotateHTabout_x_axis(defaultPose_[10], M_PI);
 
   /// thigh
-  RAI::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[5], 0.5*M_PI);
-  RAI::Math::MathFunc::rotateHTabout_x_axis(defaultPose_[5], M_PI);
-  RAI::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[5], -0.5*M_PI);
-  RAI::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[11], -0.5*M_PI);
-  RAI::Math::MathFunc::rotateHTabout_x_axis(defaultPose_[11], M_PI);
-  RAI::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[11], 0.5*M_PI);
+  rai::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[5], 0.5*M_PI);
+  rai::Math::MathFunc::rotateHTabout_x_axis(defaultPose_[5], M_PI);
+  rai::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[5], -0.5*M_PI);
+  rai::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[11], -0.5*M_PI);
+  rai::Math::MathFunc::rotateHTabout_x_axis(defaultPose_[11], M_PI);
+  rai::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[11], 0.5*M_PI);
 }
 
 ANYmal::~ANYmal(){}
@@ -87,9 +90,9 @@ void ANYmal::destroy(){
     delete sh;
 }
 
-void ANYmal::setPose(std::vector<RAI::HomogeneousTransform> &bodyPose) {
+void ANYmal::setPose(std::vector<rai::HomogeneousTransform> &bodyPose) {
   for (int i = 0; i < objs.size(); i++) {
-    RAI::HomogeneousTransform ht = bodyPose[i] * defaultPose_[i];
+    rai::HomogeneousTransform ht = bodyPose[i] * defaultPose_[i];
     objs[i]->setPose(ht);
   }
 }

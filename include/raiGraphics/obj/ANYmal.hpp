@@ -5,7 +5,7 @@
 #ifndef RAI_ANYMAL_HPP
 #define RAI_ANYMAL_HPP
 
-#include <rai/common/TypeDef.hpp>
+#include <raiCommon/TypeDef.hpp>
 #include "MultiBodyObject.hpp"
 #include "Mesh.hpp"
 
@@ -20,7 +20,7 @@ class ANYmal : public MultiBodyObject {
   ~ANYmal();
   void init();
   void destroy();
-  void setPose(std::vector<RAI::HomogeneousTransform> &bodyPose);
+  void setPose(std::vector<rai::HomogeneousTransform> &bodyPose);
   SingleBodyObject* basePtr(){ return &base; }
 
  private:
@@ -45,7 +45,7 @@ class ANYmal : public MultiBodyObject {
   Mesh foot_rf;
   Mesh foot_lh;
   Mesh foot_rh;
-  std::vector<RAI::HomogeneousTransform> defaultPose_;
+  std::vector<rai::HomogeneousTransform> defaultPose_;
 };
 
 } // object

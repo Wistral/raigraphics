@@ -3,9 +3,9 @@
 //
 
 
-#include <rai/common/math/RAI_math.hpp>
+#include <raiCommon/math/RAI_math.hpp>
 #include "raiGraphics/obj/Biped.hpp"
-#include "rai/common/TypeDef.hpp"
+#include "raiCommon/TypeDef.hpp"
 
 namespace rai_graphics {
 namespace object {
@@ -77,14 +77,14 @@ Biped::Biped():
   ///base
   defaultPose_[0](0,3) = -0.2;
   ///pelvis
-  RAI::Math::MathFunc::rotateHTabout_z_axis(defaultPose_[6], M_PI );
-  RAI::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[6], M_PI );
-  RAI::Math::MathFunc::rotateHTabout_z_axis(defaultPose_[7], M_PI );
+  rai::Math::MathFunc::rotateHTabout_z_axis(defaultPose_[6], M_PI );
+  rai::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[6], M_PI );
+  rai::Math::MathFunc::rotateHTabout_z_axis(defaultPose_[7], M_PI );
   ///leg
-  RAI::Math::MathFunc::rotateHTabout_z_axis(defaultPose_[8], M_PI);
-  RAI::Math::MathFunc::rotateHTabout_z_axis(defaultPose_[9], M_PI);
+  rai::Math::MathFunc::rotateHTabout_z_axis(defaultPose_[8], M_PI);
+  rai::Math::MathFunc::rotateHTabout_z_axis(defaultPose_[9], M_PI);
   ///ankle
-  RAI::Math::MathFunc::rotateHTabout_x_axis(defaultPose_[10], M_PI );
+  rai::Math::MathFunc::rotateHTabout_x_axis(defaultPose_[10], M_PI );
 }
 
 Biped::~Biped(){}
@@ -103,9 +103,9 @@ void Biped::destroy(){
     delete sh;
 }
 
-void Biped::setPose(std::vector<RAI::HomogeneousTransform> &bodyPose) {
+void Biped::setPose(std::vector<rai::HomogeneousTransform> &bodyPose) {
   for (int i = 0; i < objs.size(); i++) {
-    RAI::HomogeneousTransform ht = bodyPose[i] * defaultPose_[i];
+    rai::HomogeneousTransform ht = bodyPose[i] * defaultPose_[i];
     objs[i]->setPose(ht);
   }
 }

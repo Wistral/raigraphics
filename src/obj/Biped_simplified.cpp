@@ -3,9 +3,9 @@
 //
 
 
-#include <rai/common/math/RAI_math.hpp>
+#include <raiCommon/math/RAI_math.hpp>
 #include "raiGraphics/obj/Biped_simplified.hpp"
-#include "rai/common/TypeDef.hpp"
+#include "raiCommon/TypeDef.hpp"
 
 namespace rai_graphics {
 namespace object {
@@ -76,12 +76,12 @@ Biped_simplified::Biped_simplified() :
   defaultPose_[9](2, 3) = 0.03;
 
   ///pelvis
-  RAI::Math::MathFunc::rotateHTabout_z_axis(defaultPose_[6], M_PI);
-  RAI::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[6], M_PI);
-  RAI::Math::MathFunc::rotateHTabout_z_axis(defaultPose_[7], M_PI);
+  rai::Math::MathFunc::rotateHTabout_z_axis(defaultPose_[6], M_PI);
+  rai::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[6], M_PI);
+  rai::Math::MathFunc::rotateHTabout_z_axis(defaultPose_[7], M_PI);
   ///leg
-  RAI::Math::MathFunc::rotateHTabout_z_axis(defaultPose_[8], M_PI);
-  RAI::Math::MathFunc::rotateHTabout_z_axis(defaultPose_[9], M_PI);
+  rai::Math::MathFunc::rotateHTabout_z_axis(defaultPose_[8], M_PI);
+  rai::Math::MathFunc::rotateHTabout_z_axis(defaultPose_[9], M_PI);
 }
 
 Biped_simplified::~Biped_simplified() {}
@@ -100,9 +100,9 @@ void Biped_simplified::destroy() {
     delete sh;
 }
 
-void Biped_simplified::setPose(std::vector<RAI::HomogeneousTransform> &bodyPose) {
+void Biped_simplified::setPose(std::vector<rai::HomogeneousTransform> &bodyPose) {
   for (int i = 0; i < objs.size(); i++) {
-    RAI::HomogeneousTransform ht = bodyPose[i] * defaultPose_[i];
+    rai::HomogeneousTransform ht = bodyPose[i] * defaultPose_[i];
     objs[i]->setPose(ht);
   }
 

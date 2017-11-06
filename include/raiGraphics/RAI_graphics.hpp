@@ -12,7 +12,7 @@
 #include "raiGraphics/imp/shader_basic.h"
 #include "raiGraphics/imp/shader_flat.h"
 #include "raiGraphics/imp/shader_background.hpp"
-#include "rai/common/StopWatch.hpp"
+#include "raiCommon/utils/StopWatch.hpp"
 #include <mutex>
 #include <raiGraphics/obj/CheckerBoard.hpp>
 

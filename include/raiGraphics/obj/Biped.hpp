@@ -4,7 +4,7 @@
 
 #ifndef RAI_BIPED_HPP
 #define RAI_BIPED_HPP
-#include <rai/common/TypeDef.hpp>
+#include <raiCommon/TypeDef.hpp>
 #include "MultiBodyObject.hpp"
 #include "Mesh.hpp"
 #include "Sphere.hpp"
@@ -20,7 +20,7 @@ class Biped : public MultiBodyObject {
   ~Biped();
   void init();
   void destroy();
-  void setPose(std::vector<RAI::HomogeneousTransform> &bodyPose);
+  void setPose(std::vector<rai::HomogeneousTransform> &bodyPose);
   SingleBodyObject* basePtr(){ return &base; }
 
  private:
@@ -41,7 +41,7 @@ class Biped : public MultiBodyObject {
   Mesh foot_l;
   Mesh foot_r;
 
-  std::vector<RAI::HomogeneousTransform> defaultPose_;
+  std::vector<rai::HomogeneousTransform> defaultPose_;
 };
 
 } // object

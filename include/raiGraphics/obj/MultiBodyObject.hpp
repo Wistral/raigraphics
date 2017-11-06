@@ -9,7 +9,7 @@
 #include "raiGraphics/imp/shader.hpp"
 #include "raiGraphics/imp/shader_basic.h"
 #include "raiGraphics/obj/Object.hpp"
-#include "rai/common/TypeDef.hpp"
+#include "raiCommon/TypeDef.hpp"
 
 namespace rai_graphics {
 namespace object {
