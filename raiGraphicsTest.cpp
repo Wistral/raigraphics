@@ -82,8 +82,8 @@ int main() {
   Eigen::Quaterniond ghostQuaternion2(0.7071, 0, 0, 0.7071);
   directionArrow.addGhost(ghostVector2, ghostQuaternion1);
 
-  RAI_graphics::LightProp lprop;
-  RAI_graphics::CameraProp cprop;
+  LightProp lprop;
+  CameraProp cprop;
   cprop.toFollow = &whiteSphere;
   Eigen::Vector3d relPos; relPos << 20, 0, 0;
   cprop.relativeDist = relPos;

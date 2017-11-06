@@ -65,6 +65,7 @@ void* RAI_graphics::loop(void *obj){
   delete display;
   delete camera;
   delete shader_background;
+  delete checkerboard;
   delete shader_basic;
   delete shader_flat;
 }
@@ -303,9 +304,9 @@ void RAI_graphics::images2Video() {
 void *RAI_graphics::images2Video_inThread(void *obj) {
   std::lock_guard<std::mutex> guard(mtx);
   std::string command = "ffmpeg -r 60 -i " + image_dir + "/%07d.bmp -s 800x600 -c:v libx264 -crf 5 " + image_dir + "/" + videoFileName + ".mp4 >nul 2>&1";
-  system(command.c_str());
+  int i = system(command.c_str());
   command = "rm -rf " + image_dir + "/*.bmp";
-  system(command.c_str());
+  i = system(command.c_str());
   return NULL;
 }
 
@@ -313,7 +314,7 @@ const Uint8* RAI_graphics::keyboard() {
   return SDL_GetKeyboardState(NULL);
 }
 
-const RAI_graphics::MouseInput* RAI_graphics::mouse(){
+const MouseInput* RAI_graphics::mouse(){
   SDL_Event e;
   SDL_PollEvent( &e );
   mouseInput.wheel = e.wheel;
