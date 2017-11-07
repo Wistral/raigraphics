@@ -11,10 +11,12 @@
 #include "raiGraphics/imp/display.h"
 #include "raiGraphics/imp/shader_basic.h"
 #include "raiGraphics/imp/shader_flat.h"
+#include "raiGraphics/imp/shader_mouseClick.h"
 #include "raiGraphics/imp/shader_background.hpp"
 #include "raiCommon/utils/StopWatch.hpp"
 #include <mutex>
 #include <raiGraphics/obj/CheckerBoard.hpp>
+#include <raiGraphics/imp/shader_mouseClick.h>
 
 namespace rai_graphics {
 
@@ -68,6 +70,7 @@ class RAI_graphics {
   void init();
   void draw();
   void *images2Video_inThread(void *obj);
+  int readObjIdx();
 
   object::Background *background = nullptr;
   object::CheckerBoard *checkerboard = nullptr;
@@ -76,10 +79,8 @@ class RAI_graphics {
 
   std::vector<object::SingleBodyObject *> objs_;
   std::vector<object::MultiBodyObject *> supObjs_;
-
   std::vector<object::SingleBodyObject *> added_objs_;
   std::vector<object::MultiBodyObject *> added_supObjs_;
-
   std::vector<object::SingleBodyObject *> tobeRemoved_objs_;
   std::vector<object::MultiBodyObject *> tobeRemoved_supObjs_;
 
@@ -87,8 +88,11 @@ class RAI_graphics {
   Shader_basic *shader_basic = nullptr;
   Shader_flat *shader_flat = nullptr;
   Shader_background *shader_background = nullptr;
+  Shader_mouseClick *shader_mouseClick = nullptr;
+
   std::vector<Shader *> shaders_;
   std::vector<object::ShaderType> added_shaders_;
+  std::vector<object::SingleBodyObject *> objectsInOrder_;
 
   unsigned imageCounter = 0;
   bool areThereimagesTosave = false;
@@ -115,6 +119,8 @@ class RAI_graphics {
   CameraProp cameraProp;
   bool cameraPropChanged;
   bool lightPropChanged;
+  unsigned objectIdexToBeAssigned = 0;
+  int highlightedObjId = 0;
 
 };
 

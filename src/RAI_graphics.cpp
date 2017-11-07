@@ -15,6 +15,7 @@ typedef void *(*PthreadPtr)(void *);
 RAI_graphics::RAI_graphics(int windowWidth, int windowHeight) {
   windowWidth_ = windowWidth;
   windowHeight_ = windowHeight;
+  objectsInOrder_.push_back(nullptr);
 }
 
 RAI_graphics::~RAI_graphics() {
@@ -33,17 +34,18 @@ void RAI_graphics::end() {
   pthread_join(mainloopThread, NULL);
 }
 
-void* RAI_graphics::loop(void *obj){
+void *RAI_graphics::loop(void *obj) {
   display = new Display(windowWidth_, windowHeight_, "RAI simulator");
   camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), 70.0f, (float) windowWidth_ / (float) windowHeight_, 0.1f, 1000.0f);
   shader_basic = new Shader_basic;
   shader_flat = new Shader_flat;
   shader_background = new Shader_background;
+  shader_mouseClick = new Shader_mouseClick;
   light = new Light;
 
-  while(true){
-    if( mtx.try_lock() ) {
-      if(mtxLoop.try_lock()) break;
+  while (true) {
+    if (mtx.try_lock()) {
+      if (mtxLoop.try_lock()) break;
       watch.start();
       mtxinit.lock();
       init();
@@ -51,21 +53,21 @@ void* RAI_graphics::loop(void *obj){
       draw();
       mtx.unlock();
       double elapse = watch.measure();
-      if(terminate) break;
+      if (terminate) break;
       usleep(std::max((1.0 / FPS_ - elapse) * 1e6, 0.0));
     }
   }
 
-  for (auto* sob: supObjs_)
+  for (auto *sob: supObjs_)
     sob->destroy();
 
-  for (auto* ob: objs_)
+  for (auto *ob: objs_)
     ob->destroy();
 
-  if(checkerboard)
+  if (checkerboard)
     checkerboard->destroy();
 
-  if(background)
+  if (background)
     background->destroy();
 
   delete display;
@@ -73,6 +75,7 @@ void* RAI_graphics::loop(void *obj){
   delete shader_background;
   delete shader_basic;
   delete shader_flat;
+  delete shader_mouseClick;
 }
 
 void RAI_graphics::init() {
@@ -100,7 +103,7 @@ void RAI_graphics::init() {
   }
   mtxCamera.unlock();
 
-  for (auto* sob: added_supObjs_) {
+  for (auto *sob: added_supObjs_) {
     sob->init();
     supObjs_.push_back(sob);
   }
@@ -139,10 +142,55 @@ void RAI_graphics::init() {
 }
 
 void RAI_graphics::draw() {
-  SDL_PollEvent(&e);
-  camera->Control(e);
+
   display->Clear(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+
+  /// draw obj with monotone for mouse click inputs
+  for (auto *sob: supObjs_) {
+    if (sob->isVisible()) {
+      for (auto *ob: sob->getChildren()) {
+        shader_mouseClick->Bind();
+        shader_mouseClick->Update(camera, ob);
+        ob->draw();
+        shader_mouseClick->Bind();
+      }
+    }
+    for (int i = 0; i < objs_.size(); i++) {
+      if (!objs_[i]->isVisible()) continue;
+      shader_mouseClick->Bind();
+      shader_mouseClick->Update(camera, objs_[i]);
+      objs_[i]->draw();
+      shader_mouseClick->UnBind();
+    }
+  }
+
+  while (SDL_PollEvent(&e)) {
+    int objId = 16646655;
+    switch (e.type) {
+      case SDL_MOUSEBUTTONDOWN:
+        if (e.button.clicks == 2 && !keyboard()[RAI_KEY_LCTRL])
+          objId = readObjIdx();
+        break;
+      case SDL_MOUSEWHEEL:
+        if(e.wheel.y == 1)
+          camera->zoomOut();
+        else if(e.wheel.y == -1)
+          camera->zoomIn();
+        break;
+    }
+
+    if(objId != 16646655) {
+      camera->follow(objectsInOrder_[objId]);
+      highlightedObjId = objId;
+    }
+  }
+
+  camera->Control(e);
   camera->update();
+  glClear(GL_COLOR_BUFFER_BIT);
+  glClear(GL_DEPTH_BUFFER_BIT);
+  glClear(GL_ACCUM_BUFFER_BIT);
+  glClear(GL_STENCIL_BUFFER_BIT);
 
   /// draw checkerboard and reflections
   if(checkerboard) {
@@ -229,15 +277,21 @@ void RAI_graphics::addObject(object::SingleBodyObject *obj, object::ShaderType t
   std::lock_guard<std::mutex> guard(mtxinit);
   LOG_IF(FATAL, !obj) << "the object is not created yet";
   added_objs_.push_back(obj);
-  if(type ==object::RAI_SHADER_OBJECT_DEFAULT)
+  if (type == object::RAI_SHADER_OBJECT_DEFAULT)
     type = obj->defaultShader;
   added_shaders_.push_back(type);
+  obj->setObIndex(++objectIdexToBeAssigned);
+  objectsInOrder_.push_back(obj);
 }
 
 void RAI_graphics::addSuperObject(object::MultiBodyObject *obj) {
   std::lock_guard<std::mutex> guard(mtxinit);
   LOG_IF(FATAL, !obj) << "the object is not created yet";
   added_supObjs_.push_back(obj);
+  for (auto &ob: obj->getChildren()) {
+    ob->setObIndex(++objectIdexToBeAssigned);
+    objectsInOrder_.push_back(ob);
+  }
 }
 
 void RAI_graphics::addBackground(object::Background *back) {
@@ -247,7 +301,7 @@ void RAI_graphics::addBackground(object::Background *back) {
   background = back;
 }
 
-void RAI_graphics::addCheckerBoard(object::CheckerBoard *back){
+void RAI_graphics::addCheckerBoard(object::CheckerBoard *back) {
   checkerboard = back;
   checkerboardChanged = true;
 }
@@ -269,13 +323,13 @@ void RAI_graphics::setBackgroundColor(float r, float g, float b, float a) {
   clearColor[3] = a;
 }
 
-void RAI_graphics::setLightProp(LightProp& prop) {
+void RAI_graphics::setLightProp(LightProp &prop) {
   std::lock_guard<std::mutex> guard(mtxLight);
   lightProp = prop;
   lightPropChanged = true;
 }
 
-void RAI_graphics::setCameraProp(CameraProp& prop) {
+void RAI_graphics::setCameraProp(CameraProp &prop) {
   std::lock_guard<std::mutex> guard(mtxCamera);
   cameraProp = prop;
   cameraPropChanged = true;
@@ -291,10 +345,10 @@ void RAI_graphics::savingSnapshots(std::string logDirectory, std::string fileNam
 }
 
 void RAI_graphics::images2Video() {
-  std::cout<<"saving video. This might take a few seconds"<<std::endl;
+  std::cout << "saving video. This might take a few seconds" << std::endl;
   std::lock_guard<std::mutex> guard(mtxCamera);
   saveSnapShot = false;
-  if(!areThereimagesTosave) return;
+  if (!areThereimagesTosave) return;
   areThereimagesTosave = false;
   Thread2Ptr t = &RAI_graphics::images2Video_inThread;
   PthreadPtr p = *(PthreadPtr *) &t;
@@ -302,40 +356,49 @@ void RAI_graphics::images2Video() {
   if (pthread_create(&tid, 0, p, this) == 0)
     pthread_detach(tid);
 
-  while(mtx.try_lock())
+  while (mtx.try_lock())
     mtx.unlock();
 }
 
 void *RAI_graphics::images2Video_inThread(void *obj) {
   std::lock_guard<std::mutex> guard(mtx);
-  std::string command = "ffmpeg -r 60 -i " + image_dir + "/%07d.bmp -s 800x600 -c:v libx264 -crf 5 " + image_dir + "/" + videoFileName + ".mp4 >nul 2>&1";
+  std::string
+    command = "ffmpeg -r 60 -i " + image_dir + "/%07d.bmp -s 800x600 -c:v libx264 -crf 5 " + image_dir + "/" + videoFileName + ".mp4 >nul 2>&1";
   int i = system(command.c_str());
   command = "rm -rf " + image_dir + "/*.bmp";
   i = system(command.c_str());
   return NULL;
 }
 
-const Uint8* RAI_graphics::keyboard() {
+const Uint8 *RAI_graphics::keyboard() {
   return SDL_GetKeyboardState(NULL);
 }
 
-const MouseInput* RAI_graphics::mouse(){
+const MouseInput *RAI_graphics::mouse() {
   SDL_Event e;
-  SDL_PollEvent( &e );
+  SDL_PollEvent(&e);
   mouseInput.wheel = e.wheel;
   mouseInput.leftB = e.button.button;
   Uint32 mbuttonState = SDL_GetMouseState(&mouseInput.x, &mouseInput.y);
 
-  if (mbuttonState==SDL_BUTTON_LEFT) mouseInput.leftB = true;
+  if (mbuttonState == SDL_BUTTON_LEFT) mouseInput.leftB = true;
   else mouseInput.leftB = false;
 
-  if (mbuttonState==SDL_BUTTON_RIGHT) mouseInput.rightB = true;
+  if (mbuttonState == SDL_BUTTON_RIGHT) mouseInput.rightB = true;
   else mouseInput.rightB = false;
 
-  if (mbuttonState==SDL_BUTTON_MIDDLE) mouseInput.middleB = true;
+  if (mbuttonState == SDL_BUTTON_MIDDLE) mouseInput.middleB = true;
   else mouseInput.middleB = false;
 
   return &mouseInput;
+}
+
+int RAI_graphics::readObjIdx() {
+  int tmpx = 0, tmpy = 0;
+  SDL_GetMouseState(&tmpx, &tmpy);
+  float color[4];
+  glReadPixels(tmpx, windowHeight_ - tmpy, 1, 1, GL_RGB, GL_FLOAT, color);
+  return color[0] * 255 + color[1] * 255 * 255 + color[2] * 255 * 255 * 255;
 }
 
 } // rai_graphics

@@ -125,19 +125,6 @@ void Camera::Control(SDL_Event e) {
   } else {
 
     int tmpx = 0, tmpy = 0;
-    SDL_Event event;
-    float magnitudeChange = 1.0f;
-    while (SDL_PollEvent(&event)) {
-      if(event.type == SDL_MOUSEWHEEL)
-        if (event.wheel.y == 4)
-          magnitudeChange *= 1.2f;
-        else if (event.wheel.y == 5)
-          magnitudeChange *= 1.0f / 1.2f;
-    }
-
-    relativePos.x *= magnitudeChange;
-    relativePos.y *= magnitudeChange;
-    relativePos.z *= magnitudeChange;
 
     glm::vec4 rotationPitcAxis( -relativePos.y,relativePos.x, 0, 0), rotationPitcAxisnew;
     glm::normalize(rotationPitcAxis);
@@ -193,6 +180,29 @@ void Camera::follow(object::SingleBodyObject *obj, Eigen::Vector3d pos) {
   toFollowObj = obj;
   relativePos = glm::vec4(pos[0], pos[1], pos[2], 0);
   mi = false;
+  mtx.unlock();
+}
+
+void Camera::follow(object::SingleBodyObject *obj) {
+  mtx.lock();
+  toFollowObj = obj;
+  mi = false;
+  mtx.unlock();
+}
+
+void Camera::zoomIn() {
+  mtx.lock();
+  relativePos.x /= 1.1;
+  relativePos.y /= 1.1;
+  relativePos.z /= 1.1;
+  mtx.unlock();
+}
+
+void Camera::zoomOut() {
+  mtx.lock();
+  relativePos.x *= 1.1;
+  relativePos.y *= 1.1;
+  relativePos.z *= 1.1;
   mtx.unlock();
 }
 

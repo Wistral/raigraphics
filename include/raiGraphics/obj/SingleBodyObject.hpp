@@ -65,7 +65,9 @@ class SingleBodyObject: public Object {
   unsigned long getVertexNumber();
   bool isVisible() {return visible;}
 
-  unsigned int getM_numIndices() const;
+  unsigned getObIndex() const {return obIndex; };
+  unsigned setObIndex(unsigned idx) {obIndex = idx; };
+
   void setVisibility(bool visibility) {visible = visibility;}
   void setScale(double scale);
   void setScale(double scale1,double scale2,double scale3);
@@ -101,6 +103,7 @@ class SingleBodyObject: public Object {
   GLuint m_vertexArrayBuffers[NUM_BUFFERS];
   unsigned int m_numIndices;
   std::mutex mtx;
+  unsigned obIndex;
 
 
   // TODO code refine(inheritance)

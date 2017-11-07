@@ -26,6 +26,7 @@ class MultiBodyObject: public Object {
   bool isVisible() {return visible;}
   void showGhosts(int maxGhosts, float transparency);
   void addGhostsNow();
+  std::vector<SingleBodyObject*> getChildren(){ return objs; }
 
   bool reflectable = true;
  protected:
