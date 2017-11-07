@@ -85,7 +85,7 @@ class SingleBodyObject: public Object {
   bool tempTransformOn = false;
   glm::mat4 scaleMat_;
   std::vector<float> color_ = {0.7, 0.7, 0.7};
-  std::vector<float> amb_m = {0.3, 0.3, 0.3};
+  std::vector<float> amb_m = {0.6, 0.6, 0.6};
   std::vector<float> diff_m = {1.0,1.0,1.0};
   std::vector<float> spec_m = {0.6,0.6,0.6};
   float transparency_ = 1.0;

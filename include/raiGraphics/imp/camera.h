@@ -28,7 +28,6 @@ struct Camera {
 
   object::SingleBodyObject* toFollowObj = nullptr;
   glm::vec4 relativePos;
-  glm::vec4 rotationPitcAxis;
   glm::mat4 vp_;
 
   vector3d loc;

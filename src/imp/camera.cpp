@@ -68,7 +68,13 @@ void Camera::GetVP(glm::mat4 &vp) {
 
 void Camera::GetPos(glm::vec3 &position) {
   mtx.lock();
-  position = pos;
+  if (mi)
+    position = pos;
+  else{
+    Transform trans;
+    toFollowObj->getTransform(trans);
+    position = *trans.GetPos() + glm::vec3(relativePos);
+  }
   mtx.unlock();
 }
 
@@ -91,14 +97,6 @@ void Camera::Control(SDL_Event e) {
       camPitch += camAngularSpeed * (tmpy - prevMy);
       camPitch = std::min(std::max(camPitch, -89.5f), 89.5f);
     }
-
-    Uint32 mbuttonState = SDL_GetMouseState(&prevMx, &prevMy);
-
-    if (mbuttonState == SDL_BUTTON_LEFT)
-      mousePressedLastTimeStep = true;
-
-    if (mbuttonState == 0)
-      mousePressedLastTimeStep = false;
 
     lockCamera();
     glm::vec3 left, right;
@@ -126,14 +124,37 @@ void Camera::Control(SDL_Event e) {
       camLinearSpeed /= 1.05;
   } else {
 
+    int tmpx = 0, tmpy = 0;
+    SDL_Event event;
+    float magnitudeChange = 1.0f;
+    while (SDL_PollEvent(&event)) {
+      if(event.type == SDL_MOUSEWHEEL)
+        if (event.wheel.y == 4)
+          magnitudeChange *= 1.2f;
+        else if (event.wheel.y == 5)
+          magnitudeChange *= 1.0f / 1.2f;
+    }
+
+    relativePos.x *= magnitudeChange;
+    relativePos.y *= magnitudeChange;
+    relativePos.z *= magnitudeChange;
+
+    glm::vec4 rotationPitcAxis( -relativePos.y,relativePos.x, 0, 0), rotationPitcAxisnew;
+    glm::normalize(rotationPitcAxis);
+
+
+    if (mousePressedLastTimeStep) {
+      SDL_GetMouseState(&tmpx, &tmpy);
+      relativePos = glm::rotate(glm::radians((prevMx - tmpx) * 0.13f), glm::vec3(0, 0, 1)) * relativePos;
+      relativePos = glm::rotate(glm::radians((prevMy - tmpy) * 0.13f), glm::vec3(rotationPitcAxis)) * relativePos;
+    }
+
     if (switchTime > 3) {
       if (keyState[SDL_SCANCODE_LEFT]) {
         relativePos = glm::rotate(glm::radians(22.5f), glm::vec3(0, 0, 1)) * relativePos;
-        rotationPitcAxis = glm::rotate(glm::radians(22.5f), glm::vec3(0, 0, 1)) * rotationPitcAxis;
         switchTime = 0;
       } else if (keyState[SDL_SCANCODE_RIGHT]) {
         relativePos = glm::rotate(glm::radians(-22.5f), glm::vec3(0, 0, 1)) * relativePos;
-        rotationPitcAxis = glm::rotate(glm::radians(-22.5f), glm::vec3(0, 0, 1)) * rotationPitcAxis;
         switchTime = 0;
       } else if (keyState[SDL_SCANCODE_UP]) {
         relativePos = glm::rotate(glm::radians(-22.5f), glm::vec3(rotationPitcAxis)) * relativePos;
@@ -144,6 +165,14 @@ void Camera::Control(SDL_Event e) {
       }
     }
   }
+
+  Uint32 mbuttonState = SDL_GetMouseState(&prevMx, &prevMy);
+
+  if (mbuttonState == SDL_BUTTON_LEFT)
+    mousePressedLastTimeStep = true;
+
+  if (mbuttonState == 0)
+    mousePressedLastTimeStep = false;
 
   if (keyState[SDL_SCANCODE_SPACE] && switchTime > 10) {
     if (!toFollowObj) {
@@ -163,8 +192,6 @@ void Camera::follow(object::SingleBodyObject *obj, Eigen::Vector3d pos) {
   mtx.lock();
   toFollowObj = obj;
   relativePos = glm::vec4(pos[0], pos[1], pos[2], 0);
-  rotationPitcAxis = glm::vec4(pos[1], pos[0], 0, 0);
-  glm::normalize(rotationPitcAxis);
   mi = false;
   mtx.unlock();
 }
