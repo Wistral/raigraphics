@@ -164,6 +164,7 @@ void RAI_graphics::draw() {
     }
   }
 
+  /// UI
   while (SDL_PollEvent(&e)) {
     int objId = 16646655;
     switch (e.type) {
@@ -178,15 +179,17 @@ void RAI_graphics::draw() {
           camera->zoomIn();
         break;
     }
-
     if(objId != 16646655) {
       camera->follow(objectsInOrder_[objId]);
       highlightedObjId = objId;
     }
   }
 
+  /// update camera with events
   camera->Control(e);
   camera->update();
+
+  /// clear images that was generated for mouse clicks
   glClear(GL_COLOR_BUFFER_BIT);
   glClear(GL_DEPTH_BUFFER_BIT);
   glClear(GL_ACCUM_BUFFER_BIT);
@@ -221,6 +224,8 @@ void RAI_graphics::draw() {
     checkerboard->draw(camera, light, checkerboard->reflectance, false);
   }
 
+
+  /// draw the real objects
   for (auto *sob: supObjs_)
     if(sob->isVisible()) sob->draw(camera, light, 1.0, false);
 
@@ -245,6 +250,7 @@ void RAI_graphics::draw() {
     objs_[i]->usingTempTransform(false);
   }
 
+  /// draw background
   if (background) {
     shader_background->Bind();
     shader_background->Update(camera, light, background);
