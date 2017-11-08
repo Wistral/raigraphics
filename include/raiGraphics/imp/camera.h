@@ -21,7 +21,7 @@ struct Camera {
   void GetVP(glm::mat4& vp);
   void GetPose(glm::mat4 &vp);
   void GetPos(glm::vec3& position);
-  void Control(SDL_Event e);
+  void Control(SDL_Event e, bool stayAboveZero);
   void follow(rai_graphics::object::SingleBodyObject* obj, Eigen::Vector3d pos);
   void follow(rai_graphics::object::SingleBodyObject* obj);
   void zoomIn();

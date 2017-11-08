@@ -231,7 +231,7 @@ void RAI_graphics::draw() {
   /// clear images that was generated for mouse clicks
   display->Clear(0,0,0,0);
   /// update camera with events
-  camera->Control(e);
+  camera->Control(e, checkerboard);
   camera->update();
 
   if (startInteraction)
