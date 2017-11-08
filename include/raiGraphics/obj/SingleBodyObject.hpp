@@ -82,6 +82,7 @@ class SingleBodyObject: public Object {
   ShaderType defaultShader = object::RAI_SHADER_BASIC;
 
   bool reflectable = true;
+  glm::vec3 com;
 
  protected:
   void registerToGPU();
@@ -108,7 +109,6 @@ class SingleBodyObject: public Object {
   unsigned int m_numIndices;
   std::mutex mtx;
   unsigned obIndex;
-
 
   // TODO code refine(inheritance)
  public:

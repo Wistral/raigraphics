@@ -8,6 +8,8 @@ namespace rai_graphics {
 namespace object {
 
 Cone::Cone(float r, float l) {
+  com = glm::vec3(0,0,l*.25f);
+
   int slices = 20;
 //  bottom
   positions.emplace_back(glm::vec3(0, 0, 0));

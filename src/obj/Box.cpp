@@ -5,6 +5,8 @@
 #include "raiGraphics/obj/Box.hpp"
 rai_graphics::object::Box::Box(float xLength, float yLength, float zLength) {
   // origin is on the center of box
+  com = glm::vec3(0,0,0);
+
   defaultShader = object::RAI_SHADER_FLAT;
 
   float xHalfLength = xLength/2;

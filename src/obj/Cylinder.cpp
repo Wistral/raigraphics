@@ -9,6 +9,8 @@ namespace rai_graphics {
 namespace object {
 
 Cylinder::Cylinder(float r, float l) {
+  com = glm::vec3(0,0,l/2.0);
+
   int slices = 20;
   int position = 0;
 //  bottom

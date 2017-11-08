@@ -244,9 +244,9 @@ void SingleBodyObject::highlight() {
   amb_m_orig[1] = amb_m[1];
   amb_m_orig[2] = amb_m[2];
 
-  amb_m[0] = 3.0f;
-  amb_m[1] = 3.0f;
-  amb_m[2] = 3.0f;
+  amb_m[0] = 2.0f;
+  amb_m[1] = 2.0f;
+  amb_m[2] = 2.0f;
 }
 
 void SingleBodyObject::deHighlight() {

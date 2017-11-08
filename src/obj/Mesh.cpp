@@ -26,6 +26,12 @@ Mesh::Mesh(const std::string& fileName, float scale) {
   }
   scale_ = scale;
   recursiveProcess(scene->mRootNode, scene);
+  com = glm::vec3(0,0,0);
+
+  for(auto& pos: positions)
+    com += pos;
+
+  com /= positions.size();
 }
 
 Mesh::Mesh(Vertex *vertices, unsigned int numVertices, unsigned int *indicesL, unsigned int numIndices) {

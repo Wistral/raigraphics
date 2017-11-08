@@ -1,6 +1,7 @@
 //
 // Created by jhwangbo on 17. 4. 27.
 //
+#include <raiGraphics/RAI_keyboard.hpp>
 #include "raiGraphics/imp/camera.h"
 
 namespace rai_graphics {
@@ -80,7 +81,7 @@ void Camera::GetPos(glm::vec3 &position) {
 
 void Camera::Control(SDL_Event e) {
   std::lock_guard<std::mutex> guad(mtx);
-  if (mi) {
+  if (mi && !keyState[RAI_KEY_LCTRL]) {
     float sinYaw = sin(camYaw / 180 * M_PI);
     float cosYaw = cos(camYaw / 180 * M_PI);
     float sinPitch = sin(camPitch / 180 * M_PI);
@@ -122,7 +123,7 @@ void Camera::Control(SDL_Event e) {
 
     if (keyState[SDL_SCANCODE_KP_MINUS])
       camLinearSpeed /= 1.05;
-  } else {
+  } else if(!keyState[RAI_KEY_LCTRL]) {
 
     int tmpx = 0, tmpy = 0;
 

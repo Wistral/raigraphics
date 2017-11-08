@@ -17,6 +17,7 @@
 #include <mutex>
 #include <raiGraphics/obj/CheckerBoard.hpp>
 #include <raiGraphics/imp/shader_mouseClick.h>
+#include <raiGraphics/obj/Arrow.hpp>
 
 namespace rai_graphics {
 
@@ -75,6 +76,7 @@ class RAI_graphics {
 
   object::Background *background = nullptr;
   object::CheckerBoard *checkerboard = nullptr;
+  object::Arrow *interactionArrow = nullptr;
 
   bool backgroundChanged = false, checkerboardChanged = false;
 
@@ -122,6 +124,8 @@ class RAI_graphics {
   bool lightPropChanged;
   unsigned objectIdexToBeAssigned = 0;
   int highlightedObjId = 16646655;
+  bool isInteracting = false;
+  int interStartingX, interStartingY;
 
 };
 

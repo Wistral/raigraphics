@@ -41,6 +41,8 @@ void *RAI_graphics::loop(void *obj) {
   shader_flat = new Shader_flat;
   shader_background = new Shader_background;
   shader_mouseClick = new Shader_mouseClick;
+  interactionArrow = new object::Arrow(0.2, 0.1, 1, 0.3);
+
   light = new Light;
 
   while (true) {
@@ -70,12 +72,15 @@ void *RAI_graphics::loop(void *obj) {
   if (background)
     background->destroy();
 
+  interactionArrow->destroy();
+
   delete display;
   delete camera;
   delete shader_background;
   delete shader_basic;
   delete shader_flat;
   delete shader_mouseClick;
+  delete interactionArrow;
 }
 
 void RAI_graphics::init() {
@@ -124,12 +129,14 @@ void RAI_graphics::init() {
     }
 
   for (auto *ob: tobeRemoved_objs_) {
+    ob->destroy();
     ptrdiff_t pos = find(objs_.begin(), objs_.end(), ob) - objs_.begin();
     objs_.erase(objs_.begin() + pos);
     shaders_.erase(shaders_.begin() + pos);
   }
 
   for (auto *sob: tobeRemoved_supObjs_) {
+    sob->destroy();
     ptrdiff_t pos = find(supObjs_.begin(), supObjs_.end(), sob) - supObjs_.begin();
     supObjs_.erase(supObjs_.begin() + pos);
   }
@@ -169,10 +176,17 @@ void RAI_graphics::draw() {
   static const int NO_OBJECT = 16646655;
   while (SDL_PollEvent(&e)) {
     int objId = NO_OBJECT;
+    bool startInteraction=false, endInteraction=false;
     switch (e.type) {
       case SDL_MOUSEBUTTONDOWN:
         if (e.button.clicks == 2 && !keyboard()[RAI_KEY_LCTRL])
           objId = readObjIdx();
+        else if (e.button.clicks == 1 && keyboard()[RAI_KEY_LCTRL] && readObjIdx()==highlightedObjId)
+          startInteraction = isInteracting = true;
+        break;
+      case SDL_MOUSEBUTTONUP:
+        isInteracting = false;
+        endInteraction = true;
         break;
       case SDL_MOUSEWHEEL:
         if (e.wheel.y == 1)
@@ -181,7 +195,7 @@ void RAI_graphics::draw() {
           camera->zoomIn();
         break;
       case SDL_KEYDOWN:
-        if(keyboard()[SDL_SCANCODE_ESCAPE] && highlightedObjId != NO_OBJECT)
+        if(keyboard()[RAI_KEY_ESCAPE] && highlightedObjId != NO_OBJECT)
           objectsInOrder_[highlightedObjId]->deHighlight();
         break;
     }
@@ -197,6 +211,45 @@ void RAI_graphics::draw() {
         highlightedObjId = objId;
         objectsInOrder_[highlightedObjId]->highlight();
       }
+    }
+
+    if (startInteraction)
+      SDL_GetMouseState(&interStartingX, &interStartingY);
+
+    if (isInteracting) {
+      int tx, ty;
+      SDL_GetMouseState(&tx, &ty);
+      tx -= interStartingX;
+      ty -= interStartingY;
+      Transform objTrans;
+      glm::mat4 cameraT;
+      glm::vec3 cameraPos, objectPos, diffPos, arrowEnd3;
+      objectsInOrder_[highlightedObjId]->getTransform(objTrans);
+
+      glm::vec4 arrowOrigin = objTrans.GetModel() * glm::vec4(objectsInOrder_[highlightedObjId]->com, 1);
+      camera->GetVP(cameraT);
+      camera->GetPos(cameraPos);
+      diffPos = cameraPos - *objTrans.GetPos();
+      float normDiff = glm::l2Norm(diffPos);
+//      interactionArrow->setScale(normDiff/1000.0f*sqrt(float(tx*tx+ty*ty)));
+      std::cout<<"scale "<<normDiff/1000.0f*sqrt(float(tx*tx+ty*ty))<<std::endl;
+
+      glm::vec4 arrowEnd = glm::inverse(cameraT) * glm::vec4(tx,ty,0,1);
+      arrowEnd3 = glm::normalize(glm::vec3(arrowEnd));
+      auto axis = glm::cross(arrowEnd3, glm::vec3(1,0,0));
+      axis = glm::normalize(axis);
+      float cos = arrowEnd3[0];
+      Eigen::Vector3d arrowPosE(arrowOrigin[0], arrowOrigin[1], arrowOrigin[2]);
+//      interactionArrow->setPos(arrowPosE);
+      Eigen::Matrix3d arrowRotE;
+      glm::mat4 arrowRotglm = glm::rotate(float(std::acos(cos)), axis);
+      arrowRotE << arrowRotglm[0][0], arrowRotglm[1][0], arrowRotglm[2][0],
+                   arrowRotglm[0][1], arrowRotglm[1][1], arrowRotglm[2][1],
+                   arrowRotglm[0][2], arrowRotglm[1][2], arrowRotglm[2][2];
+      shader_basic->Bind();
+      shader_basic->Update(camera, light, interactionArrow, false);
+      interactionArrow->draw();
+      shader_basic->UnBind();
     }
   }
 
