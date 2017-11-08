@@ -369,7 +369,7 @@ void RAI_graphics::images2Video() {
 
 void *RAI_graphics::images2Video_inThread(void *obj) {
   std::string
-    command = "ffmpeg -r 60 -i " + image_dir + "/%07d.bmp -s 800x600 -c:v libx264 -crf 5 " + image_dir + "/" + videoFileName + ".mp4 >nul 2>&1";
+    command = "ffmpeg -r 60 -i " + image_dir + "/%07d.bmp -s "+std::to_string(windowWidth_)+"x"+std::to_string(windowHeight_)+" -c:v libx264 -crf 5 " + image_dir + "/" + videoFileName + ".mp4 >nul 2>&1";
   std::ifstream f((image_dir + "/" + videoFileName +".mp4").c_str());
   if(f.good())
     int i = system(("rm " + image_dir + "/" + videoFileName +".mp4").c_str());
