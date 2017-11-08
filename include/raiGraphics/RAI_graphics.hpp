@@ -8,6 +8,8 @@
 #include "raiGraphics/obj/Background.hpp"
 #include "raiGraphics/obj/SingleBodyObject.hpp"
 #include "raiGraphics/obj/MultiBodyObject.hpp"
+#include "raiGraphics/obj/Sphere.hpp"
+
 #include "raiGraphics/imp/display.h"
 #include "raiGraphics/imp/shader_basic.h"
 #include "raiGraphics/imp/shader_flat.h"
@@ -66,6 +68,11 @@ class RAI_graphics {
   const Uint8* keyboard();
   const MouseInput* mouse();
 
+  bool isInteracting();
+  Eigen::Vector3d& getInteractionMagnitude();
+  int getInteractingObjectID();
+
+
  private:
   void *loop(void *obj);
   void init();
@@ -73,10 +80,12 @@ class RAI_graphics {
   void *images2Video_inThread(void *obj);
   int readObjIdx();
   void drawObj(bool isReflection);
+  void computeMousePull();
 
   object::Background *background = nullptr;
   object::CheckerBoard *checkerboard = nullptr;
   object::Arrow *interactionArrow = nullptr;
+  object::Sphere *interactionBall = nullptr;
 
   bool backgroundChanged = false, checkerboardChanged = false;
 
@@ -124,8 +133,9 @@ class RAI_graphics {
   bool lightPropChanged;
   unsigned objectIdexToBeAssigned = 0;
   int highlightedObjId = 16646655;
-  bool isInteracting = false;
+  bool isInteracting_ = false;
   int interStartingX, interStartingY;
+  Eigen::Vector3d interactionForce;
 
 };
 

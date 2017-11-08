@@ -48,6 +48,7 @@ void MultiBodyObject::turnOnGhost(bool ghostOn) {
 
 void MultiBodyObject::drawSnapshot(Camera *camera, Light *light, float transparency, bool isReflection){
   for(int i = 0; i < objs.size(); i++) {
+    if( !objs[i]->reflectable && isReflection ) continue;
     objs[i]->setTransparency(transparency);
     shader[i]->Bind();
     shader[i]->Update(camera, light, objs[i], isReflection);

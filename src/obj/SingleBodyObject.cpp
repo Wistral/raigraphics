@@ -244,15 +244,18 @@ void SingleBodyObject::highlight() {
   amb_m_orig[1] = amb_m[1];
   amb_m_orig[2] = amb_m[2];
 
-  amb_m[0] = 2.0f;
-  amb_m[1] = 2.0f;
-  amb_m[2] = 2.0f;
+  amb_m[0] = 3.0f;
+  amb_m[1] = 3.0f;
+  amb_m[2] = 3.0f;
+  transparencyOrig_ = transparency_;
+  transparency_ = 0.9;
 }
 
 void SingleBodyObject::deHighlight() {
   amb_m[0] = amb_m_orig[0];
   amb_m[1] = amb_m_orig[1];
   amb_m[2] = amb_m_orig[2];
+  transparency_ = transparencyOrig_;
 }
 
 //void SingleBodyObject::drawSnapshot(Camera *camera, Light *light, float transparency) {

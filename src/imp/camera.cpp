@@ -49,21 +49,27 @@ void Camera::update() {
   if (mi) {
     glm::vec3 alternateUp(1, 0, 0);
     if (relativePos.x * relativePos.x + relativePos.y * relativePos.y < 1e-4)
-      vp_ = projection * glm::lookAt(pos, pos + offset, alternateUp);
+      pose_ = glm::lookAt(pos, pos + offset, alternateUp);
     else
-      vp_ = projection * glm::lookAt(pos, pos + offset, up);
+      pose_ = glm::lookAt(pos, pos + offset, up);
   } else {
     Transform trans;
     toFollowObj->getTransform(trans);
-    vp_ = projection * glm::lookAt(*trans.GetPos() + glm::vec3(relativePos), *trans.GetPos(), up);
+    pose_ = glm::lookAt(*trans.GetPos() + glm::vec3(relativePos), *trans.GetPos(), up);
   }
-
+  vp_ = projection * pose_;
   mtx.unlock();
 }
 
 void Camera::GetVP(glm::mat4 &vp) {
   mtx.lock();
   vp = vp_;
+  mtx.unlock();
+}
+
+void Camera::GetPose(glm::mat4 &pose) {
+  mtx.lock();
+  pose = pose_;
   mtx.unlock();
 }
 

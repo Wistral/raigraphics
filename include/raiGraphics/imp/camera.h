@@ -19,6 +19,7 @@ struct Camera {
   Camera(const glm::vec3 &pos, float fov, float aspect, float zNear, float zFar);
   void update();
   void GetVP(glm::mat4& vp);
+  void GetPose(glm::mat4 &vp);
   void GetPos(glm::vec3& position);
   void Control(SDL_Event e);
   void follow(rai_graphics::object::SingleBodyObject* obj, Eigen::Vector3d pos);
@@ -31,7 +32,7 @@ struct Camera {
 
   object::SingleBodyObject* toFollowObj = nullptr;
   glm::vec4 relativePos;
-  glm::mat4 vp_;
+  glm::mat4 vp_, pose_;
 
   vector3d loc;
   float camPitch, camYaw;

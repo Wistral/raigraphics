@@ -95,7 +95,7 @@ class SingleBodyObject: public Object {
   std::vector<float> amb_m_orig = {0.6, 0.6, 0.6};
   std::vector<float> diff_m = {1.0,1.0,1.0};
   std::vector<float> spec_m = {0.6,0.6,0.6};
-  float transparency_ = 1.0;
+  float transparency_ = 1.0, transparencyOrig_;
   float shininess = 50;
   std::vector<glm::vec3> colorsCoords;
   bool visible = true;
