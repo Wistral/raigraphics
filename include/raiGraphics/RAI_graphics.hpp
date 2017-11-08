@@ -81,6 +81,7 @@ class RAI_graphics {
   int readObjIdx();
   void drawObj(bool isReflection);
   void computeMousePull();
+  void savingSnapshots_private(std::string logDirectory, std::string fileName);
 
   object::Background *background = nullptr;
   object::CheckerBoard *checkerboard = nullptr;
@@ -136,6 +137,7 @@ class RAI_graphics {
   bool isInteracting_ = false;
   int interStartingX, interStartingY;
   Eigen::Vector3d interactionForce;
+  int autoVideoRecordingNumber=0;
 
 };
 

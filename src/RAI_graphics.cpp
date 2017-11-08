@@ -182,9 +182,9 @@ void RAI_graphics::draw() {
   /// UI
   static const int NO_OBJECT = 16646655;
   bool startInteraction=false;
+  int objId = NO_OBJECT;
 
   while (SDL_PollEvent(&e)) {
-    int objId = NO_OBJECT;
     switch (e.type) {
       case SDL_MOUSEBUTTONDOWN:
         if (e.button.clicks == 2 && !keyboard()[RAI_KEY_LCTRL])
@@ -204,23 +204,30 @@ void RAI_graphics::draw() {
       case SDL_KEYDOWN:
         if(keyboard()[RAI_KEY_ESCAPE] && highlightedObjId != NO_OBJECT)
           objectsInOrder_[highlightedObjId]->deHighlight();
+
+        if(keyboard()[RAI_KEY_R] && keyboard()[RAI_KEY_LSHIFT])
+          if(!saveSnapShot) {
+            LOG(INFO)<<"Saving video";
+            savingSnapshots_private("/tmp", "raiGraphicsAutoRecorder"+std::to_string(autoVideoRecordingNumber++));
+          } else {
+            LOG(INFO)<<"Starting encoding video";
+            images2Video();
+          }
         break;
     }
+  }
+  if (objId != NO_OBJECT) {
+    camera->follow(objectsInOrder_[objId]);
+    if(highlightedObjId != NO_OBJECT)
+      objectsInOrder_[highlightedObjId]->deHighlight();
 
-    if (objId != NO_OBJECT) {
-      camera->follow(objectsInOrder_[objId]);
-      if(highlightedObjId != NO_OBJECT)
-        objectsInOrder_[highlightedObjId]->deHighlight();
-
-      if(highlightedObjId == objId) {
-        highlightedObjId = NO_OBJECT;
-      } else {
-        highlightedObjId = objId;
-        objectsInOrder_[highlightedObjId]->highlight();
-      }
+    if(highlightedObjId == objId) {
+      highlightedObjId = NO_OBJECT;
+    } else {
+      highlightedObjId = objId;
+      objectsInOrder_[highlightedObjId]->highlight();
     }
   }
-
   /// clear images that was generated for mouse clicks
   display->Clear(0,0,0,0);
   /// update camera with events
@@ -264,7 +271,9 @@ void RAI_graphics::draw() {
       FreeImage_Unload(image);
       delete[] pixels;
     } else {
-      LOG(FATAL) << "You are saving too many frames. RAI shutting down to prevent possible system breakdown";
+      LOG(INFO)<<"RAI is saving video now since it exceeded the time limit";
+      images2Video();
+      saveSnapShot = false;
     }
   }
 
@@ -335,15 +344,18 @@ void RAI_graphics::setCameraProp(CameraProp &prop) {
 
 void RAI_graphics::savingSnapshots(std::string logDirectory, std::string fileName) {
   mtx.lock();
+  savingSnapshots(logDirectory,fileName);
+  mtx.unlock();
+}
+
+void RAI_graphics::savingSnapshots_private(std::string logDirectory, std::string fileName) {
   image_dir = logDirectory;
   imageCounter = 0;
   videoFileName = fileName;
   saveSnapShot = true;
-  mtx.unlock();
 }
 
 void RAI_graphics::images2Video() {
-  std::cout << "saving video. This might take a few seconds" << std::endl;
   std::lock_guard<std::mutex> guard(mtxCamera);
   saveSnapShot = false;
   if (!areThereimagesTosave) return;
@@ -353,18 +365,18 @@ void RAI_graphics::images2Video() {
   pthread_t tid;
   if (pthread_create(&tid, 0, p, this) == 0)
     pthread_detach(tid);
-
-  while (mtx.try_lock())
-    mtx.unlock();
 }
 
 void *RAI_graphics::images2Video_inThread(void *obj) {
-  std::lock_guard<std::mutex> guard(mtx);
   std::string
     command = "ffmpeg -r 60 -i " + image_dir + "/%07d.bmp -s 800x600 -c:v libx264 -crf 5 " + image_dir + "/" + videoFileName + ".mp4 >nul 2>&1";
+  std::ifstream f((image_dir + "/" + videoFileName +".mp4").c_str());
+  if(f.good())
+    int i = system(("rm " + image_dir + "/" + videoFileName +".mp4").c_str());
   int i = system(command.c_str());
   command = "rm -rf " + image_dir + "/*.bmp";
   i = system(command.c_str());
+  LOG(INFO)<<"The video is generated under "+image_dir;
   return NULL;
 }
 
