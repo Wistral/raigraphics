@@ -15,6 +15,7 @@ class Display {
 
   virtual ~Display();
   SDL_Window *m_window;
+  SDL_Renderer *m_renderer;
 
  protected:
  private:

@@ -8,6 +8,8 @@
 #include <FreeImage.h>
 #include <thread>
 #include <raiGraphics/obj/Sphere.hpp>
+#include <SDL2/SDL_ttf.h>
+#include "GL/glut.h"
 
 namespace rai_graphics {
 
@@ -47,6 +49,9 @@ void *RAI_graphics::loop(void *obj) {
   interactionArrow->setColor({1,0,0});
   interactionBall = new object::Sphere(1);
   interactionBall->setColor({1,0,0});
+  TTF_Init();
+  font = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 24);
+  LOG_IF(FATAL, font == nullptr) <<"Could not find the font file. Run the install script provided.";
 
   light = new Light;
 
@@ -80,6 +85,8 @@ void *RAI_graphics::loop(void *obj) {
   interactionArrow->destroy();
   interactionBall->destroy();
 
+  TTF_CloseFont(font);
+  TTF_Quit();
   delete display;
   delete camera;
   delete shader_background;
@@ -245,7 +252,6 @@ void RAI_graphics::draw() {
     drawObj(true);
     checkerboard->draw(camera, light, checkerboard->reflectance, false);
   }
-
   /// draw the real objects
   drawObj(false);
 
@@ -256,6 +262,9 @@ void RAI_graphics::draw() {
     background->draw();
     shader_background->UnBind();
   }
+
+  std::string textToDisplay("efawgekwejngiewsjg");
+
 
   if (saveSnapShot) {
     if (imageCounter < 2e3) {
@@ -479,7 +488,6 @@ Eigen::Vector3d& RAI_graphics::getInteractionMagnitude(){
 int RAI_graphics::getInteractingObjectID(){
   return highlightedObjId;
 }
-
 
 
 } // rai_graphics

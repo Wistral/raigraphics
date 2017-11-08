@@ -46,7 +46,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 # link libraries
 add_library(${TARGETS_LIB_NAME}
         SHARED ${SOURCE_FILES} ${HEADER_FILES})
-set(RAI_GRAPHICS_OPENGL_LINK ${TARGETS_LIB_NAME} glut GLU GL GLEW SDL2 assimp SOIL glog freeimage pthread)
+set(RAI_GRAPHICS_OPENGL_LINK ${TARGETS_LIB_NAME} glut GLU GL GLEW SDL2 SDL2_ttf assimp SOIL glog freeimage pthread)
 
 # executable
 add_executable(testRAIGraphics raiGraphicsTest.cpp)

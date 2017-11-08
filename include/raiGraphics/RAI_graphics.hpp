@@ -20,6 +20,8 @@
 #include <raiGraphics/obj/CheckerBoard.hpp>
 #include <raiGraphics/imp/shader_mouseClick.h>
 #include <raiGraphics/obj/Arrow.hpp>
+#include "SDL2/SDL_ttf.h"
+#include "SDL2/SDL.h"
 
 namespace rai_graphics {
 
@@ -71,6 +73,7 @@ class RAI_graphics {
   bool isInteracting();
   Eigen::Vector3d& getInteractionMagnitude();
   int getInteractingObjectID();
+  void drawText(std::string& msg, int x, int y, int r, int g, int b);
 
 
  private:
@@ -138,6 +141,7 @@ class RAI_graphics {
   int interStartingX, interStartingY;
   Eigen::Vector3d interactionForce;
   int autoVideoRecordingNumber=0;
+  TTF_Font *font;
 
 };
 
