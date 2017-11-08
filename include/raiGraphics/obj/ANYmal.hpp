@@ -8,6 +8,7 @@
 #include <raiCommon/TypeDef.hpp>
 #include "MultiBodyObject.hpp"
 #include "Mesh.hpp"
+#include "Sphere.hpp"
 
 namespace rai_graphics {
 namespace object {
@@ -41,10 +42,15 @@ class ANYmal : public MultiBodyObject {
   Mesh shank_lh;
   Mesh shank_rh;
 
-  Mesh foot_lf;
-  Mesh foot_rf;
-  Mesh foot_lh;
-  Mesh foot_rh;
+//  Mesh foot_lf;
+//  Mesh foot_rf;
+//  Mesh foot_lh;
+//  Mesh foot_rh;
+
+  Sphere foot_lf;
+  Sphere foot_rf;
+  Sphere foot_lh;
+  Sphere foot_rh;
   std::vector<rai::HomogeneousTransform> defaultPose_;
 };
 
