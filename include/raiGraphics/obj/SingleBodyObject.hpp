@@ -76,6 +76,9 @@ class SingleBodyObject: public Object {
 
   void usingTempTransform(bool utt) {tempTransformOn = utt;};
 
+  void highlight();
+  void deHighlight();
+
   ShaderType defaultShader = object::RAI_SHADER_BASIC;
 
   bool reflectable = true;
@@ -88,6 +91,7 @@ class SingleBodyObject: public Object {
   glm::mat4 scaleMat_;
   std::vector<float> color_ = {0.7, 0.7, 0.7};
   std::vector<float> amb_m = {0.6, 0.6, 0.6};
+  std::vector<float> amb_m_orig = {0.6, 0.6, 0.6};
   std::vector<float> diff_m = {1.0,1.0,1.0};
   std::vector<float> spec_m = {0.6,0.6,0.6};
   float transparency_ = 1.0;

@@ -71,6 +71,7 @@ class RAI_graphics {
   void draw();
   void *images2Video_inThread(void *obj);
   int readObjIdx();
+  void drawObj(bool isReflection);
 
   object::Background *background = nullptr;
   object::CheckerBoard *checkerboard = nullptr;
@@ -120,7 +121,7 @@ class RAI_graphics {
   bool cameraPropChanged;
   bool lightPropChanged;
   unsigned objectIdexToBeAssigned = 0;
-  int highlightedObjId = 0;
+  int highlightedObjId = 16646655;
 
 };
 

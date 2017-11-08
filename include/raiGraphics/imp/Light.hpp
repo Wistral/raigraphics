@@ -65,7 +65,7 @@ class Light{
 
  private:
   std::vector<float> position = {-100.0,0.0,10.0};
-  std::vector<float> ambient = {0.7,0.7,0.7};
+  std::vector<float> ambient = {0.5,0.5,0.5};
   std::vector<float> diffuse = {1,1,1};
   std::vector<float> specular = {0.7,0.7,0.7};
   std::mutex mtx;

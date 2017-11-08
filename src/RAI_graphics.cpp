@@ -164,24 +164,39 @@ void RAI_graphics::draw() {
     }
   }
 
+
   /// UI
+  static const int NO_OBJECT = 16646655;
   while (SDL_PollEvent(&e)) {
-    int objId = 16646655;
+    int objId = NO_OBJECT;
     switch (e.type) {
       case SDL_MOUSEBUTTONDOWN:
         if (e.button.clicks == 2 && !keyboard()[RAI_KEY_LCTRL])
           objId = readObjIdx();
         break;
       case SDL_MOUSEWHEEL:
-        if(e.wheel.y == 1)
+        if (e.wheel.y == 1)
           camera->zoomOut();
-        else if(e.wheel.y == -1)
+        else if (e.wheel.y == -1)
           camera->zoomIn();
         break;
+      case SDL_KEYDOWN:
+        if(keyboard()[SDL_SCANCODE_ESCAPE] && highlightedObjId != NO_OBJECT)
+          objectsInOrder_[highlightedObjId]->deHighlight();
+        break;
     }
-    if(objId != 16646655) {
+
+    if (objId != NO_OBJECT) {
       camera->follow(objectsInOrder_[objId]);
-      highlightedObjId = objId;
+      if(highlightedObjId != NO_OBJECT)
+        objectsInOrder_[highlightedObjId]->deHighlight();
+
+      if(highlightedObjId == objId) {
+        highlightedObjId = NO_OBJECT;
+      } else {
+        highlightedObjId = objId;
+        objectsInOrder_[highlightedObjId]->highlight();
+      }
     }
   }
 
@@ -190,65 +205,16 @@ void RAI_graphics::draw() {
   camera->update();
 
   /// clear images that was generated for mouse clicks
-  glClear(GL_COLOR_BUFFER_BIT);
-  glClear(GL_DEPTH_BUFFER_BIT);
-  glClear(GL_ACCUM_BUFFER_BIT);
-  glClear(GL_STENCIL_BUFFER_BIT);
+  display->Clear(0,0,0,0);
 
   /// draw checkerboard and reflections
-  if(checkerboard) {
-    for (auto *sob: supObjs_)
-      if(sob->isVisible() && sob->reflectable)
-        sob->draw(camera, light, 1.0, true);
-
-    for (int i = 0; i < objs_.size(); i++) {
-      if(!objs_[i]->isVisible() || !objs_[i]->reflectable) continue;
-      shaders_[i]->Bind();
-      shaders_[i]->Update(camera, light, objs_[i], true);
-      objs_[i]->draw();
-      shaders_[i]->UnBind();
-
-      // draw ghost
-      // TODO code refine
-      objs_[i]->usingTempTransform(true);
-      for(auto& ghost : objs_[i]->getGhosts()) {
-        objs_[i]->setTempTransform(ghost);
-        shaders_[i]->Bind();
-        shaders_[i]->Update(camera, light, objs_[i], true);
-        objs_[i]->draw();
-        shaders_[i]->UnBind();
-      }
-      objs_[i]->usingTempTransform(false);
-    }
-
+  if (checkerboard) {
+    drawObj(true);
     checkerboard->draw(camera, light, checkerboard->reflectance, false);
   }
 
-
   /// draw the real objects
-  for (auto *sob: supObjs_)
-    if(sob->isVisible()) sob->draw(camera, light, 1.0, false);
-
-
-  for (int i = 0; i < objs_.size(); i++) {
-    if(!objs_[i]->isVisible()) continue;
-    shaders_[i]->Bind();
-    shaders_[i]->Update(camera, light, objs_[i], false);
-    objs_[i]->draw();
-    shaders_[i]->UnBind();
-
-    // draw ghost
-    // TODO code refine
-    objs_[i]->usingTempTransform(true);
-    for(auto& ghost : objs_[i]->getGhosts()) {
-      objs_[i]->setTempTransform(ghost);
-      shaders_[i]->Bind();
-      shaders_[i]->Update(camera, light, objs_[i], false);
-      objs_[i]->draw();
-      shaders_[i]->UnBind();
-    }
-    objs_[i]->usingTempTransform(false);
-  }
+  drawObj(false);
 
   /// draw background
   if (background) {
@@ -259,7 +225,7 @@ void RAI_graphics::draw() {
   }
 
   if (saveSnapShot) {
-    if( imageCounter < 2e3) {
+    if (imageCounter < 2e3) {
       areThereimagesTosave = true;
       std::string imageFileName = std::to_string(imageCounter++);
       while (imageFileName.length() < 7)
@@ -405,6 +371,32 @@ int RAI_graphics::readObjIdx() {
   float color[4];
   glReadPixels(tmpx, windowHeight_ - tmpy, 1, 1, GL_RGB, GL_FLOAT, color);
   return color[0] * 255 + color[1] * 255 * 255 + color[2] * 255 * 255 * 255;
+}
+
+void RAI_graphics::drawObj(bool isReflection) {
+  for (auto *sob: supObjs_)
+    if (sob->isVisible()) sob->draw(camera, light, 1.0, isReflection);
+
+  for (int i = 0; i < objs_.size(); i++) {
+    if (!objs_[i]->isVisible() || !objs_[i]->reflectable) continue;
+    shaders_[i]->Bind();
+    shaders_[i]->Update(camera, light, objs_[i], isReflection);
+    objs_[i]->draw();
+    shaders_[i]->UnBind();
+
+    // draw ghost
+    // TODO code refine
+    objs_[i]->usingTempTransform(true);
+    for (auto &ghost : objs_[i]->getGhosts()) {
+      objs_[i]->setTempTransform(ghost);
+      shaders_[i]->Bind();
+      shaders_[i]->Update(camera, light, objs_[i], isReflection);
+      objs_[i]->draw();
+      shaders_[i]->UnBind();
+    }
+    objs_[i]->usingTempTransform(false);
+  }
+
 }
 
 } // rai_graphics
