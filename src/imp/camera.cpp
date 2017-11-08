@@ -124,10 +124,10 @@ void Camera::Control(SDL_Event e) {
       pos += right;
     }
 
-    if (keyState[SDL_SCANCODE_KP_PLUS])
+    if (keyState[SDL_SCANCODE_KP_PLUS] || keyState[SDL_SCANCODE_P])
       camLinearSpeed *= 1.05;
 
-    if (keyState[SDL_SCANCODE_KP_MINUS])
+    if (keyState[SDL_SCANCODE_KP_MINUS] || keyState[SDL_SCANCODE_O])
       camLinearSpeed /= 1.05;
   } else if(!keyState[RAI_KEY_LCTRL]) {
 
