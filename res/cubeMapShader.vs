@@ -4,8 +4,10 @@ out vec3 TexCoords;
 
 uniform mat4 MVP;
 
+
 void main()
 {
     gl_Position =   MVP * vec4(position, 1.0);
     TexCoords = position;
+    gl_ClipDistance[0] = 100;
 }

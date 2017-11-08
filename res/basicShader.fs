@@ -37,4 +37,5 @@ void main()
 
         gl_FragColor=vec4(colorMono * (ambient+diffuse+specular)*att,transparency);  //<- don't forget the paranthesis (ambient+diffuse+specular)
 
+
 }
