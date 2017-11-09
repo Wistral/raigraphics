@@ -73,7 +73,7 @@ class RAI_graphics {
   bool isInteracting();
   Eigen::Vector3d& getInteractionMagnitude();
   int getInteractingObjectID();
-  void drawText(std::string& msg, int x, int y, int r, int g, int b);
+  void drawText(const char* msg, int x, int y, int r, int g, int b);
 
 
  private:

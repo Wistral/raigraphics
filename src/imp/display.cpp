@@ -24,14 +24,14 @@ Display::Display(int width, int height, const std::string &title) {
 
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 
-//  SDL_CreateWindowAndRenderer(width, height, 0, &m_window, &m_renderer);
-
   m_window =
       SDL_CreateWindow(title.c_str(), 0, 0, width, height, SDL_WINDOW_OPENGL);
   LOG_IF(FATAL, m_window ==NULL) << SDL_GetError();
+  m_renderer = SDL_CreateRenderer(m_window,-1,SDL_RENDERER_SOFTWARE);
+  LOG_IF(FATAL, m_renderer ==NULL) << SDL_GetError();
+//
   m_glContext = SDL_GL_CreateContext(m_window);
   LOG_IF(FATAL, m_glContext ==NULL) << SDL_GetError();
-  m_renderer = SDL_GetRenderer(m_window);
 
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

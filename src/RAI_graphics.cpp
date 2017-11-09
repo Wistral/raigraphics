@@ -166,7 +166,6 @@ void RAI_graphics::init() {
 void RAI_graphics::draw() {
 
   display->Clear(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
-
   /// draw obj with monotone for mouse click inputs
   for (auto *sob: supObjs_) {
     if (sob->isVisible()) {
@@ -263,8 +262,7 @@ void RAI_graphics::draw() {
     shader_background->UnBind();
   }
 
-  std::string textToDisplay("efawgekwejngiewsjg");
-
+//  drawText("hellow", 0,0,255,255,255);
 
   if (saveSnapShot) {
     if (imageCounter < 2e3) {
@@ -285,7 +283,7 @@ void RAI_graphics::draw() {
       saveSnapShot = false;
     }
   }
-
+//  SDL_RenderPresent(display->m_renderer);
   display->SwapBuffers();
 }
 
@@ -489,5 +487,24 @@ int RAI_graphics::getInteractingObjectID(){
   return highlightedObjId;
 }
 
+void RAI_graphics::drawText(const char* msg, int x, int y, int r, int g, int b) {
+  SDL_Surface* surf;
+  SDL_Texture* tex;
+  SDL_Color color;
+  color.r=r;
+  color.g=g;
+  color.b=b;
+  color.a=255;
+  SDL_Rect rect;
+  surf = TTF_RenderText_Solid(font, msg, color);
+  tex = SDL_CreateTextureFromSurface(display->m_renderer, surf);
+  rect.x=x;
+  rect.y=y;
+  rect.w=surf->w;
+  rect.h=surf->h;
+  SDL_FreeSurface(surf);
+  SDL_RenderCopy(display->m_renderer, tex, NULL, &rect);
+  SDL_DestroyTexture(tex);
+}
 
 } // rai_graphics
