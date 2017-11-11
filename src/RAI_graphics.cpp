@@ -222,7 +222,7 @@ void RAI_graphics::draw() {
         break;
     }
   }
-  if (objId != NO_OBJECT) {
+  if (objId != NO_OBJECT && objId != 0) {
     camera->follow(objectsInOrder_[objId]);
     if(highlightedObjId != NO_OBJECT)
       objectsInOrder_[highlightedObjId]->deHighlight();
