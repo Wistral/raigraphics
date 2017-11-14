@@ -1,4 +1,4 @@
-#version 400
+#version 130
 uniform mat4 MVP;
 attribute vec3 position;
 

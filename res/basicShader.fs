@@ -1,4 +1,4 @@
-#version 400
+#version 130
 varying vec3 position0;
 varying vec3 normal0;
 varying vec3 colorCoord0;
