@@ -16,7 +16,7 @@ Display::Display(int width, int height, const std::string &title) {
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
 //     TODO what would be proper version? (>= 4.0?)
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 
   SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
