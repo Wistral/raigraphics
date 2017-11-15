@@ -351,7 +351,7 @@ void RAI_graphics::setCameraProp(CameraProp &prop) {
 
 void RAI_graphics::savingSnapshots(std::string logDirectory, std::string fileName) {
   mtx.lock();
-  savingSnapshots(logDirectory,fileName);
+  savingSnapshots_private(logDirectory,fileName);
   mtx.unlock();
 }
 
