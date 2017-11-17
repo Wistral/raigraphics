@@ -10,7 +10,6 @@ void SingleBodyObject::draw() {
   std::lock_guard<std::mutex> guard(mtx);
   glBindVertexArray(m_vertexArrayObject);
   glDrawElementsBaseVertex(GL_TRIANGLES, m_numIndices, GL_UNSIGNED_INT, 0, 0);
-  glBindVertexArray(0);
 }
 
 void SingleBodyObject::init() {
