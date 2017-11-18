@@ -49,6 +49,9 @@ void *RAI_graphics::loop(void *obj) {
   interactionArrow->setColor({1,0,0});
   interactionBall = new object::Sphere(1);
   interactionBall->setColor({1,0,0});
+  interactionArrow->init();
+  interactionBall->init();
+
   TTF_Init();
   font = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 24);
   LOG_IF(FATAL, font == nullptr) <<"Could not find the font file. Run the install script provided.";
@@ -131,8 +134,7 @@ void RAI_graphics::init() {
     ob->init();
     objs_.push_back(ob);
   }
-  interactionArrow->init();
-  interactionBall->init();
+
   for (auto sh: added_shaders_)
     switch (sh) {
       case object::RAI_SHADER_BASIC: shaders_.push_back(shader_basic);
