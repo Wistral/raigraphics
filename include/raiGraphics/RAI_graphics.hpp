@@ -9,12 +9,14 @@
 #include "raiGraphics/obj/SingleBodyObject.hpp"
 #include "raiGraphics/obj/MultiBodyObject.hpp"
 #include "raiGraphics/obj/Sphere.hpp"
+#include "raiGraphics/obj/Rectangle.hpp"
 
 #include "raiGraphics/imp/display.h"
 #include "raiGraphics/imp/shader_basic.h"
 #include "raiGraphics/imp/shader_flat.h"
 #include "raiGraphics/imp/shader_mouseClick.h"
 #include "raiGraphics/imp/shader_background.hpp"
+#include "raiGraphics/imp/shader_menu.h"
 #include "raiCommon/utils/StopWatch.hpp"
 #include <mutex>
 #include <raiGraphics/obj/CheckerBoard.hpp>
@@ -90,6 +92,7 @@ class RAI_graphics {
   object::CheckerBoard *checkerboard = nullptr;
   object::Arrow *interactionArrow = nullptr;
   object::Sphere *interactionBall = nullptr;
+  object::Rectangle *menuBackboard = nullptr;
 
   bool backgroundChanged = false, checkerboardChanged = false;
 
@@ -105,6 +108,7 @@ class RAI_graphics {
   Shader_flat *shader_flat = nullptr;
   Shader_background *shader_background = nullptr;
   Shader_mouseClick *shader_mouseClick = nullptr;
+  Shader_menu *shader_menu = nullptr;
 
   std::vector<Shader *> shaders_;
   std::vector<object::ShaderType> added_shaders_;

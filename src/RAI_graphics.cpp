@@ -45,16 +45,22 @@ void *RAI_graphics::loop(void *obj) {
   shader_flat = new Shader_flat;
   shader_background = new Shader_background;
   shader_mouseClick = new Shader_mouseClick;
+  shader_menu = new Shader_menu;
   interactionArrow = new object::Arrow(0.03, 0.06, 1, 0.3);
   interactionArrow->setColor({1,0,0});
   interactionBall = new object::Sphere(1);
   interactionBall->setColor({1,0,0});
+  menuBackboard = new object::Rectangle(windowWidth_,windowHeight_);
   interactionArrow->init();
   interactionBall->init();
-
+  menuBackboard->init();
+  menuBackboard->setSize(windowWidth_/6.0f,windowHeight_/1.05f);
+  menuBackboard->setTranslation(windowWidth_/60.0f,windowHeight_/30.0f);
+  menuBackboard->setTransparency(0.3);
   TTF_Init();
-  font = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 24);
+  font = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 50);
   LOG_IF(FATAL, font == nullptr) <<"Could not find the font file. Run the install script provided.";
+  menuBackboard->writeText(font, "testing te!!!!!!!!!!!!!!!!!!!");
 
   light = new Light;
 
@@ -96,8 +102,10 @@ void *RAI_graphics::loop(void *obj) {
   delete shader_basic;
   delete shader_flat;
   delete shader_mouseClick;
+  delete shader_menu;
   delete interactionArrow;
   delete interactionBall;
+  delete menuBackboard;
 }
 
 void RAI_graphics::init() {
@@ -264,7 +272,13 @@ void RAI_graphics::draw() {
     shader_background->UnBind();
   }
 
-//  drawText("hellow", 0,0,255,255,255);
+
+  /// menu
+  shader_menu->Bind();
+  shader_menu->Update(menuBackboard);
+  menuBackboard->bindTexture();
+  menuBackboard->draw();
+  shader_menu->UnBind();
 
   if (saveSnapShot) {
     if (imageCounter < 2e3) {
@@ -285,7 +299,6 @@ void RAI_graphics::draw() {
       saveSnapShot = false;
     }
   }
-//  SDL_RenderPresent(display->m_renderer);
   display->SwapBuffers();
 }
 
@@ -504,8 +517,9 @@ void RAI_graphics::drawText(const char* msg, int x, int y, int r, int g, int b) 
   rect.y=y;
   rect.w=surf->w;
   rect.h=surf->h;
+
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surf->w, surf->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surf->pixels);
   SDL_FreeSurface(surf);
-  SDL_RenderCopy(display->m_renderer, tex, NULL, &rect);
   SDL_DestroyTexture(tex);
 }
 
