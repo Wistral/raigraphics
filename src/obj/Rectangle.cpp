@@ -24,10 +24,10 @@ Rectangle::Rectangle(float windowWidth, float windowHeight) {
   positions.emplace_back(glm::vec3(1.0f, 1.0f, 0));
 
   // up
-  texCoords.emplace_back(glm::vec2(0,0));
-  texCoords.emplace_back(glm::vec2(1,0));
   texCoords.emplace_back(glm::vec2(0,1));
   texCoords.emplace_back(glm::vec2(1,1));
+  texCoords.emplace_back(glm::vec2(0,0));
+  texCoords.emplace_back(glm::vec2(1,0));
 
   // up
   indices.push_back(0);
@@ -58,8 +58,8 @@ void Rectangle::writeText(TTF_Font *font, std::string txt) {
     SDL_FreeSurface(surf);
     glDeleteTextures(1, &tex_);
   }
-  SDL_Color color = {255,0,0,255};
-  surf = TTF_RenderText_Solid(font, txt.c_str(), color);
+  SDL_Color color = {255,255,255,255};
+  surf = TTF_RenderText_Blended_Wrapped(font, txt.c_str(), color, 200);
   glGenTextures(1, &tex_);
   setSize(surf->w, surf->h);
   isTextured = true;
@@ -71,8 +71,8 @@ void Rectangle::bindTexture() {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, surf->w, surf->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surf->pixels);
-  glBindTexture(GL_TEXTURE_2D, tex_);
+  glEnable(GL_TEXTURE_2D); glBindTexture(GL_TEXTURE_2D, tex_);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surf->w, surf->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surf->pixels);
 }
 
 }

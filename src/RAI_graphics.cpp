@@ -60,7 +60,7 @@ void *RAI_graphics::loop(void *obj) {
   TTF_Init();
   font = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 50);
   LOG_IF(FATAL, font == nullptr) <<"Could not find the font file. Run the install script provided.";
-  menuBackboard->writeText(font, "testing te!!!!!!!!!!!!!!!!!!!");
+  menuBackboard->writeText(font, "testing text!!!!!!!!!!!!!!!!!!!");
 
   light = new Light;
 
@@ -500,27 +500,6 @@ Eigen::Vector3d& RAI_graphics::getInteractionMagnitude(){
 
 int RAI_graphics::getInteractingObjectID(){
   return highlightedObjId;
-}
-
-void RAI_graphics::drawText(const char* msg, int x, int y, int r, int g, int b) {
-  SDL_Surface* surf;
-  SDL_Texture* tex;
-  SDL_Color color;
-  color.r=r;
-  color.g=g;
-  color.b=b;
-  color.a=255;
-  SDL_Rect rect;
-  surf = TTF_RenderText_Solid(font, msg, color);
-  tex = SDL_CreateTextureFromSurface(display->m_renderer, surf);
-  rect.x=x;
-  rect.y=y;
-  rect.w=surf->w;
-  rect.h=surf->h;
-
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surf->w, surf->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surf->pixels);
-  SDL_FreeSurface(surf);
-  SDL_DestroyTexture(tex);
 }
 
 } // rai_graphics

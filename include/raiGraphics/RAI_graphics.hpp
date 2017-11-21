@@ -147,6 +147,13 @@ class RAI_graphics {
   int autoVideoRecordingNumber=0;
   TTF_Font *font;
 
+  std::vector<bool> menuOn_;
+  enum {
+    RAI_MAIN_MENU = 0,
+    RAI_KEY_BOARD_HELP,
+  };
+
+
 };
 
 } // rai_graphics
