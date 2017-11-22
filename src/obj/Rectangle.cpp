@@ -53,13 +53,24 @@ void Rectangle::setSize(float xsize, float ysize){
   sizeX_ = xsize/windowWidth_*2.0f; sizeY_ = ysize/windowHeight_*2.0f;
 }
 
+void Rectangle::setTextWrap(int tw){
+  wrapLength = tw;
+}
+
+
 void Rectangle::writeText(TTF_Font *font, std::string txt) {
+
+  if(txt.empty()){
+    setSize(0,0);
+    return;
+  }
+
   if(isTextured) {
     SDL_FreeSurface(surf);
     glDeleteTextures(1, &tex_);
   }
   SDL_Color color = {255,255,255,255};
-  surf = TTF_RenderText_Blended_Wrapped(font, txt.c_str(), color, 200);
+  surf = TTF_RenderText_Blended_Wrapped(font, txt.c_str(), color, wrapLength);
   glGenTextures(1, &tex_);
   setSize(surf->w, surf->h);
   isTextured = true;

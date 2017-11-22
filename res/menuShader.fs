@@ -9,5 +9,11 @@ in float trans;
 
 void main() {
     finalColor = texture(tex, fragTexCoord);
-    //finalColor.w = trans;
+
+    if(finalColor.w==0) {
+        finalColor.x = 0;
+        finalColor.y = 0;
+        finalColor.z = 0;
+        finalColor.w = trans;
+        }
 }

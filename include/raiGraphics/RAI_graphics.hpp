@@ -75,8 +75,10 @@ class RAI_graphics {
   bool isInteracting();
   Eigen::Vector3d& getInteractionMagnitude();
   int getInteractingObjectID();
-  void drawText(const char* msg, int x, int y, int r, int g, int b);
 
+  void changeMenuText(int menuId, bool isOnText, std::string mt);
+  void changeMenuPosition(int menuId, int x, int y);
+  void changeMenuWordWrap(int menuId, int wr);
 
  private:
   void *loop(void *obj);
@@ -92,7 +94,9 @@ class RAI_graphics {
   object::CheckerBoard *checkerboard = nullptr;
   object::Arrow *interactionArrow = nullptr;
   object::Sphere *interactionBall = nullptr;
-  object::Rectangle *menuBackboard = nullptr;
+  std::vector<object::Rectangle *> textBoard;
+  std::vector<std::vector<std::string>> menuText;
+  std::vector<bool> menuTextToggle;
 
   bool backgroundChanged = false, checkerboardChanged = false;
 

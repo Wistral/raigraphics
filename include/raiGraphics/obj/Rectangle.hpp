@@ -20,11 +20,13 @@ class Rectangle: public SingleBodyObject {
 
   void setSize(float xsize, float ysize);
 
+  void setTextWrap(int tw);
+
   void writeText(TTF_Font *font, std::string txt);
 
   void bindTexture();
 
-  float sizeX_ = 0.5, sizeY_ = 0.5;
+  float sizeX_ = 0, sizeY_ = 0;
   float posX_ = 0, posY_ = 0;
   float windowWidth_, windowHeight_;
 
@@ -32,6 +34,7 @@ class Rectangle: public SingleBodyObject {
   GLuint tex_;
   bool isTextured = false;
   SDL_Surface* surf;
+  int wrapLength = 200;
 };
 
 } // object
