@@ -385,7 +385,7 @@ void *RAI_graphics::images2Video_inThread(void *obj) {
   int i = system(command.c_str());
   command = "rm -rf " + image_dir + "/*.bmp";
   i = system(command.c_str());
-  LOG(INFO)<<"The video is generated under "+image_dir;
+  LOG(INFO)<<"The video is generated in "+image_dir;
   return NULL;
 }
 
