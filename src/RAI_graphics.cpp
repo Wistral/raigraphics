@@ -35,11 +35,11 @@ RAI_graphics::RAI_graphics(int windowWidth, int windowHeight) :
   /// menus
   for (auto &tb: textBoard) {
     tb = new object::Rectangle(windowWidth_, windowHeight_);
-    tb->setTranslation(20, 20);
+    tb->setTranslation(10, 10);
     tb->setTransparency(0.3);
   }
-  textBoard[0]->setTextWrap(windowWidth_-40);
-  textBoard[5]->setTranslation(windowWidth_-100, windowHeight_-35);
+  textBoard[0]->setTextWrap(windowWidth_-20);
+  textBoard[5]->setTranslation(windowWidth_-97, windowHeight_-25);
   textBoard[5]->setTextWrap(windowWidth_-40);
 
 }
@@ -93,6 +93,7 @@ void *RAI_graphics::loop(void *obj) {
   for (int i=0; i<TEXTMENUCOUNT ; i++)
     textBoard[i]->writeText(font, menuText[i][0]);
 
+  textBoard[5]->setFrontSize(2);
   light = new Light;
 
   while (true) {
@@ -240,7 +241,7 @@ void RAI_graphics::draw() {
   int objId = NO_OBJECT;
 
   std::stringstream stream;
-  stream << std::setprecision(4) << actualFPS_;
+  stream << "FPS: "<<std::setprecision(4) << actualFPS_;
   menuText[5][1] = stream.str();
 
   while (SDL_PollEvent(&e)) {

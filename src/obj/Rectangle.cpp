@@ -73,18 +73,20 @@ void Rectangle::writeText(std::vector<TTF_Font *>& font, std::string& txt) {
   SDL_Color color = {255,255,255,255};
   surf = TTF_RenderText_Blended_Wrapped(font[fontSize], txt.c_str(), color, wrapLength);
   glGenTextures(1, &tex_);
+  glBindTexture(GL_TEXTURE_2D, tex_);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surf->w, surf->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surf->pixels);
+
   setSize(surf->w, surf->h);
   isTextured = true;
 }
 
 void Rectangle::bindTexture() {
-  if(!isTextured) return;
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-  glEnable(GL_TEXTURE_2D); glBindTexture(GL_TEXTURE_2D, tex_);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surf->w, surf->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surf->pixels);
+  if(!isTextured)
+    return;
+
+  glBindTexture(GL_TEXTURE_2D, tex_);
 }
 
 void Rectangle::setFrontSize(int size) {
