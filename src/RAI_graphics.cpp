@@ -38,8 +38,7 @@ RAI_graphics::RAI_graphics(int windowWidth, int windowHeight) :
 }
 
 RAI_graphics::~RAI_graphics() {
-  for (auto *tb: textBoard)
-    delete tb;
+
 }
 
 void RAI_graphics::start() {
@@ -121,6 +120,9 @@ void *RAI_graphics::loop(void *obj) {
 
   interactionArrow->destroy();
   interactionBall->destroy();
+
+  for (auto *tb: textBoard)
+    delete tb;
 
   for(auto* fo: font)
     TTF_CloseFont(fo);

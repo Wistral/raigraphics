@@ -89,7 +89,7 @@ void Rectangle::bindTexture() {
 
 void Rectangle::setFrontSize(int size) {
   LOG_IF(INFO, size<0 || size>5)<< "font size from 0~5 are supported";
-  fontSize = size%5;
+  fontSize = size%6;
 }
 
 
