@@ -10,6 +10,10 @@
 #include <raiGraphics/obj/Sphere.hpp>
 #include <SDL2/SDL_ttf.h>
 #include "GL/glut.h"
+#include <sstream> // stringstream
+#include <iomanip>
+
+#define TEXTMENUCOUNT 10
 
 namespace rai_graphics {
 
@@ -17,13 +21,13 @@ typedef void *(RAI_graphics::*Thread2Ptr)(void *);
 typedef void *(*PthreadPtr)(void *);
 
 RAI_graphics::RAI_graphics(int windowWidth, int windowHeight) :
-  menuTextToggle(5, false) {
+  menuTextToggle(TEXTMENUCOUNT, false) {
   windowWidth_ = windowWidth;
   windowHeight_ = windowHeight;
   objectsInOrder_.push_back(nullptr);
-  menuText.resize(5);
+  menuText.resize(TEXTMENUCOUNT);
   for (auto &mtxt: menuText) mtxt.resize(2);
-  textBoard.resize(5);
+  textBoard.resize(TEXTMENUCOUNT);
   font.resize(6);
   menuText[0][0] = "Show Keyboard Input F1";
   menuText[0][1] =
@@ -35,6 +39,9 @@ RAI_graphics::RAI_graphics(int windowWidth, int windowHeight) :
     tb->setTransparency(0.3);
   }
   textBoard[0]->setTextWrap(windowWidth_-40);
+  textBoard[5]->setTranslation(windowWidth_-100, windowHeight_-35);
+  textBoard[5]->setTextWrap(windowWidth_-40);
+
 }
 
 RAI_graphics::~RAI_graphics() {
@@ -83,7 +90,7 @@ void *RAI_graphics::loop(void *obj) {
   for (auto &tb: textBoard)
     tb->init();
 
-  for (int i=0; i<5 ; i++)
+  for (int i=0; i<TEXTMENUCOUNT ; i++)
     textBoard[i]->writeText(font, menuText[i][0]);
 
   light = new Light;
@@ -100,6 +107,8 @@ void *RAI_graphics::loop(void *obj) {
       double elapse = watch.measure();
       if (terminate) break;
       usleep(std::max((1.0 / FPS_ - elapse) * 1e6, 0.0));
+      elapse = watch.measure();
+      actualFPS_ = 1.0/elapse;
     }
   }
 
@@ -230,6 +239,10 @@ void RAI_graphics::draw() {
   bool startInteraction = false;
   int objId = NO_OBJECT;
 
+  std::stringstream stream;
+  stream << std::setprecision(4) << actualFPS_;
+  menuText[5][1] = stream.str();
+
   while (SDL_PollEvent(&e)) {
     switch (e.type) {
       case SDL_MOUSEBUTTONDOWN:
@@ -259,16 +272,29 @@ void RAI_graphics::draw() {
             images2Video();
           }
 
-        for (int fkey = 0; fkey < 5; fkey++)
+        for (int fkey = 0; fkey < TEXTMENUCOUNT-5; fkey++)
           if (keyboard()[RAI_KEY_F1+fkey])
             if (menuTextToggle[fkey] = !menuTextToggle[fkey])
               textBoard[fkey]->writeText(font, menuText[fkey][1]);
             else
               textBoard[fkey]->writeText(font, menuText[fkey][0]);
 
+        for (int fkey = 5; fkey < TEXTMENUCOUNT; fkey++)
+          if (keyboard()[RAI_KEY_F1+fkey])
+            menuTextToggle[fkey] = !menuTextToggle[fkey];
+
         break;
     }
   }
+
+  loopcounter++;
+
+  for (int fkey = 5; fkey < TEXTMENUCOUNT; fkey++)
+    if (menuTextToggle[fkey])
+      textBoard[fkey]->writeText(font, menuText[fkey][1]);
+    else
+      textBoard[fkey]->writeText(font, menuText[fkey][0]);
+
   if (objId != NO_OBJECT && objId != 0) {
     camera->follow(objectsInOrder_[objId]);
     if (highlightedObjId != NO_OBJECT)
@@ -310,7 +336,7 @@ void RAI_graphics::draw() {
   }
 
   /// menu
-  for(int tbId=0; tbId<5; tbId++) {
+  for(int tbId=0; tbId<TEXTMENUCOUNT; tbId++) {
     shader_menu->Bind();
     shader_menu->Update(textBoard[tbId]);
     textBoard[tbId]->bindTexture();

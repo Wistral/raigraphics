@@ -152,6 +152,8 @@ class RAI_graphics {
   std::vector<TTF_Font *> font;
 
   std::vector<bool> menuOn_;
+  double actualFPS_=0;
+  uint loopcounter=0;
   enum {
     RAI_MAIN_MENU = 0,
     RAI_KEY_BOARD_HELP,

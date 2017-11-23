@@ -59,7 +59,7 @@ void Rectangle::setTextWrap(int tw){
 }
 
 
-void Rectangle::writeText(std::vector<TTF_Font *>& font, std::string txt) {
+void Rectangle::writeText(std::vector<TTF_Font *>& font, std::string& txt) {
 
   if(txt.empty()){
     setSize(0,0);
