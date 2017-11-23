@@ -5,6 +5,7 @@
 #include <SDL2/SDL_system.h>
 #include <SDL2/SDL_ttf.h>
 #include "raiGraphics/obj/Rectangle.hpp"
+#include "glog/logging.h"
 
 namespace rai_graphics {
 namespace object {
@@ -58,7 +59,7 @@ void Rectangle::setTextWrap(int tw){
 }
 
 
-void Rectangle::writeText(TTF_Font *font, std::string txt) {
+void Rectangle::writeText(std::vector<TTF_Font *>& font, std::string txt) {
 
   if(txt.empty()){
     setSize(0,0);
@@ -70,7 +71,7 @@ void Rectangle::writeText(TTF_Font *font, std::string txt) {
     glDeleteTextures(1, &tex_);
   }
   SDL_Color color = {255,255,255,255};
-  surf = TTF_RenderText_Blended_Wrapped(font, txt.c_str(), color, wrapLength);
+  surf = TTF_RenderText_Blended_Wrapped(font[fontSize], txt.c_str(), color, wrapLength);
   glGenTextures(1, &tex_);
   setSize(surf->w, surf->h);
   isTextured = true;
@@ -85,6 +86,12 @@ void Rectangle::bindTexture() {
   glEnable(GL_TEXTURE_2D); glBindTexture(GL_TEXTURE_2D, tex_);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surf->w, surf->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surf->pixels);
 }
+
+void Rectangle::setFrontSize(int size) {
+  LOG_IF(INFO, size<0 || size>5)<< "font size from 0~5 are supported";
+  fontSize = size%5;
+}
+
 
 }
 }

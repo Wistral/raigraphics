@@ -22,7 +22,10 @@ class Rectangle: public SingleBodyObject {
 
   void setTextWrap(int tw);
 
-  void writeText(TTF_Font *font, std::string txt);
+  void writeText(std::vector<TTF_Font *>& font, std::string txt);
+
+  /// from 1-5
+  void setFrontSize(int size);
 
   void bindTexture();
 
@@ -35,6 +38,8 @@ class Rectangle: public SingleBodyObject {
   bool isTextured = false;
   SDL_Surface* surf;
   int wrapLength = 200;
+  TTF_Font *font;
+  int fontSize=3;
 };
 
 } // object

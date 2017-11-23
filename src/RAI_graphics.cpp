@@ -24,10 +24,10 @@ RAI_graphics::RAI_graphics(int windowWidth, int windowHeight) :
   menuText.resize(5);
   for (auto &mtxt: menuText) mtxt.resize(2);
   textBoard.resize(5);
-
+  font.resize(6);
   menuText[0][0] = "Show Keyboard Input F1";
   menuText[0][1] =
-    "                                       |  mouse motion/wheel = camera |  ldblclk = highlight object  |  ctr+drag = interaction1  |  alt+drag = interaction2  |\n                                      |  space = camera mode  |  shift+r = videos On/Off  |  F1~F5 = user defined toggles  |  1~5 = user defined actions  |";
+    "                      |  mouse motion/wheel = camera |  ldblclk = highlight object  |  ctr+drag = interaction1  |  alt+drag = interaction2  |\n                     |  space = camera mode  |  shift+r = videos On/Off  |  F1~F5 = user defined toggles  |  1~5 = user defined actions  |";
   /// menus
   for (auto &tb: textBoard) {
     tb = new object::Rectangle(windowWidth_, windowHeight_);
@@ -71,8 +71,14 @@ void *RAI_graphics::loop(void *obj) {
   interactionBall->init();
 
   TTF_Init();
-  font = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 20);
-  LOG_IF(FATAL, font == nullptr) << "Could not find the font file. Run the install script provided.";
+  font[0] = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 8);
+  font[1] = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 12);
+  font[2] = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 18);
+  font[3] = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 24);
+  font[4] = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 30);
+  font[5] = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 38);
+
+  LOG_IF(FATAL, font[0] == nullptr) << "Could not find the font file. Run the install script provided.";
 
   /// menus
   for (auto &tb: textBoard)
@@ -116,7 +122,8 @@ void *RAI_graphics::loop(void *obj) {
   interactionArrow->destroy();
   interactionBall->destroy();
 
-  TTF_CloseFont(font);
+  for(auto* fo: font)
+    TTF_CloseFont(fo);
   TTF_Quit();
   delete display;
   delete camera;

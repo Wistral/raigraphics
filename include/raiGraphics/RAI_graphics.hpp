@@ -149,7 +149,7 @@ class RAI_graphics {
   int interStartingX, interStartingY;
   Eigen::Vector3d interactionForce;
   int autoVideoRecordingNumber=0;
-  TTF_Font *font;
+  std::vector<TTF_Font *> font;
 
   std::vector<bool> menuOn_;
   enum {
