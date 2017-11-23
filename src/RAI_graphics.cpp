@@ -319,7 +319,7 @@ void RAI_graphics::draw() {
       glReadPixels(0, 0, windowWidth_, windowHeight_, GL_BGR, GL_UNSIGNED_BYTE, pixels);
       FIBITMAP *image = FreeImage_ConvertFromRawBits(pixels, windowWidth_, windowHeight_, 3 * windowWidth_, 24,
                                                      0xFF0000, 0x00FF00, 0x0000FF, false);
-      FreeImage_Save(FIF_BMP, image, (image_dir + "/" + imageFileName + ".bmp").c_str(), 0);
+      FreeImage_Save(FIF_JPEG, image, (image_dir + "/" + imageFileName + ".jpg").c_str(), 512);
       FreeImage_Unload(image);
       delete[] pixels;
     } else {
@@ -421,13 +421,13 @@ void RAI_graphics::images2Video() {
 void *RAI_graphics::images2Video_inThread(void *obj) {
   std::string
     command =
-    "ffmpeg -r 60 -i " + image_dir + "/%07d.bmp -s " + std::to_string(windowWidth_) + "x" + std::to_string(windowHeight_) + " -c:v libx264 -crf 5 "
+    "ffmpeg -r 60 -i " + image_dir + "/%07d.jpg -s " + std::to_string(windowWidth_) + "x" + std::to_string(windowHeight_) + " -c:v libx264 -crf 1 "
       + image_dir + "/" + videoFileName + ".mp4 >nul 2>&1";
   std::ifstream f((image_dir + "/" + videoFileName + ".mp4").c_str());
   if (f.good())
     int i = system(("rm " + image_dir + "/" + videoFileName + ".mp4").c_str());
   int i = system(command.c_str());
-  command = "rm -rf " + image_dir + "/*.bmp";
+  command = "rm -rf " + image_dir + "/*.jpg";
   i = system(command.c_str());
   LOG(INFO) << "The video is generated under " + image_dir;
   return NULL;
