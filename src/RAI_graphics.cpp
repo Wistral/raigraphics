@@ -319,7 +319,7 @@ void RAI_graphics::draw() {
       glReadPixels(0, 0, windowWidth_, windowHeight_, GL_BGR, GL_UNSIGNED_BYTE, pixels);
       FIBITMAP *image = FreeImage_ConvertFromRawBits(pixels, windowWidth_, windowHeight_, 3 * windowWidth_, 24,
                                                      0xFF0000, 0x00FF00, 0x0000FF, false);
-      FreeImage_Save(FIF_JPEG, image, (image_dir + "/" + imageFileName + ".jpg").c_str(), 512);
+      FreeImage_Save(FIF_JPEG, image, (image_dir + "/" + imageFileName + ".jpg").c_str(), 1023);
       FreeImage_Unload(image);
       delete[] pixels;
     } else {
