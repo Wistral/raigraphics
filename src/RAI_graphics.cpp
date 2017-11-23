@@ -38,10 +38,11 @@ RAI_graphics::RAI_graphics(int windowWidth, int windowHeight) :
     tb->setTranslation(10, 10);
     tb->setTransparency(0.3);
   }
-  textBoard[0]->setTextWrap(windowWidth_-20);
-  textBoard[5]->setTranslation(windowWidth_-97, windowHeight_-25);
-  textBoard[5]->setTextWrap(windowWidth_-40);
+  textBoard[0]->setTextWrap(windowWidth_ - 20);
+  textBoard[5]->setTranslation(windowWidth_ - 97, windowHeight_ - 25);
+  textBoard[5]->setTextWrap(windowWidth_ - 40);
 
+  std::string path("/home/jhwangbo/Documents");
 }
 
 RAI_graphics::~RAI_graphics() {
@@ -90,7 +91,7 @@ void *RAI_graphics::loop(void *obj) {
   for (auto &tb: textBoard)
     tb->init();
 
-  for (int i=0; i<TEXTMENUCOUNT ; i++)
+  for (int i = 0; i < TEXTMENUCOUNT; i++)
     textBoard[i]->writeText(font, menuText[i][0]);
 
   textBoard[5]->setFrontSize(2);
@@ -109,7 +110,7 @@ void *RAI_graphics::loop(void *obj) {
       if (terminate) break;
       usleep(std::max((1.0 / FPS_ - elapse) * 1e6, 0.0));
       elapse = watch.measure();
-      actualFPS_ = 1.0/elapse;
+      actualFPS_ = 1.0 / elapse;
     }
   }
 
@@ -134,7 +135,7 @@ void *RAI_graphics::loop(void *obj) {
   for (auto *tb: textBoard)
     delete tb;
 
-  for(auto* fo: font)
+  for (auto *fo: font)
     TTF_CloseFont(fo);
   TTF_Quit();
   delete display;
@@ -216,8 +217,9 @@ void RAI_graphics::init() {
 void RAI_graphics::draw() {
 
   display->Clear(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+
   /// draw obj with monotone for mouse click inputs
-  for (auto *sob: supObjs_) {
+  for (auto *sob: supObjs_)
     if (sob->isVisible()) {
       for (auto *ob: sob->getChildren()) {
         shader_mouseClick->Bind();
@@ -226,13 +228,13 @@ void RAI_graphics::draw() {
         shader_mouseClick->Bind();
       }
     }
-    for (int i = 0; i < objs_.size(); i++) {
-      if (!objs_[i]->isVisible()) continue;
-      shader_mouseClick->Bind();
-      shader_mouseClick->Update(camera, objs_[i]);
-      objs_[i]->draw();
-      shader_mouseClick->UnBind();
-    }
+
+  for (int i = 0; i < objs_.size(); i++) {
+    if (!objs_[i]->isVisible()) continue;
+    shader_mouseClick->Bind();
+    shader_mouseClick->Update(camera, objs_[i]);
+    objs_[i]->draw();
+    shader_mouseClick->UnBind();
   }
 
   /// UI
@@ -241,7 +243,7 @@ void RAI_graphics::draw() {
   int objId = NO_OBJECT;
 
   std::stringstream stream;
-  stream << "FPS: "<<std::setprecision(4) << actualFPS_;
+  stream << "FPS: " << std::setprecision(4) << actualFPS_;
   menuText[5][1] = stream.str();
 
   while (SDL_PollEvent(&e)) {
@@ -273,21 +275,20 @@ void RAI_graphics::draw() {
             images2Video();
           }
 
-        for (int fkey = 0; fkey < TEXTMENUCOUNT-5; fkey++)
-          if (keyboard()[RAI_KEY_F1+fkey])
+        for (int fkey = 0; fkey < TEXTMENUCOUNT - 5; fkey++)
+          if (keyboard()[RAI_KEY_F1 + fkey])
             if (menuTextToggle[fkey] = !menuTextToggle[fkey])
               textBoard[fkey]->writeText(font, menuText[fkey][1]);
             else
               textBoard[fkey]->writeText(font, menuText[fkey][0]);
 
         for (int fkey = 5; fkey < TEXTMENUCOUNT; fkey++)
-          if (keyboard()[RAI_KEY_F1+fkey])
+          if (keyboard()[RAI_KEY_F1 + fkey])
             menuTextToggle[fkey] = !menuTextToggle[fkey];
 
         break;
     }
   }
-
   loopcounter++;
 
   for (int fkey = 5; fkey < TEXTMENUCOUNT; fkey++)
@@ -320,11 +321,13 @@ void RAI_graphics::draw() {
   if (isInteracting_)
     computeMousePull();
 
+
   /// draw checkerboard and reflections
   if (checkerboard) {
     drawObj(true);
     checkerboard->draw(camera, light, checkerboard->reflectance, false);
   }
+
   /// draw the real objects
   drawObj(false);
 
@@ -337,7 +340,7 @@ void RAI_graphics::draw() {
   }
 
   /// menu
-  for(int tbId=0; tbId<TEXTMENUCOUNT; tbId++) {
+  for (int tbId = 0; tbId < TEXTMENUCOUNT; tbId++) {
     shader_menu->Bind();
     shader_menu->Update(textBoard[tbId]);
     textBoard[tbId]->bindTexture();
@@ -569,15 +572,15 @@ int RAI_graphics::getInteractingObjectID() {
   return highlightedObjId;
 }
 
-void RAI_graphics::changeMenuText(int menuId, bool isOnText, std::string mt){
+void RAI_graphics::changeMenuText(int menuId, bool isOnText, std::string mt) {
   menuText[menuId][isOnText] = mt;
 }
 
-void RAI_graphics::changeMenuPosition(int menuId, int x, int y){
+void RAI_graphics::changeMenuPosition(int menuId, int x, int y) {
   textBoard[menuId]->setTranslation(x, y);
 }
 
-void RAI_graphics::changeMenuWordWrap(int menuId, int wr){
+void RAI_graphics::changeMenuWordWrap(int menuId, int wr) {
   textBoard[menuId]->setTextWrap(wr);
 }
 
