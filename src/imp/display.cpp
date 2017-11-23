@@ -43,6 +43,7 @@ Display::Display(int width, int height, const std::string &title) {
   glEnable(GL_CULL_FACE);
   glCullFace(GL_BACK);
   glEnable(GL_CLIP_DISTANCE0);
+  glEnable(GL_TEXTURE_2D);
 }
 
 Display::~Display() {

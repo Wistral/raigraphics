@@ -3,7 +3,11 @@
 //
 
 #include "raiGraphics/obj/Box.hpp"
-rai_graphics::object::Box::Box(float xLength, float yLength, float zLength) {
+
+namespace rai_graphics{
+namespace object{
+
+Box::Box(float xLength, float yLength, float zLength) {
   // origin is on the center of box
   com = glm::vec3(0,0,0);
 
@@ -73,3 +77,7 @@ rai_graphics::object::Box::Box(float xLength, float yLength, float zLength) {
   indices.push_back(6);
   indices.push_back(3);
 }
+
+}
+}
+

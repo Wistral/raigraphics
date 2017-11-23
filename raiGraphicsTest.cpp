@@ -19,7 +19,7 @@ int main() {
   google::LogToStderr();
 
   // TODO: RAI_ROOT in every file should be changed (now only task module left)
-  RAI_graphics graphics(800, 600);
+  RAI_graphics graphics(1440,900);
 
   // graphical primitives
   object::Sphere whiteSphere(1);
