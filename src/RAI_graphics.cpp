@@ -10,16 +10,38 @@
 #include <raiGraphics/obj/Sphere.hpp>
 #include <SDL2/SDL_ttf.h>
 #include "GL/glut.h"
+#include <sstream> // stringstream
+#include <iomanip>
+
+#define TEXTMENUCOUNT 10
 
 namespace rai_graphics {
 
 typedef void *(RAI_graphics::*Thread2Ptr)(void *);
 typedef void *(*PthreadPtr)(void *);
 
-RAI_graphics::RAI_graphics(int windowWidth, int windowHeight) {
+RAI_graphics::RAI_graphics(int windowWidth, int windowHeight) :
+  menuTextToggle(TEXTMENUCOUNT, false) {
   windowWidth_ = windowWidth;
   windowHeight_ = windowHeight;
   objectsInOrder_.push_back(nullptr);
+  menuText.resize(TEXTMENUCOUNT);
+  for (auto &mtxt: menuText) mtxt.resize(2);
+  textBoard.resize(TEXTMENUCOUNT);
+  font.resize(6);
+  menuText[0][0] = "Show Keyboard Input F1";
+  menuText[0][1] =
+    "                      |  mouse motion/wheel = camera |  ldblclk = highlight object  |  ctr+drag = interaction1  |  alt+drag = interaction2  |\n                     |  space = camera mode  |  shift+r = videos On/Off  |  F1~F5 = user defined toggles  |  1~5 = user defined actions  |";
+  /// menus
+  for (auto &tb: textBoard) {
+    tb = new object::Rectangle(windowWidth_, windowHeight_);
+    tb->setTranslation(10, 10);
+    tb->setTransparency(0.3);
+  }
+  textBoard[0]->setTextWrap(windowWidth_-20);
+  textBoard[5]->setTranslation(windowWidth_-97, windowHeight_-25);
+  textBoard[5]->setTextWrap(windowWidth_-40);
+
 }
 
 RAI_graphics::~RAI_graphics() {
@@ -45,17 +67,33 @@ void *RAI_graphics::loop(void *obj) {
   shader_flat = new Shader_flat;
   shader_background = new Shader_background;
   shader_mouseClick = new Shader_mouseClick;
+  shader_menu = new Shader_menu;
   interactionArrow = new object::Arrow(0.03, 0.06, 1, 0.3);
-  interactionArrow->setColor({1,0,0});
+  interactionArrow->setColor({1, 0, 0});
   interactionBall = new object::Sphere(1);
-  interactionBall->setColor({1,0,0});
+  interactionBall->setColor({1, 0, 0});
+
   interactionArrow->init();
   interactionBall->init();
 
   TTF_Init();
-  font = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 24);
-  LOG_IF(FATAL, font == nullptr) <<"Could not find the font file. Run the install script provided.";
+  font[0] = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 8);
+  font[1] = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 12);
+  font[2] = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 18);
+  font[3] = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 24);
+  font[4] = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 30);
+  font[5] = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 38);
 
+  LOG_IF(FATAL, font[0] == nullptr) << "Could not find the font file. Run the install script provided.";
+
+  /// menus
+  for (auto &tb: textBoard)
+    tb->init();
+
+  for (int i=0; i<TEXTMENUCOUNT ; i++)
+    textBoard[i]->writeText(font, menuText[i][0]);
+
+  textBoard[5]->setFrontSize(2);
   light = new Light;
 
   while (true) {
@@ -70,6 +108,8 @@ void *RAI_graphics::loop(void *obj) {
       double elapse = watch.measure();
       if (terminate) break;
       usleep(std::max((1.0 / FPS_ - elapse) * 1e6, 0.0));
+      elapse = watch.measure();
+      actualFPS_ = 1.0/elapse;
     }
   }
 
@@ -78,6 +118,9 @@ void *RAI_graphics::loop(void *obj) {
 
   for (auto *ob: objs_)
     ob->destroy();
+
+  for (auto *tb: textBoard)
+    tb->destroy();
 
   if (checkerboard)
     checkerboard->destroy();
@@ -88,7 +131,11 @@ void *RAI_graphics::loop(void *obj) {
   interactionArrow->destroy();
   interactionBall->destroy();
 
-  TTF_CloseFont(font);
+  for (auto *tb: textBoard)
+    delete tb;
+
+  for(auto* fo: font)
+    TTF_CloseFont(fo);
   TTF_Quit();
   delete display;
   delete camera;
@@ -96,6 +143,7 @@ void *RAI_graphics::loop(void *obj) {
   delete shader_basic;
   delete shader_flat;
   delete shader_mouseClick;
+  delete shader_menu;
   delete interactionArrow;
   delete interactionBall;
 }
@@ -189,19 +237,22 @@ void RAI_graphics::draw() {
 
   /// UI
   static const int NO_OBJECT = 16646655;
-  bool startInteraction=false;
+  bool startInteraction = false;
   int objId = NO_OBJECT;
+
+  std::stringstream stream;
+  stream << "FPS: "<<std::setprecision(4) << actualFPS_;
+  menuText[5][1] = stream.str();
 
   while (SDL_PollEvent(&e)) {
     switch (e.type) {
       case SDL_MOUSEBUTTONDOWN:
         if (e.button.clicks == 2 && !keyboard()[RAI_KEY_LCTRL])
           objId = readObjIdx();
-        else if (e.button.clicks == 1 && keyboard()[RAI_KEY_LCTRL] && readObjIdx()==highlightedObjId)
+        else if (e.button.clicks == 1 && keyboard()[RAI_KEY_LCTRL] && readObjIdx() == highlightedObjId)
           startInteraction = isInteracting_ = true;
         break;
-      case SDL_MOUSEBUTTONUP:
-        isInteracting_ = false;
+      case SDL_MOUSEBUTTONUP:isInteracting_ = false;
         break;
       case SDL_MOUSEWHEEL:
         if (e.wheel.y == 1)
@@ -210,26 +261,47 @@ void RAI_graphics::draw() {
           camera->zoomIn();
         break;
       case SDL_KEYDOWN:
-        if(keyboard()[RAI_KEY_ESCAPE] && highlightedObjId != NO_OBJECT)
+        if (keyboard()[RAI_KEY_ESCAPE] && highlightedObjId != NO_OBJECT)
           objectsInOrder_[highlightedObjId]->deHighlight();
 
-        if(keyboard()[RAI_KEY_R] && keyboard()[RAI_KEY_LSHIFT])
-          if(!saveSnapShot) {
-            LOG(INFO)<<"Saving video";
-            savingSnapshots_private("/tmp", "raiGraphicsAutoRecorder"+std::to_string(autoVideoRecordingNumber++));
+        if (keyboard()[RAI_KEY_R] && keyboard()[RAI_KEY_LSHIFT])
+          if (!saveSnapShot) {
+            LOG(INFO) << "Saving video";
+            savingSnapshots_private("/tmp", "raiGraphicsAutoRecorder" + std::to_string(autoVideoRecordingNumber++));
           } else {
-            LOG(INFO)<<"Starting encoding video";
+            LOG(INFO) << "Starting encoding video";
             images2Video();
           }
+
+        for (int fkey = 0; fkey < TEXTMENUCOUNT-5; fkey++)
+          if (keyboard()[RAI_KEY_F1+fkey])
+            if (menuTextToggle[fkey] = !menuTextToggle[fkey])
+              textBoard[fkey]->writeText(font, menuText[fkey][1]);
+            else
+              textBoard[fkey]->writeText(font, menuText[fkey][0]);
+
+        for (int fkey = 5; fkey < TEXTMENUCOUNT; fkey++)
+          if (keyboard()[RAI_KEY_F1+fkey])
+            menuTextToggle[fkey] = !menuTextToggle[fkey];
+
         break;
     }
   }
+
+  loopcounter++;
+
+  for (int fkey = 5; fkey < TEXTMENUCOUNT; fkey++)
+    if (menuTextToggle[fkey])
+      textBoard[fkey]->writeText(font, menuText[fkey][1]);
+    else
+      textBoard[fkey]->writeText(font, menuText[fkey][0]);
+
   if (objId != NO_OBJECT && objId != 0) {
     camera->follow(objectsInOrder_[objId]);
-    if(highlightedObjId != NO_OBJECT)
+    if (highlightedObjId != NO_OBJECT)
       objectsInOrder_[highlightedObjId]->deHighlight();
 
-    if(highlightedObjId == objId) {
+    if (highlightedObjId == objId) {
       highlightedObjId = NO_OBJECT;
     } else {
       highlightedObjId = objId;
@@ -237,7 +309,7 @@ void RAI_graphics::draw() {
     }
   }
   /// clear images that was generated for mouse clicks
-  display->Clear(0,0,0,0);
+  display->Clear(0, 0, 0, 0);
   /// update camera with events
   camera->Control(e, checkerboard);
   camera->update();
@@ -264,7 +336,14 @@ void RAI_graphics::draw() {
     shader_background->UnBind();
   }
 
-//  drawText("hellow", 0,0,255,255,255);
+  /// menu
+  for(int tbId=0; tbId<TEXTMENUCOUNT; tbId++) {
+    shader_menu->Bind();
+    shader_menu->Update(textBoard[tbId]);
+    textBoard[tbId]->bindTexture();
+    textBoard[tbId]->draw();
+    shader_menu->UnBind();
+  }
 
   if (saveSnapShot) {
     if (imageCounter < 2e3) {
@@ -276,16 +355,15 @@ void RAI_graphics::draw() {
       glReadPixels(0, 0, windowWidth_, windowHeight_, GL_BGR, GL_UNSIGNED_BYTE, pixels);
       FIBITMAP *image = FreeImage_ConvertFromRawBits(pixels, windowWidth_, windowHeight_, 3 * windowWidth_, 24,
                                                      0xFF0000, 0x00FF00, 0x0000FF, false);
-      FreeImage_Save(FIF_BMP, image, (image_dir + "/" + imageFileName + ".bmp").c_str(), 0);
+      FreeImage_Save(FIF_JPEG, image, (image_dir + "/" + imageFileName + ".jpg").c_str(), 1023);
       FreeImage_Unload(image);
       delete[] pixels;
     } else {
-      LOG(INFO)<<"RAI is saving video now since it exceeded the time limit";
+      LOG(INFO) << "RAI is saving video now since it exceeded the time limit";
       images2Video();
       saveSnapShot = false;
     }
   }
-//  SDL_RenderPresent(display->m_renderer);
   display->SwapBuffers();
 }
 
@@ -353,7 +431,7 @@ void RAI_graphics::setCameraProp(CameraProp &prop) {
 
 void RAI_graphics::savingSnapshots(std::string logDirectory, std::string fileName) {
   mtx.lock();
-  savingSnapshots_private(logDirectory,fileName);
+  savingSnapshots_private(logDirectory, fileName);
   mtx.unlock();
 }
 
@@ -378,14 +456,16 @@ void RAI_graphics::images2Video() {
 
 void *RAI_graphics::images2Video_inThread(void *obj) {
   std::string
-    command = "ffmpeg -r 60 -i " + image_dir + "/%07d.bmp -s "+std::to_string(windowWidth_)+"x"+std::to_string(windowHeight_)+" -c:v libx264 -crf 5 " + image_dir + "/" + videoFileName + ".mp4 >nul 2>&1";
-  std::ifstream f((image_dir + "/" + videoFileName +".mp4").c_str());
-  if(f.good())
-    int i = system(("rm " + image_dir + "/" + videoFileName +".mp4").c_str());
+    command =
+    "ffmpeg -r 60 -i " + image_dir + "/%07d.jpg -s " + std::to_string(windowWidth_) + "x" + std::to_string(windowHeight_) + " -c:v libx264 -crf 1 "
+      + image_dir + "/" + videoFileName + ".mp4 >nul 2>&1";
+  std::ifstream f((image_dir + "/" + videoFileName + ".mp4").c_str());
+  if (f.good())
+    int i = system(("rm " + image_dir + "/" + videoFileName + ".mp4").c_str());
   int i = system(command.c_str());
-  command = "rm -rf " + image_dir + "/*.bmp";
+  command = "rm -rf " + image_dir + "/*.jpg";
   i = system(command.c_str());
-  LOG(INFO)<<"The video is generated under "+image_dir;
+  LOG(INFO) << "The video is generated under " + image_dir;
   return NULL;
 }
 
@@ -425,7 +505,7 @@ void RAI_graphics::drawObj(bool isReflection) {
     if (sob->isVisible()) sob->draw(camera, light, 1.0, isReflection);
 
   for (int i = 0; i < objs_.size(); i++) {
-    if (!objs_[i]->isVisible() && (!objs_[i]->reflectable && isReflection) ) continue;
+    if (!objs_[i]->isVisible() && (!objs_[i]->reflectable && isReflection)) continue;
     shaders_[i]->Bind();
     shaders_[i]->Update(camera, light, objs_[i], isReflection);
     objs_[i]->draw();
@@ -459,10 +539,10 @@ void RAI_graphics::computeMousePull() {
   camera->GetPos(cameraPos);
   diffPos = cameraPos - *objTrans.GetPos();
   float normDiff = glm::l2Norm(diffPos);
-  interactionArrow->setScale(normDiff/800.0f*sqrt(float(tx*tx+ty*ty)));
-  glm::vec4 arrowEnd = glm::inverse(cameraT) * glm::vec4(tx,-ty,0,0);
+  interactionArrow->setScale(normDiff / 800.0f * sqrt(float(tx * tx + ty * ty)));
+  glm::vec4 arrowEnd = glm::inverse(cameraT) * glm::vec4(tx, -ty, 0, 0);
   arrowEnd3 = glm::normalize(glm::vec3(arrowEnd));
-  glm::vec3 axis = glm::cross(arrowEnd3, glm::vec3(1,0,0));
+  glm::vec3 axis = glm::cross(arrowEnd3, glm::vec3(1, 0, 0));
   axis = glm::normalize(axis);
   Eigen::Vector3d axisE(axis.x, axis.y, axis.z);
   double angle = acos(arrowEnd3[0]);
@@ -477,36 +557,28 @@ void RAI_graphics::computeMousePull() {
   interactionForce << arrowEnd.x, arrowEnd.y, arrowEnd.z;
 }
 
-bool RAI_graphics::isInteracting(){
+bool RAI_graphics::isInteracting() {
   return isInteracting_;
 }
 
-Eigen::Vector3d& RAI_graphics::getInteractionMagnitude(){
+Eigen::Vector3d &RAI_graphics::getInteractionMagnitude() {
   return interactionForce;
 }
 
-int RAI_graphics::getInteractingObjectID(){
+int RAI_graphics::getInteractingObjectID() {
   return highlightedObjId;
 }
 
-void RAI_graphics::drawText(const char* msg, int x, int y, int r, int g, int b) {
-  SDL_Surface* surf;
-  SDL_Texture* tex;
-  SDL_Color color;
-  color.r=r;
-  color.g=g;
-  color.b=b;
-  color.a=255;
-  SDL_Rect rect;
-  surf = TTF_RenderText_Solid(font, msg, color);
-  tex = SDL_CreateTextureFromSurface(display->m_renderer, surf);
-  rect.x=x;
-  rect.y=y;
-  rect.w=surf->w;
-  rect.h=surf->h;
-  SDL_FreeSurface(surf);
-  SDL_RenderCopy(display->m_renderer, tex, NULL, &rect);
-  SDL_DestroyTexture(tex);
+void RAI_graphics::changeMenuText(int menuId, bool isOnText, std::string mt){
+  menuText[menuId][isOnText] = mt;
+}
+
+void RAI_graphics::changeMenuPosition(int menuId, int x, int y){
+  textBoard[menuId]->setTranslation(x, y);
+}
+
+void RAI_graphics::changeMenuWordWrap(int menuId, int wr){
+  textBoard[menuId]->setTextWrap(wr);
 }
 
 } // rai_graphics
