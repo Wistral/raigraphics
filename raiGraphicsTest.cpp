@@ -38,7 +38,7 @@ int main() {
   Eigen::Vector3d bodyFrameOrigin2(0.0, 10.0, 3.0);
   Eigen::Quaterniond bodyFrameQuat2(0.9239, 0, 0.3827, 0);
   object::CoordinateFrame bodyFrame2(bodyFrameOrigin2, bodyFrameQuat2);
-  Eigen::Vector3d bodyFrameOrigin3(0.0, 0.0, 20.0);
+  Eigen::Vector3d bodyFrameOrigin3(0.0, 0.0, 10.0);
   Eigen::Quaterniond bodyFrameQuat3(0.9239, 0, 0, 0.3827);
   object::CoordinateFrame bodyFrame3(bodyFrameOrigin3, bodyFrameQuat3);
 
@@ -47,12 +47,12 @@ int main() {
   greenBox.setColor({0.0, 1.0, 0.0});
   blueCylinder.setColor({0.0, 0.0, 1.0});
 
-  Eigen::Vector3d whiteSpherePosition; whiteSpherePosition << 0, 0, 2;
+  Eigen::Vector3d whiteSpherePosition; whiteSpherePosition << 0, 0, 3;
   Eigen::Vector3d redConePosition; redConePosition << 10, 0, 3;
   Eigen::Quaterniond redConeQuaternion(0.9239, 0.3827, 0, 0);
   Eigen::Vector3d greenBoxPosition; greenBoxPosition << 0, 10, 3;
   Eigen::Quaterniond greenBoxQuaternion(0.9239, 0, 0.3827, 0);
-  Eigen::Vector3d blueCylinderPosition; blueCylinderPosition << 0, 0, 6;
+  Eigen::Vector3d blueCylinderPosition; blueCylinderPosition << 0, 0, 9;
   Eigen::Quaterniond blueCylinderQuaternion(0.9239, 0, 0, 0.3827);
 
   whiteSphere.setPos(whiteSpherePosition);
