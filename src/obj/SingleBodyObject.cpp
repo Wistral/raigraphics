@@ -62,6 +62,22 @@ void SingleBodyObject::setPos(Eigen::Vector3d &position) {
   transform.SetPos(pos);
 }
 
+void SingleBodyObject::setPos(double x, double y, double z) {
+  std::lock_guard<std::mutex> guard(mtx);
+  (*transform.GetPos()).x = float(x);
+  (*transform.GetPos()).y = float(y);
+  (*transform.GetPos()).z = float(z);
+}
+
+void SingleBodyObject::setOri(double w, double x, double y, double z){
+  std::lock_guard<std::mutex> guard(mtx);
+  (*transform.GetRot()).w = float(w);
+  (*transform.GetRot()).x = float(x);
+  (*transform.GetRot()).y = float(y);
+  (*transform.GetRot()).z = float(z);
+}
+
+
 void SingleBodyObject::setOri(Eigen::Vector4d &quaternionAsVector) {
   std::lock_guard<std::mutex> guard(mtx);
   glm::quat quatglm = glm::quat(quaternionAsVector(0),

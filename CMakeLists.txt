@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 add_definitions(-std=c++11 -pthread)
 include(GNUInstallDirs)
+set(CMAKE_CXX_COMPILER "/usr/bin/g++-7")
 
 project(raiGraphicsOpengl)
 

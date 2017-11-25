@@ -45,6 +45,8 @@ class SingleBodyObject: public Object {
   void setOri(Eigen::Quaterniond &quat);
 
   void setPos(Eigen::Vector3d &position);
+  void setPos(double x, double y, double z);
+  void setOri(double w, double x, double y, double z);
 
   void setTransform(Transform& trans);
   void setLightProp(std::vector<float>& amb, std::vector<float>& diff, std::vector<float>& spec, float shine);
@@ -66,7 +68,7 @@ class SingleBodyObject: public Object {
   bool isVisible() {return visible;}
 
   unsigned getObIndex() const {return obIndex; };
-  unsigned setObIndex(unsigned idx) {obIndex = idx; };
+  void setObIndex(unsigned idx) {obIndex = idx; };
 
   void setVisibility(bool visibility) {visible = visibility;}
   void setScale(double scale);
