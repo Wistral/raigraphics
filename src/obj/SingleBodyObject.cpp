@@ -77,7 +77,6 @@ void SingleBodyObject::setOri(double w, double x, double y, double z){
 
 
 void SingleBodyObject::setOri(Eigen::Vector4d &quaternionAsVector) {
-  std::lock_guard<std::mutex> guard(mtx);
   glm::quat quatglm = glm::quat(quaternionAsVector(0),
                                 quaternionAsVector(1),
                                 quaternionAsVector(2),
@@ -86,13 +85,11 @@ void SingleBodyObject::setOri(Eigen::Vector4d &quaternionAsVector) {
 }
 
 void SingleBodyObject::setOri(Eigen::Quaterniond &quat) {
-  std::lock_guard<std::mutex> guard(mtx);
   glm::quat quatglm = glm::quat(quat.w(), quat.x(), quat.y(), quat.z());
   transform.SetRot(quatglm);
 }
 
 void SingleBodyObject::setOri(Eigen::Matrix3d &rotationMat) {
-  std::lock_guard<std::mutex> guard(mtx);
   Eigen::Quaternion<double> quat(rotationMat);
   glm::quat quatglm = glm::quat(quat.w(), quat.x(), quat.y(), quat.z());
   transform.SetRot(quatglm);
