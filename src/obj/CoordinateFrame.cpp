@@ -74,6 +74,13 @@ void CoordinateFrame::setPos(Eigen::Vector3d &position) {
   zAxisArrow_.setPos(origin_);
 }
 
+void CoordinateFrame::setPos(double x, double y, double z) {
+  origin_<<x,y,z;
+  xAxisArrow_.setPos(x,y,z);
+  yAxisArrow_.setPos(x,y,z);
+  zAxisArrow_.setPos(x,y,z);
+}
+
 void CoordinateFrame::init() {
   for(auto* ob: objs)
     ob->init();

@@ -34,6 +34,7 @@ class CoordinateFrame : public MultiBodyObject {
   void setPose(Eigen::Vector3d &position, Eigen::Matrix3d &quaternionAsVectorWB);
   void setPose(Eigen::Vector3d &position, Eigen::Quaterniond &quaternionWB);
   void setPos(Eigen::Vector3d &position);
+  void setPos(double x, double y, double z);
   void setOri(Eigen::Vector4d &rotationMatrixWB);
   void setOri(Eigen::Matrix3d &rotationMatrixWB);
   void setOri(Eigen::Quaterniond &quaternionWB);
