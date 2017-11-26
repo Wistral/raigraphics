@@ -69,6 +69,7 @@ void *RAI_graphics::loop(void *obj) {
   shader_background = new Shader_background;
   shader_mouseClick = new Shader_mouseClick;
   shader_menu = new Shader_menu;
+  shader_checkerboard = new Shader_checkerboard;
   interactionArrow = new object::Arrow(0.03, 0.06, 1, 0.3);
   interactionArrow->setColor({1, 0, 0});
   interactionBall = new object::Sphere(1);
@@ -146,6 +147,7 @@ void *RAI_graphics::loop(void *obj) {
   delete shader_flat;
   delete shader_mouseClick;
   delete shader_menu;
+  delete shader_checkerboard;
   delete interactionArrow;
   delete interactionBall;
 }
@@ -313,7 +315,7 @@ void RAI_graphics::draw() {
   /// clear images that was generated for mouse clicks
   display->Clear(0, 0, 0, 0);
   /// update camera with events
-  camera->Control(e, checkerboard);
+  camera->Control(e, false);
   camera->update();
 
   if (startInteraction)
@@ -326,7 +328,10 @@ void RAI_graphics::draw() {
   /// draw checkerboard and reflections
   if (checkerboard) {
     drawObj(true);
-    checkerboard->draw(camera, light, checkerboard->reflectance, false);
+    shader_checkerboard->Bind();
+    shader_checkerboard->Update(camera, light, checkerboard, false);
+    checkerboard->draw();
+    shader_checkerboard->UnBind();
   }
 
   /// draw the real objects

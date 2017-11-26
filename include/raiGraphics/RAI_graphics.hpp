@@ -17,6 +17,7 @@
 #include "raiGraphics/imp/shader_mouseClick.h"
 #include "raiGraphics/imp/shader_background.hpp"
 #include "raiGraphics/imp/shader_menu.h"
+#include "raiGraphics/imp/shader_checkerboard.h"
 #include "raiCommon/utils/StopWatch.hpp"
 #include <mutex>
 #include <raiGraphics/obj/CheckerBoard.hpp>
@@ -116,6 +117,7 @@ class RAI_graphics {
   Shader_background *shader_background = nullptr;
   Shader_mouseClick *shader_mouseClick = nullptr;
   Shader_menu *shader_menu = nullptr;
+  Shader_checkerboard *shader_checkerboard = nullptr;
 
   std::vector<Shader *> shaders_;
   std::vector<object::ShaderType> added_shaders_;

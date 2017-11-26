@@ -38,9 +38,9 @@ struct Transform {
   inline void SetScale(glm::vec3 &scaleL) { scale = scaleL; }
  protected:
  private:
-  glm::vec3 pos;
-  glm::quat rot;
-  glm::vec3 scale;
+  glm::vec3 pos = {0,0,0};
+  glm::quat rot = {1,0,0,0};
+  glm::vec3 scale = {1,1,1};
 };
 
 } // rai_graphics

@@ -8,29 +8,36 @@
 namespace rai_graphics {
 namespace object {
 
-CheckerBoard::CheckerBoard(float gridSize, float width, float length, float reflectanceI, std::vector<float> color1, std::vector<float> color2):
-board1(gridSize, floorf(width/gridSize), floorf(length/gridSize), color1), board2(gridSize, floorf(width/gridSize), floorf(length/gridSize), color2){
-  objs.push_back(&board1);
-  objs.push_back(&board2);
-  Eigen::Vector3d pos; pos<<gridSize, 0,0;
-  board2.setPos(pos);
-  reflectance = reflectanceI;
+CheckerBoard::CheckerBoard(float gridSize,
+                           float width,
+                           float length,
+                           float reflectanceI,
+                           std::vector<float> color1,
+                           std::vector<float> color2) {
+
+  com = glm::vec3(0,0,0);
+  col1 = {color1[0], color1[1], color1[2]};
+  col2 = {color2[0], color2[1], color2[2]};
+  gridSize_ = gridSize;
+  transparency_ = reflectanceI;
+
+  positions.emplace_back(-width/2.0, -length/2.0, 0);
+  positions.emplace_back(width/2.0, -length/2.0, 0);
+  positions.emplace_back(width/2.0, length/2.0, 0);
+  positions.emplace_back(-width/2.0, length/2.0, 0);
+
+  normals.emplace_back(0,0,1);
+  normals.emplace_back(0,0,1);
+  indices.push_back(0);
+  indices.push_back(1);
+  indices.push_back(2);
+  indices.push_back(2);
+  indices.push_back(3);
+  indices.push_back(0);
+
 }
 
-void CheckerBoard::init(){
-  for(auto* ob: objs)
-    ob->init();
 
-  shader.push_back(new Shader_basic);
-  shader.push_back(new Shader_basic);
-}
-
-void CheckerBoard::destroy(){
-  for(auto* ob: objs)
-    ob->destroy();
-  for(auto* sh: shader)
-    delete sh;
-}
 
 } // object
 } // rai_graphics
