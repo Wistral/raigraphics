@@ -31,6 +31,8 @@ void main()
         vec3 diffuse=dcont*(mdiffuse*ldiffuse);
 
         vec3 surf2view=normalize(position0-camPos);
+        float omega = 0.1 * length(surf2view) * gridSize;
+
         vec3 reflection=reflect(surf2light,norm);
 
         float scont=pow(max(0.0,dot(surf2view,reflection)),shininess);
@@ -40,6 +42,19 @@ void main()
                           floor(position0.y/gridSize);
         bool isEven = mod(total,2.0)==0.0;
 
-        gl_FragColor=vec4(((isEven)? col1:col2) * (ambient+diffuse+specular)*att,transparency);  //<- don't forget the paranthesis (ambient+diffuse+specular)
+        float xboarderDist = (position0.x)/gridSize - int(position0.x/gridSize+0.5);
+        float yboarderDist = (position0.y)/gridSize - int(position0.y/gridSize+0.5);
+        float boarderDist = min(abs(xboarderDist), abs(yboarderDist))*gridSize;
+
+        vec3 color;
+        if(boarderDist < omega)
+            if(isEven)
+                color = mix(col2, col1, 0.5 + 0.5 * boarderDist / omega);
+            else
+                color = mix(col1, col2, 0.5 + 0.5 * boarderDist / omega);
+        else
+            color = (isEven)? col1:col2;
+
+        gl_FragColor=vec4( color* (ambient+diffuse+specular)*att,transparency);  //<- don't forget the paranthesis (ambient+diffuse+specular)
 
 }
