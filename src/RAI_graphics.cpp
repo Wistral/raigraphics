@@ -111,6 +111,7 @@ void *RAI_graphics::loop(void *obj) {
       usleep(std::max((1.0 / FPS_ - elapse) * 1e6, 0.0));
       elapse = watch.measure();
       actualFPS_ = 1.0 / elapse;
+      isGraphicsReady = true;
     }
   }
 

@@ -79,6 +79,9 @@ class RAI_graphics {
   void changeMenuText(int menuId, bool isOnText, std::string mt);
   void changeMenuPosition(int menuId, int x, int y);
   void changeMenuWordWrap(int menuId, int wr);
+  bool isReady(){
+    return isGraphicsReady;
+  }
 
  private:
   void *loop(void *obj);
@@ -154,6 +157,7 @@ class RAI_graphics {
   std::vector<bool> menuOn_;
   double actualFPS_=0;
   uint loopcounter=0;
+  bool isGraphicsReady=false;
   enum {
     RAI_MAIN_MENU = 0,
     RAI_KEY_BOARD_HELP,
