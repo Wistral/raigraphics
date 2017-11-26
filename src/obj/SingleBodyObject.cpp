@@ -7,13 +7,11 @@ namespace rai_graphics {
 namespace object {
 
 void SingleBodyObject::draw() {
-  std::lock_guard<std::mutex> guard(mtx);
   glBindVertexArray(m_vertexArrayObject);
   glDrawElementsBaseVertex(GL_TRIANGLES, m_numIndices, GL_UNSIGNED_INT, 0, 0);
 }
 
 void SingleBodyObject::init() {
-  std::lock_guard<std::mutex> guard(mtx);
   registerToGPU();
 }
 
