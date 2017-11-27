@@ -31,8 +31,8 @@ void main()
         vec3 diffuse=dcont*(mdiffuse*ldiffuse);
 
         vec3 surf2view=normalize(position0-camPos);
-        float omega = 0.02 * length(surf2view);
-        float distanceSmoothingFactor = exp(-10*omega/gridSize);
+        float omega = 0.002 * length(position0-camPos);
+        float distanceSmoothingFactor = exp(-25*omega/gridSize);
 
         vec3 reflection=reflect(surf2light,norm);
 
@@ -46,15 +46,19 @@ void main()
         float xboarderDist = abs(position0.x/gridSize +1000 - int(position0.x/gridSize+0.5+1000));
         float yboarderDist = abs(position0.y/gridSize +1000 - int(position0.y/gridSize+0.5+1000));
         float boarderDist = min(xboarderDist, yboarderDist)*gridSize;
-
+        vec3 mixedColor;
         vec3 color;
+        mixedColor = mix(col2, col1, 0.5);
+
         if(boarderDist < omega)
             if(isEven)
-                color = mix(col2, col1, 0.5 + 0.5 * boarderDist / omega * distanceSmoothingFactor);
+                color = mix(col2, col1, 0.5 + 0.5 * boarderDist / omega);
             else
-                color = mix(col1, col2, 0.5 + 0.5 * boarderDist / omega * distanceSmoothingFactor);
+                color = mix(col1, col2, 0.5 + 0.5 * boarderDist / omega);
         else
             color = (isEven)? col1:col2;
+
+        color = mix(mixedColor, color, distanceSmoothingFactor);
 
 
 
