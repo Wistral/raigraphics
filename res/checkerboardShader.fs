@@ -31,8 +31,8 @@ void main()
         vec3 diffuse=dcont*(mdiffuse*ldiffuse);
 
         vec3 surf2view=normalize(position0-camPos);
-        float omega = 0.002 * length(position0-camPos);
-        float distanceSmoothingFactor = exp(-25*omega/gridSize);
+        float omega = 0.003 * length(position0-camPos);
+        float distanceSmoothingFactor = exp(-15*omega/gridSize);
 
         vec3 reflection=reflect(surf2light,norm);
 
