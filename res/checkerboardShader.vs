@@ -18,7 +18,7 @@ uniform vec4 clipingPlane;
 void main()
 {
 	gl_Position = MVP * vec4(position, 1.0);
-	position0 =  (vec4(position, 1.0)).xyz;
+	position0 =  position;
 	texCoord0 = texCoord;
 	normal0 = (vec4(normal, 0.0)).xyz;
 	camPos = cameraPos;
