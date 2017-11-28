@@ -35,16 +35,16 @@ class SingleBodyObject: public Object {
 
   virtual void destroy();
 
-  void setPose(Eigen::Vector3d &position, Eigen::Matrix3d &quaternionAsVector);
-  void setPose(Eigen::Vector3d &position, Eigen::Vector4d &quaternionAsVector);
-  void setPose(Eigen::Vector3d &position, Eigen::Quaterniond &quat);
-  void setPose(Eigen::Matrix4d &ht);
+  void setPose(const Eigen::Vector3d &position, const Eigen::Vector4d &quaternionAsVector);
+  void setPose(const Eigen::Vector3d &position, const Eigen::Matrix3d &rotationMatrix);
+  void setPose(const Eigen::Vector3d &position, const Eigen::Quaterniond &quat);
+  void setPose(const Eigen::Matrix4d &ht);
 
-  void setOri(Eigen::Vector4d &quaternionAsVector);
-  void setOri(Eigen::Matrix3d &quaternionAsVector);
-  void setOri(Eigen::Quaterniond &quat);
+  void setOri(const Eigen::Vector4d &quaternionAsVector);
+  void setOri(const Eigen::Matrix3d &rotationMat);
+  void setOri(const Eigen::Quaterniond &quat);
 
-  void setPos(Eigen::Vector3d &position);
+  void setPos(const Eigen::Vector3d &position);
   void setPos(double x, double y, double z);
   void setOri(double w, double x, double y, double z);
 

@@ -30,14 +30,14 @@ class CoordinateFrame : public MultiBodyObject {
                   float arrowHeadRadius = 0.5);
 
 
-  void setPose(Eigen::Vector3d &position, Eigen::Vector4d &quaternionAsVectorWB);
-  void setPose(Eigen::Vector3d &position, Eigen::Matrix3d &quaternionAsVectorWB);
-  void setPose(Eigen::Vector3d &position, Eigen::Quaterniond &quaternionWB);
-  void setPos(Eigen::Vector3d &position);
+  void setPose(const Eigen::Vector3d &position, const Eigen::Vector4d &quaternionAsVectorWB);
+  void setPose(const Eigen::Vector3d &position, const Eigen::Matrix3d &rotationMatrix);
+  void setPose(const Eigen::Vector3d &position, const Eigen::Quaterniond &quaternionWB);
+  void setPos(const Eigen::Vector3d &position);
   void setPos(double x, double y, double z);
-  void setOri(Eigen::Vector4d &rotationMatrixWB);
-  void setOri(Eigen::Matrix3d &rotationMatrixWB);
-  void setOri(Eigen::Quaterniond &quaternionWB);
+  void setOri(const Eigen::Vector4d &quaternionAsVectorWB);
+  void setOri(const Eigen::Matrix3d &rotationMatrixWB);
+  void setOri(const Eigen::Quaterniond &quaternionWB);
 
   virtual ~CoordinateFrame();
   void init();

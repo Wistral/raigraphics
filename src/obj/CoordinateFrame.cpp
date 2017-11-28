@@ -66,7 +66,7 @@ void CoordinateFrame::initChildren() {
   reflectable = false;
 }
 
-void CoordinateFrame::setPos(Eigen::Vector3d &position) {
+void CoordinateFrame::setPos(const Eigen::Vector3d &position) {
   origin_ = position;
 
   xAxisArrow_.setPos(origin_);
@@ -98,7 +98,7 @@ void CoordinateFrame::destroy() {
 CoordinateFrame::~CoordinateFrame() {
 }
 
-void CoordinateFrame::setOri(Eigen::Quaterniond &quaternionWB) {
+void CoordinateFrame::setOri(const Eigen::Quaterniond &quaternionWB) {
   rotation_ = quaternionWB;
   WxAxisArrowQuaternion_ = quaternionWB * BxAxisArrowQuaternion_;
   WyAxisArrowQuaternion_ = quaternionWB * ByAxisArrowQuaternion_;
@@ -108,26 +108,26 @@ void CoordinateFrame::setOri(Eigen::Quaterniond &quaternionWB) {
   yAxisArrow_.setOri(WyAxisArrowQuaternion_);
   zAxisArrow_.setOri(WzAxisArrowQuaternion_);
 }
-void CoordinateFrame::setOri(Eigen::Vector4d &quaternionAsVectorWB) {
+void CoordinateFrame::setOri(const Eigen::Vector4d &quaternionAsVectorWB) {
   Eigen::Quaterniond quaternion(quaternionAsVectorWB(0),
                                 quaternionAsVectorWB(1),
                                 quaternionAsVectorWB(2),
                                 quaternionAsVectorWB(3));
   setOri(quaternion);
 }
-void CoordinateFrame::setOri(Eigen::Matrix3d &rotationMatrixWB) {
+void CoordinateFrame::setOri(const Eigen::Matrix3d &rotationMatrixWB) {
   Eigen::Quaterniond quaternion(rotationMatrixWB);
   setOri(quaternion);
 }
-void CoordinateFrame::setPose(Eigen::Vector3d &position, Eigen::Matrix3d &rotationMatrixWB) {
+void CoordinateFrame::setPose(const Eigen::Vector3d &position, const Eigen::Matrix3d &rotationMatrixWB) {
   setPos(position);
   setOri(rotationMatrixWB);
 }
-void CoordinateFrame::setPose(Eigen::Vector3d &position, Eigen::Vector4d &quaternionAsVectorWB) {
+void CoordinateFrame::setPose(const Eigen::Vector3d &position, const Eigen::Vector4d &quaternionAsVectorWB) {
   setPos(position);
   setOri(quaternionAsVectorWB);
 }
-void CoordinateFrame::setPose(Eigen::Vector3d &position, Eigen::Quaterniond &quaternionWB) {
+void CoordinateFrame::setPose(const Eigen::Vector3d &position, const Eigen::Quaterniond &quaternionWB) {
   setPos(position);
   setOri(quaternionWB);
 }
