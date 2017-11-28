@@ -19,7 +19,7 @@ CheckerBoard::CheckerBoard(float gridSize,
   col1 = {color1[0], color1[1], color1[2]};
   col2 = {color2[0], color2[1], color2[2]};
   gridSize_ = gridSize;
-  transparency_ = reflectanceI;
+  transparency_ = 1 - reflectanceI;
 
   positions.emplace_back(-width/2.0, -length/2.0, 0);
   positions.emplace_back(width/2.0, -length/2.0, 0);
