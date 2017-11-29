@@ -3,6 +3,7 @@
 //
 
 #include <glog/logging.h>
+#include <raiGraphics/obj/Capsule.hpp>
 #include "raiGraphics/RAI_graphics.hpp"
 #include "raiGraphics/obj/CoordinateFrame.hpp"
 //#include <raiGraphics/obj/Mesh.hpp>
@@ -26,6 +27,7 @@ int main() {
   object::Cone redCone(1, 2);
   object::Box greenBox(2, 2, 2);
   object::Cylinder blueCylinder(1, 2);
+  object::Capsule yellowCapsule(2, 2);
   object::Background background("sky");
   object::CheckerBoard grnd(4, 500, 500, 0.1, {0,0,0}, {1,1,1});
   Eigen::Vector3d bodyFrameOrigin(0.0, 0.0, 3.0);
@@ -46,6 +48,7 @@ int main() {
   redCone.setColor({1.0, 0.0, 0.0});
   greenBox.setColor({0.0, 1.0, 0.0});
   blueCylinder.setColor({0.0, 0.0, 1.0});
+  yellowCapsule.setColor({1.0, 1.0, 0.0});
 
   Eigen::Vector3d redConePosition; redConePosition << 10, 0, 3;
   Eigen::Quaterniond redConeQuaternion(0.9239, 0.3827, 0, 0);
@@ -53,11 +56,13 @@ int main() {
   Eigen::Quaterniond greenBoxQuaternion(0.9239, 0, 0.3827, 0);
   Eigen::Vector3d blueCylinderPosition; blueCylinderPosition << 0, 0, 9;
   Eigen::Quaterniond blueCylinderQuaternion(0.9239, 0, 0, 0.3827);
+  Eigen::Vector3d yellowCapsulePostion; yellowCapsulePostion << 0, -10, 3;
 
   whiteSphere.setPos(0,0,3);
   redCone.setPose(redConePosition, redConeQuaternion);
   greenBox.setPose(greenBoxPosition, greenBoxQuaternion);
   blueCylinder.setPose(blueCylinderPosition, blueCylinderQuaternion);
+  yellowCapsule.setPos(yellowCapsulePostion);
 
   object::Arrow directionArrow(0.1, 0.2, 4, 0.2);
   directionArrow.setColor({1.0, 1.0, 0.0});
@@ -70,6 +75,7 @@ int main() {
   graphics.addObject(&redCone);
   graphics.addObject(&greenBox);
   graphics.addObject(&blueCylinder);
+  graphics.addObject(&yellowCapsule);
   graphics.addObject(&directionArrow);
   graphics.addSuperObject(&inertiaFrame);
   graphics.addSuperObject(&bodyFrame1);
@@ -86,6 +92,7 @@ int main() {
   directionArrow.addGhost(ghostVector2, ghostQuaternion1);
 
   LightProp lprop;
+  lprop.pos_light = {10.0, 0.0, 10.0};
   CameraProp cprop;
   cprop.toFollow = &whiteSphere;
   Eigen::Vector3d relPos; relPos << 20, 0, 0;
