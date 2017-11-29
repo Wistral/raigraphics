@@ -32,12 +32,12 @@ Capsule::Capsule(float r, float l) {
 
   for (phi = 0; phi < rings - 1; phi++) {
     for (theta = 0; theta < rings * 2 - 1; theta++) {
-      indices.push_back(phi * rings * 2 + theta);
       indices.push_back((phi + 1) * rings * 2 + (theta + 1));
-      indices.push_back(phi * rings * 2 + (theta + 1));
-      indices.push_back(phi * rings * 2 + theta);
       indices.push_back((phi + 1) * rings * 2 + theta);
-      indices.push_back((phi + 1) * rings * 2 + (theta + 1));
+      indices.push_back(phi * rings * 2 + (theta + 1));
+      indices.push_back((phi + 1) * rings * 2 + theta);
+      indices.push_back(phi * rings * 2 + theta);
+      indices.push_back(phi * rings * 2 + (theta + 1));
     }
   }
 
