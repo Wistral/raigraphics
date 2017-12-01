@@ -72,7 +72,7 @@ void *RAI_graphics::loop(void *obj) {
   shader_checkerboard = new Shader_checkerboard;
   interactionArrow = new object::Arrow(0.03, 0.06, 1, 0.3);
   interactionArrow->setColor({1, 0, 0});
-  interactionBall = new object::Sphere(1, 0, false);
+  interactionBall = new object::Sphere(1, false);
   interactionBall->setColor({1, 0, 0});
 
   interactionArrow->init();
@@ -309,7 +309,7 @@ void RAI_graphics::draw() {
     if (highlightedObjId == objId) {
       highlightedObjId = NO_OBJECT;
     } else {
-      highlightedObjId = objId;
+      highlightedObjId = objectsInOrder_[objId]->getSelectableObIndex();
       objectsInOrder_[highlightedObjId]->highlight();
     }
   }

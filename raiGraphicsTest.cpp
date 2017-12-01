@@ -23,7 +23,7 @@ int main() {
   RAI_graphics graphics(800,600);
 
   // graphical primitives
-  object::Sphere whiteSphere(1, 20, true);
+  object::Sphere whiteSphere(1, true);
   object::Cone redCone(1, 2, true);
   object::Box greenBox(2, 2, 2, true);
   object::Cylinder blueCylinder(1, 2, true);

@@ -24,8 +24,8 @@ Biped_simplified::Biped_simplified() :
     thigh_r(std::string(getenv("RAI_ROOT")) + "/RAI/taskModules/bipedLocomotion/cadModel/biped/Thigh_V1.dae", 0.001),
     shank_r(std::string(getenv("RAI_ROOT")) + "/RAI/taskModules/bipedLocomotion/cadModel/biped/Shank_V1.dae", 0.001),
 //    afe_r(std::string(getenv("RAI_ROOT")) + "/RAI/taskModules/bipedLocomotion/cadModel/biped/Afe_V1.dae", 0.001),
-    foot_l(0.05, 0, false),
-    foot_r(0.05, 0, false)
+    foot_l(0.05, false),
+    foot_r(0.05, false)
 //    foot_l(std::string(getenv("RAI_ROOT")) + "/RAI/taskModules/bipedLocomotion/cadModel/biped/Foot_V1.dae", 0.001),
 //    foot_r(std::string(getenv("RAI_ROOT")) + "/RAI/taskModules/bipedLocomotion/cadModel/biped/Foot_V1.dae", 0.001)
 {
