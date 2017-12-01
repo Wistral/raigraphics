@@ -265,6 +265,9 @@ void SingleBodyObject::deHighlight() {
   amb_m[2] = amb_m_orig[2];
   transparency_ = transparencyOrig_;
 }
+bool SingleBodyObject::isSelectable() const {
+  return selectable_;
+}
 
 //void SingleBodyObject::drawSnapshot(Camera *camera, Light *light, float transparency) {
 //  setTransparency(transparency);

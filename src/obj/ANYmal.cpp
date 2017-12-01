@@ -22,10 +22,10 @@ ANYmal::ANYmal():
     shank_rf(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_shank_2_RF.dae", 0.001),
     shank_lh(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_shank_2_LH.dae", 0.001),
     shank_rh(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_shank_2_RH.dae", 0.001),
-    foot_lf(0.025),
-    foot_rf(0.025),
-    foot_lh(0.025),
-    foot_rh(0.025){
+    foot_lf(0.025, 0, false),
+    foot_rf(0.025, 0, false),
+    foot_lh(0.025, 0, false),
+    foot_rh(0.025, 0, false) {
 
   reflectable = true;
 

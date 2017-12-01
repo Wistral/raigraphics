@@ -12,7 +12,7 @@ namespace object {
 
 class Box: public SingleBodyObject {
  public:
-  Box(float xLength, float yLength, float zLength);
+  Box(float xLength, float yLength, float zLength, bool isSelectable=false);
 
  private:
 

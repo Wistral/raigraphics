@@ -8,7 +8,7 @@
 namespace rai_graphics {
 namespace object {
 
-Cylinder::Cylinder(float r, float l) {
+Cylinder::Cylinder(float r, float l, bool isSelectable) {
   com = glm::vec3(0,0,l/2.0);
 
   int slices = 20;
@@ -98,6 +98,8 @@ Cylinder::Cylinder(float r, float l) {
     indices.push_back(2*slices+position + (2 * (i + 1) + 1)%(2*slices));
   }
 
+  // selectable
+  selectable_ = isSelectable;
 }
 
 } // object

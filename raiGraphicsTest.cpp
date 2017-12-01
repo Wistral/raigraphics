@@ -23,11 +23,11 @@ int main() {
   RAI_graphics graphics(800,600);
 
   // graphical primitives
-  object::Sphere whiteSphere(1);
-  object::Cone redCone(1, 2);
-  object::Box greenBox(2, 2, 2);
-  object::Cylinder blueCylinder(1, 2);
-  object::Capsule yellowCapsule(2, 2);
+  object::Sphere whiteSphere(1, 20, true);
+  object::Cone redCone(1, 2, true);
+  object::Box greenBox(2, 2, 2, true);
+  object::Cylinder blueCylinder(1, 2, true);
+  object::Capsule yellowCapsule(2, 2, true);
   object::Background background("sky");
   object::CheckerBoard grnd(4, 500, 500, 0.1, {0,0,0}, {1,1,1});
   Eigen::Vector3d bodyFrameOrigin(0.0, 0.0, 3.0);

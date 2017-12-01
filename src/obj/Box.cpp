@@ -7,7 +7,7 @@
 namespace rai_graphics{
 namespace object{
 
-Box::Box(float xLength, float yLength, float zLength) {
+Box::Box(float xLength, float yLength, float zLength, bool isSelectable) {
   // origin is on the center of box
   com = glm::vec3(0,0,0);
 
@@ -76,6 +76,9 @@ Box::Box(float xLength, float yLength, float zLength) {
   indices.push_back(2);
   indices.push_back(6);
   indices.push_back(3);
+
+  // selectable
+  selectable_ = isSelectable;
 }
 
 }
