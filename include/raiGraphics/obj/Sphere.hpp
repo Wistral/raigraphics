@@ -13,7 +13,7 @@ namespace object {
 class Sphere : public SingleBodyObject {
 
  public:
-  Sphere(float radius, int rings, bool isSelectable=false);
+  Sphere(float radius, int rings=20, bool isSelectable=false);
   float radius_;
 
 };
