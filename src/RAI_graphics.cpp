@@ -303,14 +303,16 @@ void RAI_graphics::draw() {
 
   if (objId != NO_OBJECT && objId != 0) {
     camera->follow(objectsInOrder_[objId]);
+    interactingObjSelectableId = objectsInOrder_[objId]->getSelectableObIndex();
+
     if (highlightedObjId != NO_OBJECT)
       objectsInOrder_[highlightedObjId]->deHighlight();
 
     if (highlightedObjId == objId) {
       highlightedObjId = NO_OBJECT;
     } else {
-      highlightedObjId = objectsInOrder_[objId]->getSelectableObIndex();
-      objectsInOrder_[highlightedObjId]->highlight();
+      highlightedObjId = objId;
+      objectsInOrder_[objId]->highlight();
     }
   }
   /// clear images that was generated for mouse clicks
@@ -386,7 +388,7 @@ void RAI_graphics::addObject(object::SingleBodyObject *obj, object::ShaderType t
   added_shaders_.push_back(type);
 
   if(obj->isSelectable())
-    obj->setSelectableObIndex(++selectableObjectIndexToBeAssigned);
+    obj->setSelectableObIndex(++selectableIndexToBeAssigned);
 
   obj->setObIndex(++objectIdexToBeAssigned);
   objectsInOrder_.push_back(obj);
@@ -580,7 +582,7 @@ Eigen::Vector3d &RAI_graphics::getInteractionMagnitude() {
 }
 
 int RAI_graphics::getInteractingObjectID() {
-  return highlightedObjId;
+  return interactingObjSelectableId;
 }
 
 void RAI_graphics::changeMenuText(int menuId, bool isOnText, std::string mt) {

@@ -149,8 +149,9 @@ class RAI_graphics {
   bool cameraPropChanged;
   bool lightPropChanged;
   unsigned objectIdexToBeAssigned = 0;
-  unsigned selectableObjectIndexToBeAssigned = 0;
+  unsigned selectableIndexToBeAssigned = 0;
   int highlightedObjId = 16646655;
+  int interactingObjSelectableId = -1;
   bool isInteracting_ = false;
   int interStartingX, interStartingY;
   Eigen::Vector3d interactionForce;
