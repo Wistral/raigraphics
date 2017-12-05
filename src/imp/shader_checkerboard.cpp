@@ -87,4 +87,8 @@ void Shader_checkerboard::Update(Camera *camera, Light *light, object::CheckerBo
 
 }
 
+void Shader_checkerboard::Update(Camera *camera,  Light *light, object::SingleBodyObject* obj, bool isreflection){
+LOG(FATAL)<<"model specific shader"<<std::endl;
+}
+
 } // rai_graphics
