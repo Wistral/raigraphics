@@ -7,7 +7,7 @@
 namespace rai_graphics {
 namespace object {
 
-Capsule::Capsule(float r, float l) {
+Capsule::Capsule(float r, float l, bool isSelectable) {
   com = glm::vec3(0, 0, 0);
 
   int slices = 20;
@@ -79,7 +79,8 @@ Capsule::Capsule(float r, float l) {
     indices.push_back(position2 + i);
   }
 
-
+  // selectable
+  selectable_ = isSelectable;
 }
 
 } // object

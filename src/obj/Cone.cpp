@@ -7,7 +7,7 @@
 namespace rai_graphics {
 namespace object {
 
-Cone::Cone(float r, float l) {
+Cone::Cone(float r, float l, bool isSelectable) {
   com = glm::vec3(0,0,l*.25f);
 
   int slices = 20;
@@ -44,6 +44,9 @@ Cone::Cone(float r, float l) {
     indices.push_back(slices+i);
     indices.push_back(slices + i % slices + 1);
   }
+
+  // selectable
+  selectable_ = isSelectable;
 }
 
 } // object

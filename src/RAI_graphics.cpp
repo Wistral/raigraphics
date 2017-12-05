@@ -72,7 +72,7 @@ void *RAI_graphics::loop(void *obj) {
   shader_checkerboard = new Shader_checkerboard;
   interactionArrow = new object::Arrow(0.03, 0.06, 1, 0.3);
   interactionArrow->setColor({1, 0, 0});
-  interactionBall = new object::Sphere(1);
+  interactionBall = new object::Sphere(1, false);
   interactionBall->setColor({1, 0, 0});
 
   interactionArrow->init();
@@ -225,6 +225,7 @@ void RAI_graphics::draw() {
   for (auto *sob: supObjs_)
     if (sob->isVisible()) {
       for (auto *ob: sob->getChildren()) {
+        if (not ob->isVisible() or not ob->isSelectable()) continue;
         shader_mouseClick->Bind();
         shader_mouseClick->Update(camera, ob);
         ob->draw();
@@ -233,7 +234,7 @@ void RAI_graphics::draw() {
     }
 
   for (int i = 0; i < objs_.size(); i++) {
-    if (!objs_[i]->isVisible()) continue;
+    if (not objs_[i]->isVisible() or not objs_[i]->isSelectable()) continue;
     shader_mouseClick->Bind();
     shader_mouseClick->Update(camera, objs_[i]);
     objs_[i]->draw();
@@ -302,6 +303,8 @@ void RAI_graphics::draw() {
 
   if (objId != NO_OBJECT && objId != 0) {
     camera->follow(objectsInOrder_[objId]);
+    interactingObjSelectableId = objectsInOrder_[objId]->getSelectableObIndex();
+
     if (highlightedObjId != NO_OBJECT)
       objectsInOrder_[highlightedObjId]->deHighlight();
 
@@ -309,7 +312,7 @@ void RAI_graphics::draw() {
       highlightedObjId = NO_OBJECT;
     } else {
       highlightedObjId = objId;
-      objectsInOrder_[highlightedObjId]->highlight();
+      objectsInOrder_[objId]->highlight();
     }
   }
   /// clear images that was generated for mouse clicks
@@ -383,6 +386,10 @@ void RAI_graphics::addObject(object::SingleBodyObject *obj, object::ShaderType t
   if (type == object::RAI_SHADER_OBJECT_DEFAULT)
     type = obj->defaultShader;
   added_shaders_.push_back(type);
+
+  if(obj->isSelectable())
+    obj->setSelectableObIndex(++selectableIndexToBeAssigned);
+
   obj->setObIndex(++objectIdexToBeAssigned);
   objectsInOrder_.push_back(obj);
 }
@@ -575,7 +582,7 @@ Eigen::Vector3d &RAI_graphics::getInteractionMagnitude() {
 }
 
 int RAI_graphics::getInteractingObjectID() {
-  return highlightedObjId;
+  return interactingObjSelectableId;
 }
 
 void RAI_graphics::changeMenuText(int menuId, bool isOnText, std::string mt) {

@@ -7,8 +7,10 @@
 namespace rai_graphics {
 namespace object {
 
-Sphere::Sphere(float radius, int rings) {
+Sphere::Sphere(float radius, bool isSelectable) {
   com = glm::vec3(0,0,0);
+
+  int rings = 20;
 
   float const R = 1. / (float) (rings - 1);
   float const S = 1. / (float) (rings - 1);
@@ -51,6 +53,9 @@ Sphere::Sphere(float radius, int rings) {
       indices[idx] = (r + 1) * rings + (s + 1); idx++;
 
     }
+
+  // selectable
+  selectable_ = isSelectable;
 }
 
 } // object

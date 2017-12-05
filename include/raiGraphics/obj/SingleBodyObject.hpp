@@ -68,7 +68,9 @@ class SingleBodyObject: public Object {
   bool isVisible() {return visible;}
 
   unsigned getObIndex() const {return obIndex; };
+  unsigned getSelectableObIndex() const {return selectableObIndex; };
   void setObIndex(unsigned idx) {obIndex = idx; };
+  void setSelectableObIndex(unsigned idx) {selectableObIndex = idx; };
 
   void setVisibility(bool visibility) {visible = visibility;}
   void setScale(double scale);
@@ -80,6 +82,12 @@ class SingleBodyObject: public Object {
 
   void highlight();
   void deHighlight();
+
+  virtual void addGhost(Eigen::Vector3d &position);
+  virtual void addGhost(Eigen::Vector3d &position, Eigen::Quaterniond &quat);
+  void clearGhost();
+  std::vector<Transform> & getGhosts();
+  bool isSelectable() const;
 
   ShaderType defaultShader = object::RAI_SHADER_BASIC;
 
@@ -111,18 +119,13 @@ class SingleBodyObject: public Object {
   unsigned int m_numIndices;
   std::mutex mtx;
   unsigned obIndex;
+  unsigned selectableObIndex;
 
-  // TODO code refine(inheritance)
- public:
-  virtual void addGhost(Eigen::Vector3d &position);
-  virtual void addGhost(Eigen::Vector3d &position, Eigen::Quaterniond &quat);
-  void clearGhost();
-
-  std::vector<Transform> & getGhosts();
- protected:
 //  void drawSnapshot(Camera *camera,  Light *light, float transparency);
   std::vector<Transform> ghosts;
 //  Shader* shader = nullptr;
+
+  bool selectable_ = false;
 
 };
 

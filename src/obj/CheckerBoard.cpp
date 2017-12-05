@@ -34,7 +34,6 @@ CheckerBoard::CheckerBoard(float gridSize,
   indices.push_back(2);
   indices.push_back(3);
   indices.push_back(0);
-
 }
 
 

@@ -14,7 +14,7 @@ namespace object {
 class Capsule: public SingleBodyObject {
  public:
   /// total height of capsule is (2*r + l)
-  Capsule(float r, float l);
+  Capsule(float r, float l, bool isSelectable=false);
 
 };
 
