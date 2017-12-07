@@ -62,11 +62,13 @@ void Shader_flat::Update(Camera *camera, Light *light, object::SingleBodyObject*
   light->getDiffuse(diffl);
   light->getSpecular(specl);
   light->getPosition(posl);
+  glm::vec4 clipingPlane(0,0,-1,1e5);
 
   glm::mat4 MVP, zflip;
   if(isreflection){
     zflip[2][2]=-1;
     glCullFace(GL_FRONT);
+    clipingPlane[3] = 0;
   } else {
     glCullFace(GL_BACK);
   }
@@ -79,6 +81,7 @@ void Shader_flat::Update(Camera *camera, Light *light, object::SingleBodyObject*
   glm::mat4 Normal = zflip * trans.GetModel() * scale;
   MVP = MVP * zflip * trans.GetM() * scale;
 
+  glUniform4f(glGetUniformLocation(m_program, "clipingPlane"), clipingPlane[0], clipingPlane[1], clipingPlane[2], clipingPlane[3]);
   glUniformMatrix4fv(glGetUniformLocation(m_program, "MVP"), 1, GL_FALSE, &MVP[0][0]);
   glUniformMatrix4fv(glGetUniformLocation(m_program, "Normal"), 1, GL_FALSE, &Normal[0][0]);
   glUniform3f(glGetUniformLocation(m_program, "cameraPos"), CamPos.x, CamPos.y, CamPos.z);

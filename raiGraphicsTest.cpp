@@ -29,7 +29,7 @@ int main() {
   object::Cylinder blueCylinder(1, 2, true);
   object::Capsule yellowCapsule(2, 2, true);
   object::Background background("sky");
-  object::CheckerBoard grnd(4, 500, 500, 0.1, {0,0,0}, {1,1,1});
+  object::CheckerBoard grnd(4, 500, 500, 0.05, {0,0,0}, {1,1,1});
   Eigen::Vector3d bodyFrameOrigin(0.0, 0.0, 3.0);
   Eigen::Quaterniond bodyFrameQuat(1, 0, 0, 0);
   object::CoordinateFrame inertiaFrame(bodyFrameOrigin, bodyFrameQuat);
@@ -105,9 +105,7 @@ int main() {
   // exit test app when keyboard 'Q' key pressed
   while(1)
   {
-    const Uint8* keys = graphics.keyboard();
-
-    if (keys[RAI_KEY_Q]) {
+    if (graphics.keyboard()[RAI_KEY_Q]) {
       break;
     }
   }

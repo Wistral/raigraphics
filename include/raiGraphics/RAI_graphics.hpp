@@ -76,6 +76,7 @@ class RAI_graphics {
   bool isInteracting();
   Eigen::Vector3d& getInteractionMagnitude();
   int getInteractingObjectID();
+  bool getCustomToggleState(int id);
 
   void changeMenuText(int menuId, bool isOnText, std::string mt);
   void changeMenuPosition(int menuId, int x, int y);
@@ -101,6 +102,7 @@ class RAI_graphics {
   std::vector<object::Rectangle *> textBoard;
   std::vector<std::vector<std::string>> menuText;
   std::vector<bool> menuTextToggle;
+  std::vector<bool> customToggle;
 
   bool backgroundChanged = false, checkerboardChanged = false;
 

@@ -16,9 +16,7 @@ class Shader_checkerboard : public Shader {
   void Bind();
   void UnBind();
   void Update(Camera *camera,  Light *light, object::CheckerBoard* obj, bool isreflection);
-  void Update(Camera *camera,  Light *light, object::SingleBodyObject* obj, bool isreflection){
-    LOG(FATAL)<<"model specific shader"<<std::endl;
-  }
+  void Update(Camera *camera,  Light *light, object::SingleBodyObject* obj, bool isreflection);
 
  protected:
  private:
