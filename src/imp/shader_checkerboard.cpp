@@ -46,6 +46,11 @@ void Shader_checkerboard::UnBind() {
 
 
 void Shader_checkerboard::Update(Camera *camera, Light *light, object::CheckerBoard* obj) {
+  glDisable(GL_CLIP_DISTANCE0);
+  glDisable(GL_CLIP_DISTANCE1);
+  glDisable(GL_CLIP_DISTANCE2);
+  glDisable(GL_CLIP_DISTANCE3);
+  glDisable(GL_CLIP_DISTANCE4);
   std::vector<float> clr, amb, diff, spec, ambl, diffl, specl, posl;
   float shine;
 

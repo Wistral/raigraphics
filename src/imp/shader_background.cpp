@@ -43,6 +43,11 @@ void Shader_background::Update(Camera *camera, Light *light, object::SingleBodyO
 }
 
 void Shader_background::Update(Camera *camera, Light *light, object::Background* obj) {
+  glDisable(GL_CLIP_DISTANCE0);
+  glDisable(GL_CLIP_DISTANCE1);
+  glDisable(GL_CLIP_DISTANCE2);
+  glDisable(GL_CLIP_DISTANCE3);
+  glDisable(GL_CLIP_DISTANCE4);
   glCullFace(GL_BACK);
   glm::mat4 MVP;
   camera->GetVP(MVP);
