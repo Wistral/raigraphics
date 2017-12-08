@@ -523,7 +523,7 @@ void RAI_graphics::drawObj(bool isReflection) {
   for (auto *sob: supObjs_)
     if (sob->isVisible() && isReflection)
       sob->draw(camera, light, 1.0, checkerboard);
-    else
+    else if(sob->isVisible())
       sob->draw(camera, light, 1.0);
 
   for (int i = 0; i < objs_.size(); i++) {

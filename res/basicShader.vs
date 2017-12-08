@@ -30,9 +30,9 @@ void main()
 	normal0 = (Normal * vec4(normal, 0.0)).xyz;
 	camPos = cameraPos;
 	vec4 position_w = Normal * vec4(position, 1.0);
-   	gl_ClipDistance[0] = dot( clipingPlane0, position_w);
-  	gl_ClipDistance[1] = dot( clipingPlane1, position_w);
-  	gl_ClipDistance[2] = dot( clipingPlane2, position_w);
-    gl_ClipDistance[3] = dot( clipingPlane3, position_w);
-    gl_ClipDistance[4] = dot( clipingPlane4, position_w);
+   	gl_ClipDistance[0] = dot(clipingPlane0, position_w);
+  	gl_ClipDistance[1] = dot(clipingPlane1, position_w);
+  	gl_ClipDistance[2] = dot(clipingPlane2, position_w);
+    gl_ClipDistance[3] = dot(clipingPlane3, position_w);
+    gl_ClipDistance[4] = dot(clipingPlane4, position_w);
 }

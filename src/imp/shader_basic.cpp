@@ -46,10 +46,10 @@ void Shader_basic::UnBind() {
 
 void Shader_basic::Update(Camera *camera, Light *light, object::SingleBodyObject *obj) {
   glDisable(GL_CLIP_DISTANCE0);
-  glDisable(GL_CLIP_DISTANCE0);
-  glDisable(GL_CLIP_DISTANCE0);
-  glDisable(GL_CLIP_DISTANCE0);
-  glDisable(GL_CLIP_DISTANCE0);
+  glDisable(GL_CLIP_DISTANCE1);
+  glDisable(GL_CLIP_DISTANCE2);
+  glDisable(GL_CLIP_DISTANCE3);
+  glDisable(GL_CLIP_DISTANCE4);
 
   Transform trans;
   std::vector<float> clr, amb, diff, spec, ambl, diffl, specl, posl;
@@ -111,12 +111,11 @@ void Shader_basic::Update(Camera *camera, Light *light, object::SingleBodyObject
 
 void Shader_basic::UpdateForReflection(Camera *camera, Light *light, object::SingleBodyObject *obj, object::CheckerBoard *chk) {
   glEnable(GL_CLIP_DISTANCE0);
-  glEnable(GL_CLIP_DISTANCE0);
-  glEnable(GL_CLIP_DISTANCE0);
-  glEnable(GL_CLIP_DISTANCE0);
-  glEnable(GL_CLIP_DISTANCE0);
+  glEnable(GL_CLIP_DISTANCE1);
+  glEnable(GL_CLIP_DISTANCE2);
+  glEnable(GL_CLIP_DISTANCE3);
+  glEnable(GL_CLIP_DISTANCE4);
   glCullFace(GL_FRONT);
-
 
   glm::vec3 clipingPlane0(0, 0, -1);
   glm::vec3 clipingPlane1;
@@ -165,11 +164,11 @@ void Shader_basic::UpdateForReflection(Camera *camera, Light *light, object::Sin
   glm::mat4 Normal = zflip * trans.GetModel() * scale;
   glm::vec4 test;
 
-  glUniform4f(glGetUniformLocation(m_program, "clipingPlane0"), clipingPlane0[0], clipingPlane0[1], clipingPlane0[2], clip0);
-  glUniform4f(glGetUniformLocation(m_program, "clipingPlane1"), clipingPlane1[0], clipingPlane1[1], clipingPlane1[2], clip1);
-  glUniform4f(glGetUniformLocation(m_program, "clipingPlane2"), clipingPlane2[0], clipingPlane2[1], clipingPlane2[2], clip2);
-  glUniform4f(glGetUniformLocation(m_program, "clipingPlane3"), clipingPlane3[0], clipingPlane3[1], clipingPlane3[2], clip3);
-  glUniform4f(glGetUniformLocation(m_program, "clipingPlane4"), clipingPlane4[0], clipingPlane4[1], clipingPlane4[2], clip4);
+  glUniform4f(glGetUniformLocation(m_program, "clipingPlane0"), clipingPlane0[0], clipingPlane0[1], clipingPlane0[2], -clip0);
+  glUniform4f(glGetUniformLocation(m_program, "clipingPlane1"), clipingPlane1[0], clipingPlane1[1], clipingPlane1[2], -clip1);
+  glUniform4f(glGetUniformLocation(m_program, "clipingPlane2"), clipingPlane2[0], clipingPlane2[1], clipingPlane2[2], -clip2);
+  glUniform4f(glGetUniformLocation(m_program, "clipingPlane3"), clipingPlane3[0], clipingPlane3[1], clipingPlane3[2], -clip3);
+  glUniform4f(glGetUniformLocation(m_program, "clipingPlane4"), clipingPlane4[0], clipingPlane4[1], clipingPlane4[2], -clip4);
 
   glUniformMatrix4fv(glGetUniformLocation(m_program, "MVP"), 1, GL_FALSE, &MVP[0][0]);
   glUniformMatrix4fv(glGetUniformLocation(m_program, "Normal"), 1, GL_FALSE, &Normal[0][0]);
