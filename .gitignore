@@ -3,6 +3,7 @@ deepLearning/cuda
 deepLearning/tensorflow
 cmake-build-debug*
 cmake-build-release*
+cmake-build-rel*
 cmake-build-default
 /.cproject
 /.project

@@ -322,7 +322,7 @@ void RAI_graphics::draw() {
   /// clear images that was generated for mouse clicks
   display->Clear(0, 0, 0, 0);
   /// update camera with events
-  camera->Control(e, false);
+  camera->Control(e, true);
   camera->update();
 
   if (startInteraction)

@@ -55,7 +55,8 @@ void Camera::update() {
   } else {
     Transform trans;
     toFollowObj->getTransform(trans);
-    pose_ = glm::lookAt(*trans.GetPos() + glm::vec3(relativePos), *trans.GetPos(), up);
+    glm::vec3 camPos = *trans.GetPos() + glm::vec3(relativePos);
+    pose_ = glm::lookAt(camPos, *trans.GetPos(), up);
   }
   vp_ = projection * pose_;
   mtx.unlock();
@@ -102,7 +103,7 @@ void Camera::Control(SDL_Event e, bool stayAboveZero) {
       SDL_GetMouseState(&tmpx, &tmpy);
       camYaw += camAngularSpeed * (tmpx - prevMx);
       camPitch += camAngularSpeed * (tmpy - prevMy);
-      camPitch = std::min(std::max(camPitch, -89.5f), 89.5f);
+      camPitch = std::min(std::max(camPitch, 5.0f), 89.5f);
     }
 
     lockCamera();
@@ -136,7 +137,6 @@ void Camera::Control(SDL_Event e, bool stayAboveZero) {
 
     glm::vec4 rotationPitcAxis( -relativePos.y,relativePos.x, 0, 0), rotationPitcAxisnew;
     glm::normalize(rotationPitcAxis);
-
 
     if (mousePressedLastTimeStep) {
       SDL_GetMouseState(&tmpx, &tmpy);
