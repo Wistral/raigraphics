@@ -68,6 +68,7 @@ void Shader_flat::Update(Camera *camera, Light *light, object::SingleBodyObject*
   light->getDiffuse(diffl);
   light->getSpecular(specl);
   light->getPosition(posl);
+  glm::vec4 clipingPlane(0,0,-1,1e5);
 
   glm::mat4 MVP, zflip;
 

@@ -21,7 +21,7 @@ typedef void *(RAI_graphics::*Thread2Ptr)(void *);
 typedef void *(*PthreadPtr)(void *);
 
 RAI_graphics::RAI_graphics(int windowWidth, int windowHeight) :
-  menuTextToggle(TEXTMENUCOUNT, false) {
+  menuTextToggle(TEXTMENUCOUNT, false), customToggle(10, false) {
   windowWidth_ = windowWidth;
   windowHeight_ = windowHeight;
   objectsInOrder_.push_back(nullptr);
@@ -290,6 +290,10 @@ void RAI_graphics::draw() {
           if (keyboard()[RAI_KEY_F1 + fkey])
             menuTextToggle[fkey] = !menuTextToggle[fkey];
 
+        for (int togKey = 0; togKey < 10; togKey++)
+          if (keyboard()[RAI_KEY_1 + togKey])
+            customToggle[togKey] = !customToggle[togKey];
+
         break;
     }
   }
@@ -440,7 +444,6 @@ void RAI_graphics::setLightProp(LightProp &prop) {
 }
 
 void RAI_graphics::setCameraProp(CameraProp &prop) {
-  std::lock_guard<std::mutex> guard(mtxCamera);
   cameraProp = prop;
   cameraPropChanged = true;
 }
@@ -581,6 +584,10 @@ void RAI_graphics::computeMousePull() {
 
 bool RAI_graphics::isInteracting() {
   return isInteracting_;
+}
+
+bool RAI_graphics::getCustomToggleState(int id) {
+  return customToggle[id];
 }
 
 Eigen::Vector3d &RAI_graphics::getInteractionMagnitude() {
