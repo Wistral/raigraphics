@@ -17,4 +17,9 @@ void main() {
     trans = transparency;
     gl_Position = vec4(vert.x * xscale + xpos -1, vert.y * yscale + ypos -1, 0, 1);
     //gl_Position = tempVec;
+    gl_ClipDistance[0] = 1;
+    gl_ClipDistance[1] = 1;
+    gl_ClipDistance[2] = 1;
+    gl_ClipDistance[3] = 1;
+    gl_ClipDistance[4] = 1;
 }

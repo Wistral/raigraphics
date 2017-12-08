@@ -228,7 +228,10 @@ void SingleBodyObject::addGhost(Eigen::Vector3d &position) {
   ghostTransform.SetPos(pos);
 
   ghosts.push_back(ghostTransform);
+  ghostColor.emplace_back(color_[0], color_[1], color_[2]);
+  ghostScale.emplace_back(scaleMat_[0][0], scaleMat_[1][1], scaleMat_[2][2]);
 }
+
 void SingleBodyObject::addGhost(Eigen::Vector3d &position, Eigen::Quaterniond &quat) {
   Transform ghostTransform;
   glm::quat quatglm = glm::quat(quat.w(), quat.x(), quat.y(), quat.z());
@@ -237,6 +240,8 @@ void SingleBodyObject::addGhost(Eigen::Vector3d &position, Eigen::Quaterniond &q
   ghostTransform.SetPos(pos);
 
   ghosts.push_back(ghostTransform);
+  ghostColor.emplace_back(color_[0], color_[1], color_[2]);
+  ghostScale.emplace_back(scaleMat_[0][0], scaleMat_[1][1], scaleMat_[2][2]);
 }
 
 std::vector<Transform> & SingleBodyObject::getGhosts() {
@@ -245,6 +250,8 @@ std::vector<Transform> & SingleBodyObject::getGhosts() {
 
 void SingleBodyObject::clearGhost() {
   ghosts.clear();
+  ghostColor.clear();
+  ghostScale.clear();
 }
 
 void SingleBodyObject::highlight() {
