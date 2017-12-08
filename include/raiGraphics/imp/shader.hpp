@@ -10,6 +10,7 @@
 #include "transform.h"
 #include "Light.hpp"
 #include "raiGraphics/obj/SingleBodyObject.hpp"
+#include "raiGraphics/obj/CheckerBoard.hpp"
 #include "camera.h"
 #include <iostream>
 #include <fstream>
@@ -21,7 +22,8 @@ class Shader {
  public:
   virtual void Bind() = 0;
   virtual void UnBind() = 0;
-  virtual void Update(Camera *camera, Light *light, object::SingleBodyObject* obj, bool isreflection) = 0;
+  virtual void Update(Camera *camera, Light *light, object::SingleBodyObject* obj) = 0;
+  virtual void UpdateForReflection(Camera *camera, Light *light, object::SingleBodyObject* obj, object::CheckerBoard* chk) = 0;
 
  protected:
   std::string LoadShader(const std::string &fileName);

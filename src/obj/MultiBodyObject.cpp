@@ -2,12 +2,13 @@
 // Created by jhwangbo on 01.05.17.
 //
 #include "raiGraphics/obj/MultiBodyObject.hpp"
+#include "raiGraphics/obj/CheckerBoard.hpp"
 
 namespace rai_graphics {
 namespace object {
 
-void MultiBodyObject::draw(Camera *camera,  Light *light, float transparency, bool isReflection){
-  drawSnapshot(camera, light, transparency, isReflection);
+void MultiBodyObject::draw(Camera *camera,  Light *light, float transparency, CheckerBoard* chk){
+  drawSnapshot(camera, light, transparency, chk);
 //  turnOnGhost(true);
 //  for(auto& ghost : ghosts) {
 //    setTrans(ghost);
@@ -46,12 +47,15 @@ void MultiBodyObject::turnOnGhost(bool ghostOn) {
     ob->usingTempTransform(ghostOn);
 }
 
-void MultiBodyObject::drawSnapshot(Camera *camera, Light *light, float transparency, bool isReflection){
+void MultiBodyObject::drawSnapshot(Camera *camera, Light *light, float transparency, CheckerBoard* chk){
   for(int i = 0; i < objs.size(); i++) {
-    if( !objs[i]->reflectable && isReflection ) continue;
+    if( !objs[i]->reflectable && chk ) continue;
     objs[i]->setTransparency(transparency);
     shader[i]->Bind();
-    shader[i]->Update(camera, light, objs[i], isReflection);
+    if(chk)
+      shader[i]->UpdateForReflection(camera, light, objs[i], chk);
+    else
+      shader[i]->Update(camera, light, objs[i]);
     objs[i]->draw();
     shader[i]->UnBind();
   }

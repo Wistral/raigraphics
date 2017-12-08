@@ -332,7 +332,7 @@ void RAI_graphics::draw() {
   if (checkerboard) {
     drawObj(true);
     shader_checkerboard->Bind();
-    shader_checkerboard->Update(camera, light, checkerboard, false);
+    shader_checkerboard->Update(camera, light, checkerboard);
     checkerboard->draw();
     shader_checkerboard->UnBind();
   }
@@ -518,12 +518,18 @@ int RAI_graphics::readObjIdx() {
 
 void RAI_graphics::drawObj(bool isReflection) {
   for (auto *sob: supObjs_)
-    if (sob->isVisible()) sob->draw(camera, light, 1.0, isReflection);
+    if (sob->isVisible() && isReflection)
+      sob->draw(camera, light, 1.0, checkerboard);
+    else
+      sob->draw(camera, light, 1.0);
 
   for (int i = 0; i < objs_.size(); i++) {
     if (!objs_[i]->isVisible() && (!objs_[i]->reflectable && isReflection)) continue;
     shaders_[i]->Bind();
-    shaders_[i]->Update(camera, light, objs_[i], isReflection);
+    if(isReflection)
+      shaders_[i]->UpdateForReflection(camera, light, objs_[i], checkerboard);
+    else
+      shaders_[i]->Update(camera, light, objs_[i]);
     objs_[i]->draw();
     shaders_[i]->UnBind();
 
@@ -533,7 +539,7 @@ void RAI_graphics::drawObj(bool isReflection) {
     for (auto &ghost : objs_[i]->getGhosts()) {
       objs_[i]->setTempTransform(ghost);
       shaders_[i]->Bind();
-      shaders_[i]->Update(camera, light, objs_[i], isReflection);
+      shaders_[i]->Update(camera, light, objs_[i]);
       objs_[i]->draw();
       shaders_[i]->UnBind();
     }
@@ -567,7 +573,7 @@ void RAI_graphics::computeMousePull() {
   Eigen::Vector4d quat = rai::Math::MathFunc::angleAxisToQuat(-angle, axisE);
   interactionArrow->setOri(quat);
   shader_basic->Bind();
-  shader_basic->Update(camera, light, interactionArrow, false);
+  shader_basic->Update(camera, light, interactionArrow);
   interactionArrow->draw();
   shader_basic->UnBind();
   interactionForce << arrowEnd.x, arrowEnd.y, arrowEnd.z;

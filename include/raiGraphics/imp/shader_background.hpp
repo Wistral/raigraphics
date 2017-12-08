@@ -17,7 +17,8 @@ class Shader_background : public Shader {
   void Bind();
   void UnBind();
   void Update(Camera *camera, Light *light, object::Background* obj);
-  void Update(Camera *camera, Light *light, object::SingleBodyObject* obj, bool isReflection);
+  void Update(Camera *camera, Light *light, object::SingleBodyObject* obj);
+  void UpdateForReflection(Camera *camera, Light *light, object::SingleBodyObject* obj, object::CheckerBoard* chk);
 
  private:
   static const unsigned int NUM_SHADERS = 2;

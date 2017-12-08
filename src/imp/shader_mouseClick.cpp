@@ -42,7 +42,7 @@ void Shader_mouseClick::UnBind() {
   glUseProgramObjectARB(0);
 }
 
-void Shader_mouseClick::Update(Camera *camera, Light *light, object::SingleBodyObject* obj, bool isreflection) {
+void Shader_mouseClick::Update(Camera *camera, Light *light, object::SingleBodyObject* obj) {
   LOG(FATAL)<<"unused method";
 }
 
@@ -62,6 +62,10 @@ void Shader_mouseClick::Update(Camera *camera, object::SingleBodyObject* obj) {
   glUniformMatrix4fv(glGetUniformLocation(m_program, "MVP"), 1, GL_FALSE, &MVP[0][0]);
   glUniform3f(glGetUniformLocation(m_program, "color0"),(float)(obj->getObIndex()%255)/255,
               (float)((obj->getObIndex()/255)%255)/255, (float)((obj->getObIndex()/255/255)%255)/255);
+}
+
+void Shader_mouseClick::UpdateForReflection(Camera *camera, Light *light, object::SingleBodyObject* obj, object::CheckerBoard* chk){
+  LOG(FATAL) << "cannot draw reflection of text"<<std::endl;
 }
 
 } // rai_graphics

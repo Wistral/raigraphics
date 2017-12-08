@@ -51,8 +51,12 @@ void Shader_menu::Update(object::Rectangle* obj) {
   glUniform1f(glGetUniformLocation(m_program,"transparency"),obj->getTransparency());
 }
 
-void Shader_menu::Update(Camera *camera, Light *light, object::SingleBodyObject* obj, bool isreflection){
+void Shader_menu::Update(Camera *camera, Light *light, object::SingleBodyObject* obj){
   LOG(FATAL)<<"unsupported update method";
+}
+
+void Shader_menu::UpdateForReflection(Camera *camera, Light *light, object::SingleBodyObject* obj, object::CheckerBoard* chk){
+  LOG(FATAL) << "cannot draw reflection of text"<<std::endl;
 }
 
 

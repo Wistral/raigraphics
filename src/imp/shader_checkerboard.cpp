@@ -45,7 +45,7 @@ void Shader_checkerboard::UnBind() {
 }
 
 
-void Shader_checkerboard::Update(Camera *camera, Light *light, object::CheckerBoard* obj, bool isreflection) {
+void Shader_checkerboard::Update(Camera *camera, Light *light, object::CheckerBoard* obj) {
   std::vector<float> clr, amb, diff, spec, ambl, diffl, specl, posl;
   float shine;
 
@@ -87,8 +87,12 @@ void Shader_checkerboard::Update(Camera *camera, Light *light, object::CheckerBo
 
 }
 
-void Shader_checkerboard::Update(Camera *camera,  Light *light, object::SingleBodyObject* obj, bool isreflection){
+void Shader_checkerboard::Update(Camera *camera,  Light *light, object::SingleBodyObject* obj){
 LOG(FATAL)<<"model specific shader"<<std::endl;
+}
+
+void Shader_checkerboard::UpdateForReflection(Camera *camera, Light *light, object::SingleBodyObject* obj, object::CheckerBoard* chk){
+  LOG(FATAL) << "cannot draw reflection of itself"<<std::endl;
 }
 
 } // rai_graphics

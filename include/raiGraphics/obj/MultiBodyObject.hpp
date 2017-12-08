@@ -21,7 +21,7 @@ class MultiBodyObject: public Object {
   virtual void init() = 0;
   virtual void destroy() = 0;
 
-  void draw(Camera *camera,  Light *light, float transparency, bool isReflection);
+  void draw(Camera *camera,  Light *light, float transparency, CheckerBoard* chk = nullptr);
   void setVisibility(bool visibility) {visible = visibility;}
   bool isVisible() {return visible;}
   void showGhosts(int maxGhosts, float transparency);
@@ -34,7 +34,7 @@ class MultiBodyObject: public Object {
   void setTrans(std::vector<Transform>& trans);
   void getTrans(std::vector<Transform>& trans);
   void turnOnGhost(bool ghostOn);
-  void drawSnapshot(Camera *camera,  Light *light, float transparency, bool isReflection);
+  void drawSnapshot(Camera *camera,  Light *light, float transparency, CheckerBoard* chk = nullptr);
 
   bool visible = true;
   std::vector<SingleBodyObject*> objs;

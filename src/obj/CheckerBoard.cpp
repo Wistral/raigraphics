@@ -9,11 +9,13 @@ namespace rai_graphics {
 namespace object {
 
 CheckerBoard::CheckerBoard(float gridSize,
-                           float width,
-                           float length,
+                           float wid,
+                           float leng,
                            float reflectanceI,
                            std::vector<float> color1,
                            std::vector<float> color2) {
+  width = wid;
+  length = leng;
 
   com = glm::vec3(0,0,0);
   col1 = {color1[0], color1[1], color1[2]};
@@ -21,10 +23,10 @@ CheckerBoard::CheckerBoard(float gridSize,
   gridSize_ = gridSize;
   transparency_ = 1 - reflectanceI;
 
-  positions.emplace_back(-width/2.0, -length/2.0, 0);
-  positions.emplace_back(width/2.0, -length/2.0, 0);
-  positions.emplace_back(width/2.0, length/2.0, 0);
-  positions.emplace_back(-width/2.0, length/2.0, 0);
+  positions.emplace_back(-wid/2.0, -leng/2.0, 0);
+  positions.emplace_back(wid/2.0, -leng/2.0, 0);
+  positions.emplace_back(wid/2.0, leng/2.0, 0);
+  positions.emplace_back(-wid/2.0, leng/2.0, 0);
 
   normals.emplace_back(0,0,1);
   normals.emplace_back(0,0,1);

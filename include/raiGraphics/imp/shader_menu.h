@@ -17,7 +17,8 @@ class Shader_menu : public Shader {
   void UnBind();
   void Update(object::Rectangle* obj);
 
-  void Update(Camera *camera, Light *light, object::SingleBodyObject* obj, bool isreflection);
+  void Update(Camera *camera, Light *light, object::SingleBodyObject* obj);
+  void UpdateForReflection(Camera *camera, Light *light, object::SingleBodyObject* obj, object::CheckerBoard* chk);
 
  protected:
  private:

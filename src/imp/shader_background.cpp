@@ -38,7 +38,7 @@ void Shader_background::UnBind() {
   glUseProgramObjectARB(0);
 }
 
-void Shader_background::Update(Camera *camera, Light *light, object::SingleBodyObject* obj, bool isReflection){
+void Shader_background::Update(Camera *camera, Light *light, object::SingleBodyObject* obj){
   LOG(FATAL) << "Shader_background only works with a background object"<<std::endl;
 }
 
@@ -51,5 +51,10 @@ void Shader_background::Update(Camera *camera, Light *light, object::Background*
   glUniformMatrix4fv(glGetUniformLocation(m_program, "Normal"), 1, GL_FALSE, &Normal[0][0]);
   glUniform1i(glGetUniformLocation(m_program, "skybox"), 0);
 }
+
+void Shader_background::UpdateForReflection(Camera *camera, Light *light, object::SingleBodyObject* obj, object::CheckerBoard* chk){
+  LOG(FATAL) << "cannot draw reflection for background yet"<<std::endl;
+}
+
 
 } // rai_graphics

@@ -13,8 +13,9 @@ class Shader_mouseClick : public Shader {
   virtual std::string shaderFileName();
   void Bind();
   void UnBind();
-  void Update(Camera *camera,  Light *light, object::SingleBodyObject* obj, bool isreflection);
+  void Update(Camera *camera,  Light *light, object::SingleBodyObject* obj);
   void Update(Camera *camera,  object::SingleBodyObject* obj);
+  void UpdateForReflection(Camera *camera, Light *light, object::SingleBodyObject* obj, object::CheckerBoard* chk);
 
  protected:
  private:

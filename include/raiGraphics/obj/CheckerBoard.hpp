@@ -18,6 +18,7 @@ class CheckerBoard : public SingleBodyObject {
 
   glm::vec3 col1, col2;
   float gridSize_;
+  float width, length;
 };
 
 } // object
