@@ -47,6 +47,11 @@ void Shader_mouseClick::Update(Camera *camera, Light *light, object::SingleBodyO
 }
 
 void Shader_mouseClick::Update(Camera *camera, object::SingleBodyObject* obj) {
+  glDisable(GL_CLIP_DISTANCE0);
+  glDisable(GL_CLIP_DISTANCE1);
+  glDisable(GL_CLIP_DISTANCE2);
+  glDisable(GL_CLIP_DISTANCE3);
+  glDisable(GL_CLIP_DISTANCE4);
   Transform trans;
   std::vector<float> clr;
   obj->getTransform(trans);

@@ -43,6 +43,11 @@ void Shader_menu::UnBind() {
 
 
 void Shader_menu::Update(object::Rectangle* obj) {
+  glDisable(GL_CLIP_DISTANCE0);
+  glDisable(GL_CLIP_DISTANCE1);
+  glDisable(GL_CLIP_DISTANCE2);
+  glDisable(GL_CLIP_DISTANCE3);
+  glDisable(GL_CLIP_DISTANCE4);
   glUniform1f(glGetUniformLocation(m_program,"xscale"),obj->sizeX_);
   glUniform1f(glGetUniformLocation(m_program,"yscale"),obj->sizeY_);
   glUniform1f(glGetUniformLocation(m_program,"xpos"),obj->posX_);
