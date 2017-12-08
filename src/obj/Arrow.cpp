@@ -124,6 +124,7 @@ Eigen::Quaterniond Arrow::quaternionForDirectionVector(const Eigen::Vector3d &di
   Eigen::Quaterniond rotation = rotationZ * rotationY;
   return rotation;
 }
+
 void Arrow::addGhostWithVector(Eigen::Vector3d &position, Eigen::Vector3d &directionVector) {
   Eigen::Quaterniond quat = quaternionForDirectionVector(directionVector);
   glm::quat quatglm = glm::quat(quat.w(), quat.x(), quat.y(), quat.z());
@@ -133,6 +134,21 @@ void Arrow::addGhostWithVector(Eigen::Vector3d &position, Eigen::Vector3d &direc
   ghostTransform.SetRot(quatglm);
   ghostTransform.SetPos(pos);
   ghosts.push_back(ghostTransform);
+  ghostColor.emplace_back(color_[0], color_[1], color_[2]);
+  ghostScale.emplace_back(scaleMat_[0][0], scaleMat_[1][1], scaleMat_[2][2]);
+}
+
+void Arrow::addGhostWithVector(Eigen::Vector3d position, Eigen::Vector3d directionVector, Eigen::Vector3f color, Eigen::Vector3f scale) {
+  Eigen::Quaterniond quat = quaternionForDirectionVector(directionVector);
+  glm::quat quatglm = glm::quat(quat.w(), quat.x(), quat.y(), quat.z());
+  glm::vec3 pos(position(0), position(1), position(2));
+
+  Transform ghostTransform;
+  ghostTransform.SetRot(quatglm);
+  ghostTransform.SetPos(pos);
+  ghosts.push_back(ghostTransform);
+  ghostScale.emplace_back(scale(0), scale(1), scale(2));
+  ghostColor.emplace_back(color(0), color(1), color(2));
 }
 
 } // object

@@ -33,8 +33,8 @@ void MultiBodyObject::addGhostsNow() {
 }
 
 void MultiBodyObject::setTrans(std::vector<Transform>& trans){
-  for(int i = 0; i < objs.size(); i++)
-    objs[i]->setTempTransform(trans[i]);
+//  for(int i = 0; i < objs.size(); i++)
+//    objs[i]->setTempTransform(trans[i]);
 }
 
 void MultiBodyObject::getTrans(std::vector<Transform>& trans){

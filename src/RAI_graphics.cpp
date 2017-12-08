@@ -538,15 +538,17 @@ void RAI_graphics::drawObj(bool isReflection) {
 
     // draw ghost
     // TODO code refine
+    objs_[i]->mutexLock();
     objs_[i]->usingTempTransform(true);
-    for (auto &ghost : objs_[i]->getGhosts()) {
-      objs_[i]->setTempTransform(ghost);
+    for (int j=0; j<objs_[i]->getGhosts().size(); j++) {
+      objs_[i]->setTempTransform(j);
       shaders_[i]->Bind();
       shaders_[i]->Update(camera, light, objs_[i]);
       objs_[i]->draw();
       shaders_[i]->UnBind();
     }
     objs_[i]->usingTempTransform(false);
+    objs_[i]->mutexUnLock();
   }
 }
 
