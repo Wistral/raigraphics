@@ -24,5 +24,10 @@ void main()
 	camPos = cameraPos;
 	vec4 position_w = vec4(position, 1.0);
    	gl_ClipDistance[0] = 1;
+	gl_ClipDistance[1] = 1;
+   	gl_ClipDistance[2] = 1;
+   	gl_ClipDistance[3] = 1;
+   	gl_ClipDistance[4] = 1;
+
 
 }
