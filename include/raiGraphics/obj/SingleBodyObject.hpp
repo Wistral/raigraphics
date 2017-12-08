@@ -123,6 +123,9 @@ class SingleBodyObject: public Object {
 
 //  void drawSnapshot(Camera *camera,  Light *light, float transparency);
   std::vector<Transform> ghosts;
+  std::vector<glm::vec3> ghostColor;
+  std::vector<glm::vec3> ghostScale;
+
 //  Shader* shader = nullptr;
 
   bool selectable_ = false;
