@@ -67,9 +67,7 @@ class SingleBodyObject: public Object {
   unsigned long getVertexNumber();
   bool isVisible() {return visible;}
 
-  unsigned getObIndex() const {return obIndex; };
   unsigned getSelectableObIndex() const {return selectableObIndex; };
-  void setObIndex(unsigned idx) {obIndex = idx; };
   void setSelectableObIndex(unsigned idx) {selectableObIndex = idx; };
 
   void setVisibility(bool visibility) {visible = visibility;}
@@ -124,7 +122,6 @@ class SingleBodyObject: public Object {
   GLuint m_vertexArrayBuffers[NUM_BUFFERS];
   unsigned int m_numIndices;
   std::mutex mtx;
-  unsigned obIndex;
   unsigned selectableObIndex;
 
 //  void drawSnapshot(Camera *camera,  Light *light, float transparency);

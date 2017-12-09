@@ -258,7 +258,7 @@ void RAI_graphics::draw() {
         else if (e.button.clicks == 1 && keyboard()[RAI_KEY_LCTRL] && readObjIdx() == highlightedObjId)
           startInteraction = isInteracting_ = true;
         break;
-      case SDL_MOUSEBUTTONUP:isInteracting_ = false;
+      case SDL_MOUSEBUTTONUP: isInteracting_ = false;
         break;
       case SDL_MOUSEWHEEL:
         if (e.wheel.y == 1)
@@ -319,6 +319,7 @@ void RAI_graphics::draw() {
       objectsInOrder_[objId]->highlight();
     }
   }
+
   /// clear images that was generated for mouse clicks
   display->Clear(0, 0, 0, 0);
   /// update camera with events
@@ -391,10 +392,9 @@ void RAI_graphics::addObject(object::SingleBodyObject *obj, object::ShaderType t
     type = obj->defaultShader;
   added_shaders_.push_back(type);
 
-  if(obj->isSelectable())
+//  if(obj->isSelectable())
     obj->setSelectableObIndex(++selectableIndexToBeAssigned);
 
-  obj->setObIndex(++objectIdexToBeAssigned);
   objectsInOrder_.push_back(obj);
 }
 
@@ -403,7 +403,7 @@ void RAI_graphics::addSuperObject(object::MultiBodyObject *obj) {
   LOG_IF(FATAL, !obj) << "the object is not created yet";
   added_supObjs_.push_back(obj);
   for (auto &ob: obj->getChildren()) {
-    ob->setObIndex(++objectIdexToBeAssigned);
+    ob->setSelectableObIndex(++selectableIndexToBeAssigned);
     objectsInOrder_.push_back(ob);
   }
 }
@@ -565,6 +565,7 @@ void RAI_graphics::computeMousePull() {
   camera->GetPose(cameraT);
   camera->GetPos(cameraPos);
   diffPos = cameraPos - *objTrans.GetPos();
+  float distance = glm::l2Norm(diffPos);
   float normDiff = glm::l2Norm(diffPos);
   interactionArrow->setScale(normDiff / 800.0f * sqrt(float(tx * tx + ty * ty)));
   glm::vec4 arrowEnd = glm::inverse(cameraT) * glm::vec4(tx, -ty, 0, 0);
@@ -581,7 +582,7 @@ void RAI_graphics::computeMousePull() {
   shader_basic->Update(camera, light, interactionArrow);
   interactionArrow->draw();
   shader_basic->UnBind();
-  interactionForce << arrowEnd.x, arrowEnd.y, arrowEnd.z;
+  interactionForce << arrowEnd.x/distance, arrowEnd.y/distance, arrowEnd.z/distance;
 }
 
 bool RAI_graphics::isInteracting() {

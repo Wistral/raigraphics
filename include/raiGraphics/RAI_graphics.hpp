@@ -150,8 +150,7 @@ class RAI_graphics {
   CameraProp cameraProp;
   bool cameraPropChanged;
   bool lightPropChanged;
-  unsigned objectIdexToBeAssigned = 0;
-  unsigned selectableIndexToBeAssigned = 0;
+  int selectableIndexToBeAssigned = 0;
   int highlightedObjId = 16646655;
   int interactingObjSelectableId = -1;
   bool isInteracting_ = false;

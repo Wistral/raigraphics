@@ -14,7 +14,7 @@ namespace object {
 class Cylinder: public SingleBodyObject {
 
  public:
-  Cylinder(float r, float l, bool isSelectable=false);
+  Cylinder(float r, float l, bool isSelectable=true);
 
  private:
 

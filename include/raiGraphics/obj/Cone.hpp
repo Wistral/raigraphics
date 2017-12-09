@@ -14,7 +14,7 @@ namespace object {
 class Cone: public SingleBodyObject {
 
  public:
-  Cone(float r, float l, bool isSelectable=false);
+  Cone(float r, float l, bool isSelectable=true);
 
  private:
 
