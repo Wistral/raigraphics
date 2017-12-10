@@ -27,7 +27,7 @@ int main() {
   object::Cone redCone(1, 2, true);
   object::Box greenBox(2, 2, 2, true);
   object::Cylinder blueCylinder(1, 2, true);
-  object::Capsule yellowCapsule(2, 2, true);
+  object::Capsule yellowCapsule(1, 2, true);
   object::Background background("sky");
   object::CheckerBoard grnd(4, 500, 500, 0.05, {0,0,0}, {1,1,1});
   Eigen::Vector3d bodyFrameOrigin(0.0, 0.0, 3.0);
@@ -43,6 +43,10 @@ int main() {
   Eigen::Vector3d bodyFrameOrigin3(0.0, 0.0, 10.0);
   Eigen::Quaterniond bodyFrameQuat3(0.9239, 0, 0, 0.3827);
   object::CoordinateFrame bodyFrame3(bodyFrameOrigin3, bodyFrameQuat3);
+  Eigen::Vector3d bodyFrameOrigin4(0.0, -10.0, 3.0);
+  Eigen::Quaterniond bodyFrameQuat4(0, 1.0, 0, 0);
+  object::CoordinateFrame bodyFrame4(bodyFrameOrigin4, bodyFrameQuat4);
+
 
   whiteSphere.setColor({1.0, 1.0, 1.0});
   redCone.setColor({1.0, 0.0, 0.0});
@@ -54,7 +58,7 @@ int main() {
   Eigen::Quaterniond redConeQuaternion(0.9239, 0.3827, 0, 0);
   Eigen::Vector3d greenBoxPosition; greenBoxPosition << 0, 10, 3;
   Eigen::Quaterniond greenBoxQuaternion(0.9239, 0, 0.3827, 0);
-  Eigen::Vector3d blueCylinderPosition; blueCylinderPosition << 0, 0, 9;
+  Eigen::Vector3d blueCylinderPosition; blueCylinderPosition << 0, 0, 10;
   Eigen::Quaterniond blueCylinderQuaternion(0.9239, 0, 0, 0.3827);
   Eigen::Vector3d yellowCapsulePostion; yellowCapsulePostion << 0, -10, 3;
 
@@ -81,6 +85,7 @@ int main() {
   graphics.addSuperObject(&bodyFrame1);
   graphics.addSuperObject(&bodyFrame2);
   graphics.addSuperObject(&bodyFrame3);
+  graphics.addSuperObject(&bodyFrame4);
 
   // ghost objects
   Eigen::Vector3d ghostVector1; ghostVector1 << 10, 0, 3;
@@ -95,7 +100,7 @@ int main() {
   lprop.pos_light = {10.0, 0.0, 10.0};
   CameraProp cprop;
   cprop.toFollow = &whiteSphere;
-  Eigen::Vector3d relPos; relPos << 20, 0, 0;
+  Eigen::Vector3d relPos; relPos << 15, 15, 15;
   cprop.relativeDist = relPos;
 
   graphics.setCameraProp(cprop);

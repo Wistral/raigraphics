@@ -9,19 +9,19 @@ namespace rai_graphics {
 namespace object {
 
 Cylinder::Cylinder(float r, float l, bool isSelectable) {
-  com = glm::vec3(0,0,l/2.0);
+  com = glm::vec3(0,0,0.0);
 
   int slices = 20;
   int position = 0;
 //  bottom
-  positions.push_back(glm::vec3(0, 0, 0));
+  positions.push_back(glm::vec3(0, 0, -0.5*l));
   normals.push_back(glm::vec3(0, 0, -1));
 
   for (int i = 0; i < slices; i++) {
     float theta = 2 * M_PI / slices * i;
     float y = r * std::cos(theta);
     float x = -r * std::sin(theta);
-    positions.push_back(glm::vec3(x, y, 0));
+    positions.push_back(glm::vec3(x, y, -0.5*l));
 //    normals.push_back(glm::vec3(x, y, -l/2));
     normals.push_back(glm::vec3(0, 0, -1));
   }
@@ -36,11 +36,11 @@ Cylinder::Cylinder(float r, float l, bool isSelectable) {
     float theta = 2 * M_PI / slices * i;
     float y = r * std::cos(theta);
     float x = -r * std::sin(theta);
-    positions.push_back(glm::vec3(x, y, l));
+    positions.push_back(glm::vec3(x, y, 0.5*l));
     normals.push_back(glm::vec3(0, 0, 1));
     //    normals.push_back(glm::vec3(x, y, l/2));
   }
-  positions.push_back(glm::vec3(0, 0, l));
+  positions.push_back(glm::vec3(0, 0, 0.5*l));
   normals.push_back(glm::vec3(0, 0, 1));
 
   for (int i = 1; i < slices + 1; i++) {
@@ -63,7 +63,7 @@ Cylinder::Cylinder(float r, float l, bool isSelectable) {
     float theta = 2 * M_PI / slices * i;
     float y = r * std::cos(theta);
     float x = -r * std::sin(theta);
-    positions.push_back(glm::vec3(x, y, 0));
+    positions.push_back(glm::vec3(x, y, -0.5*l));
 //    normals.push_back(glm::vec3(x, y, -l/2));
     normals.push_back(glm::vec3(x, y, -1));
   }
@@ -72,7 +72,7 @@ Cylinder::Cylinder(float r, float l, bool isSelectable) {
     float theta = 2 * M_PI / slices * i;
     float y = r * std::cos(theta);
     float x = -r * std::sin(theta);
-    positions.push_back(glm::vec3(x, y, l));
+    positions.push_back(glm::vec3(x, y, 0.5*l));
     normals.push_back(glm::vec3(x, y, 1));
     //    normals.push_back(glm::vec3(x, y, l/2));
   }
@@ -81,9 +81,9 @@ Cylinder::Cylinder(float r, float l, bool isSelectable) {
     float theta = 2 * M_PI / slices * i;
     float y = r * std::cos(theta);
     float x = -r * std::sin(theta);
-    positions.push_back(glm::vec3(x, y, 0));
+    positions.push_back(glm::vec3(x, y, -0.5*l));
     normals.push_back(glm::vec3(x, y, 0));
-    positions.push_back(glm::vec3(x, y, l));
+    positions.push_back(glm::vec3(x, y, 0.5*l));
     normals.push_back(glm::vec3(x, y, 0));
     //    normals.push_back(glm::vec3(x, y, l/2));
   }
