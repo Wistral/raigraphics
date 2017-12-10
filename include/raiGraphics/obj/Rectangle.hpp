@@ -25,7 +25,7 @@ class Rectangle: public SingleBodyObject {
   void writeText(std::vector<TTF_Font *>& font, std::string& txt);
 
   /// from 1-5
-  void setFrontSize(int size);
+  void setFontSize(int size);
 
   void bindTexture();
 

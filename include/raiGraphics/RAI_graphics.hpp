@@ -103,6 +103,7 @@ class RAI_graphics {
   std::vector<std::vector<std::string>> menuText;
   std::vector<bool> menuTextToggle;
   std::vector<bool> customToggle;
+  float interactionMagnitude = 1.0;
 
   bool backgroundChanged = false, checkerboardChanged = false;
 
