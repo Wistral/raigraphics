@@ -103,6 +103,7 @@ class RAI_graphics {
   std::vector<std::vector<std::string>> menuText;
   std::vector<bool> menuTextToggle;
   std::vector<bool> customToggle;
+  float interactionMagnitude = 1.0;
 
   bool backgroundChanged = false, checkerboardChanged = false;
 
@@ -150,8 +151,7 @@ class RAI_graphics {
   CameraProp cameraProp;
   bool cameraPropChanged;
   bool lightPropChanged;
-  unsigned objectIdexToBeAssigned = 0;
-  unsigned selectableIndexToBeAssigned = 0;
+  int selectableIndexToBeAssigned = 0;
   int highlightedObjId = 16646655;
   int interactingObjSelectableId = -1;
   bool isInteracting_ = false;

@@ -31,16 +31,21 @@ RAI_graphics::RAI_graphics(int windowWidth, int windowHeight) :
   font.resize(6);
   menuText[0][0] = "Show Keyboard Input F1";
   menuText[0][1] =
-    "                      |  mouse motion/wheel = camera |  ldblclk = highlight object  |  ctr+drag = interaction1  |  alt+drag = interaction2  |\n                     |  space = camera mode  |  shift+r = videos On/Off  |  F1~F5 = user defined toggles  |  1~5 = user defined actions  |";
+    " mouse          = camera \n ldblclk          = highlight object \n ctr+drag       = interaction1 \n alt+drag       = interaction2  \n space           = camera mode  \n shift+r          = videos On/Off  \n F1~F5          = user defined menus \n 1~5             = user defined toggles";
+
   /// menus
   for (auto &tb: textBoard) {
     tb = new object::Rectangle(windowWidth_, windowHeight_);
     tb->setTranslation(10, 10);
-    tb->setTransparency(0.3);
+    tb->setTransparency(0.4);
   }
-  textBoard[0]->setTextWrap(windowWidth_ - 20);
+
+  textBoard[0]->setTextWrap(300);
   textBoard[5]->setTranslation(windowWidth_ - 97, windowHeight_ - 25);
   textBoard[5]->setTextWrap(windowWidth_ - 40);
+
+  textBoard[6]->setTranslation(windowWidth_ - 205, 10);
+  textBoard[6]->setTextWrap(windowWidth_ - 40);
 
   std::string path("/home/jhwangbo/Documents");
 }
@@ -92,10 +97,13 @@ void *RAI_graphics::loop(void *obj) {
   for (auto &tb: textBoard)
     tb->init();
 
+  textBoard[0]->setFontSize(2);
+  textBoard[6]->setFontSize(2);
+  textBoard[5]->setFontSize(2);
+
   for (int i = 0; i < TEXTMENUCOUNT; i++)
     textBoard[i]->writeText(font, menuText[i][0]);
 
-  textBoard[5]->setFrontSize(2);
   light = new Light;
 
   while (true) {
@@ -250,6 +258,14 @@ void RAI_graphics::draw() {
   stream << "FPS: " << std::setprecision(4) << actualFPS_;
   menuText[5][1] = stream.str();
 
+  if (keyboard()[RAI_KEY_LCTRL]) {
+    std::stringstream inStr;
+    inStr << "Interaction Strength: " << std::setprecision(2) << interactionMagnitude;
+    menuText[6][0] = inStr.str();
+  } else {
+    menuText[6][0] = "";
+  }
+
   while (SDL_PollEvent(&e)) {
     switch (e.type) {
       case SDL_MOUSEBUTTONDOWN:
@@ -258,13 +274,7 @@ void RAI_graphics::draw() {
         else if (e.button.clicks == 1 && keyboard()[RAI_KEY_LCTRL] && readObjIdx() == highlightedObjId)
           startInteraction = isInteracting_ = true;
         break;
-      case SDL_MOUSEBUTTONUP:isInteracting_ = false;
-        break;
-      case SDL_MOUSEWHEEL:
-        if (e.wheel.y == 1)
-          camera->zoomOut();
-        else if (e.wheel.y == -1)
-          camera->zoomIn();
+      case SDL_MOUSEBUTTONUP: isInteracting_ = false;
         break;
       case SDL_KEYDOWN:
         if (keyboard()[RAI_KEY_ESCAPE] && highlightedObjId != NO_OBJECT)
@@ -278,7 +288,6 @@ void RAI_graphics::draw() {
             LOG(INFO) << "Starting encoding video";
             images2Video();
           }
-
         for (int fkey = 0; fkey < TEXTMENUCOUNT - 5; fkey++)
           if (keyboard()[RAI_KEY_F1 + fkey])
             if (menuTextToggle[fkey] = !menuTextToggle[fkey])
@@ -293,7 +302,16 @@ void RAI_graphics::draw() {
         for (int togKey = 0; togKey < 10; togKey++)
           if (keyboard()[RAI_KEY_1 + togKey])
             customToggle[togKey] = !customToggle[togKey];
-
+        break;
+      case SDL_MOUSEWHEEL:
+        if(keyboard()[RAI_KEY_LCTRL] && e.wheel.y == 1)
+          interactionMagnitude *= 1.2;
+        else if (keyboard()[RAI_KEY_LCTRL] && e.wheel.y == -1)
+          interactionMagnitude /= 1.2;
+        else if (e.wheel.y == 1)
+          camera->zoomOut();
+        else if (e.wheel.y == -1)
+          camera->zoomIn();
         break;
     }
   }
@@ -319,6 +337,7 @@ void RAI_graphics::draw() {
       objectsInOrder_[objId]->highlight();
     }
   }
+
   /// clear images that was generated for mouse clicks
   display->Clear(0, 0, 0, 0);
   /// update camera with events
@@ -330,7 +349,6 @@ void RAI_graphics::draw() {
 
   if (isInteracting_)
     computeMousePull();
-
 
   /// draw checkerboard and reflections
   if (checkerboard) {
@@ -391,10 +409,9 @@ void RAI_graphics::addObject(object::SingleBodyObject *obj, object::ShaderType t
     type = obj->defaultShader;
   added_shaders_.push_back(type);
 
-  if(obj->isSelectable())
+//  if(obj->isSelectable())
     obj->setSelectableObIndex(++selectableIndexToBeAssigned);
 
-  obj->setObIndex(++objectIdexToBeAssigned);
   objectsInOrder_.push_back(obj);
 }
 
@@ -403,7 +420,7 @@ void RAI_graphics::addSuperObject(object::MultiBodyObject *obj) {
   LOG_IF(FATAL, !obj) << "the object is not created yet";
   added_supObjs_.push_back(obj);
   for (auto &ob: obj->getChildren()) {
-    ob->setObIndex(++objectIdexToBeAssigned);
+    ob->setSelectableObIndex(++selectableIndexToBeAssigned);
     objectsInOrder_.push_back(ob);
   }
 }
@@ -527,7 +544,7 @@ void RAI_graphics::drawObj(bool isReflection) {
       sob->draw(camera, light, 1.0);
 
   for (int i = 0; i < objs_.size(); i++) {
-    if ((!objs_[i]->isVisible()&&objs_[i]->getGhosts().empty()) || (!objs_[i]->reflectable && isReflection)) continue;
+    if ((!objs_[i]->isVisible()&&objs_[i]->getGhosts().size()==0)|| (!objs_[i]->reflectable && isReflection)) continue;
     shaders_[i]->Bind();
     if(isReflection)
       shaders_[i]->UpdateForReflection(camera, light, objs_[i], checkerboard);
@@ -538,15 +555,17 @@ void RAI_graphics::drawObj(bool isReflection) {
 
     // draw ghost
     // TODO code refine
+    objs_[i]->mutexLock();
     objs_[i]->usingTempTransform(true);
-    for (auto &ghost : objs_[i]->getGhosts()) {
-      objs_[i]->setTempTransform(ghost);
+    for (int j=0; j<objs_[i]->getGhosts().size(); j++) {
+      objs_[i]->setTempTransform(j);
       shaders_[i]->Bind();
       shaders_[i]->Update(camera, light, objs_[i]);
       objs_[i]->draw();
       shaders_[i]->UnBind();
     }
     objs_[i]->usingTempTransform(false);
+    objs_[i]->mutexUnLock();
   }
 }
 
@@ -580,6 +599,11 @@ void RAI_graphics::computeMousePull() {
   interactionArrow->draw();
   shader_basic->UnBind();
   interactionForce << arrowEnd.x, arrowEnd.y, arrowEnd.z;
+  if(interactionForce.norm() > 1e-5)
+    interactionForce /= interactionForce.norm();
+  else
+    interactionForce.setZero();
+  interactionForce *= sqrt(float(tx * tx + ty * ty)) * interactionMagnitude;
 }
 
 bool RAI_graphics::isInteracting() {

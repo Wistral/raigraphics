@@ -21,7 +21,6 @@ void SingleBodyObject::destroy() {
 }
 
 void SingleBodyObject::setPose(const Eigen::Vector3d &position, const Eigen::Matrix3d &rotationMat) {
-  std::lock_guard<std::mutex> guard(mtx);
   Eigen::Quaternion<double> quat(rotationMat);
   glm::quat quatglm = glm::quat(quat.w(), quat.x(), quat.y(), quat.z());
   glm::vec3 pos(position(0), position(1), position(2));
@@ -30,7 +29,6 @@ void SingleBodyObject::setPose(const Eigen::Vector3d &position, const Eigen::Mat
 }
 
 void SingleBodyObject::setPose(const Eigen::Vector3d &position, const Eigen::Vector4d &quaternionAsVector) {
-  std::lock_guard<std::mutex> guard(mtx);
   glm::quat quatglm = glm::quat(quaternionAsVector(0),
                                 quaternionAsVector(1),
                                 quaternionAsVector(2),
@@ -47,7 +45,6 @@ void SingleBodyObject::setPose(const Eigen::Matrix4d &ht) {
 }
 
 void SingleBodyObject::setPose(const Eigen::Vector3d &position, const Eigen::Quaterniond &quat) {
-  std::lock_guard<std::mutex> guard(mtx);
   glm::quat quatglm = glm::quat(quat.w(), quat.x(), quat.y(), quat.z());
   glm::vec3 pos(position(0), position(1), position(2));
   transform.SetRot(quatglm);
@@ -55,7 +52,6 @@ void SingleBodyObject::setPose(const Eigen::Vector3d &position, const Eigen::Qua
 }
 
 void SingleBodyObject::setPos(const Eigen::Vector3d &position) {
-  std::lock_guard<std::mutex> guard(mtx);
   glm::vec3 pos(position(0), position(1), position(2));
   transform.SetPos(pos);
 }
@@ -98,7 +94,6 @@ void SingleBodyObject::setTransform(Transform& trans) {
 }
 
 void SingleBodyObject::setLightProp(std::vector<float> &amb, std::vector<float> &diff, std::vector<float> &spec, float shine) {
-  std::lock_guard<std::mutex> guard(mtx);
   amb_m = amb;
   diff_m = diff;
   spec_m = spec;
@@ -106,17 +101,14 @@ void SingleBodyObject::setLightProp(std::vector<float> &amb, std::vector<float> 
 }
 
 void SingleBodyObject::setColor(std::vector<float> colorL) {
-  std::lock_guard<std::mutex> guard(mtx);
   color_ = colorL;
 }
 
 void SingleBodyObject::setTransparency(float transparency) {
-  std::lock_guard<std::mutex> guard(mtx);
   transparency_ = transparency;
 }
 
 float SingleBodyObject::getTransparency() {
-  std::lock_guard<std::mutex> guard(mtx);
   return transparency_;
 }
 
@@ -126,49 +118,49 @@ void SingleBodyObject::setScale(double scale) {
 }
 
 void SingleBodyObject::setScale(double scale1, double scale2, double scale3) {
-  std::lock_guard<std::mutex> guard(mtx);
   scaleMat_ = glm::scale(glm::vec3(scale1, scale2, scale3));
 }
 
 glm::mat4 SingleBodyObject::getScale() {
-  std::lock_guard<std::mutex> guard(mtx);
-  return scaleMat_;
+  if(tempTransformOn)
+    return scaleMatGhost_;
+  else
+    return scaleMat_;
 }
 
 void SingleBodyObject::getTransform(Transform& trans) {
-  std::lock_guard<std::mutex> guard(mtx);
   if(tempTransformOn)
-    trans = tempTransform;
+    trans = transformGhost;
   else
     trans = transform;
 }
 
-void SingleBodyObject::setTempTransform(Transform& trans) {
-  tempTransform = trans;
+void SingleBodyObject::setTempTransform(int i) {
+  transformGhost = ghosts[i];
+  colorGhost_ = {ghostColor[i][0], ghostColor[i][1], ghostColor[i][2]};
+  scaleMatGhost_ = glm::scale(glm::vec3(ghostScale[i][0], ghostScale[i][1], ghostScale[i][2]));
 }
 
 void SingleBodyObject::getColor(std::vector<float> &clr) {
-  std::lock_guard<std::mutex> guard(mtx);
-  clr = color_;
+  if(tempTransformOn)
+    clr = colorGhost_;
+  else
+    clr = color_;
 }
 
 void SingleBodyObject::getLightPropAmb(std::vector<float> &amb) {
-  std::lock_guard<std::mutex> guard(mtx);
   amb = amb_m;
 }
 
 void SingleBodyObject::getLightPropDiff(std::vector<float> &diff) {
-  std::lock_guard<std::mutex> guard(mtx);
   diff = diff_m;
 }
 
 void SingleBodyObject::getLightPropSpec(std::vector<float> &spec) {
-  std::lock_guard<std::mutex> guard(mtx);
   spec = spec_m;
 }
 
 void SingleBodyObject::getShiness(float& shine) {
-  std::lock_guard<std::mutex> guard(mtx);
   shine = shininess;
 }
 
@@ -226,7 +218,6 @@ void SingleBodyObject::addGhost(Eigen::Vector3d &position) {
   Transform ghostTransform;
   glm::vec3 pos(position(0), position(1), position(2));
   ghostTransform.SetPos(pos);
-
   ghosts.push_back(ghostTransform);
   ghostColor.emplace_back(color_[0], color_[1], color_[2]);
   ghostScale.emplace_back(scaleMat_[0][0], scaleMat_[1][1], scaleMat_[2][2]);
@@ -238,10 +229,20 @@ void SingleBodyObject::addGhost(Eigen::Vector3d &position, Eigen::Quaterniond &q
   glm::vec3 pos(position(0), position(1), position(2));
   ghostTransform.SetRot(quatglm);
   ghostTransform.SetPos(pos);
-
   ghosts.push_back(ghostTransform);
   ghostColor.emplace_back(color_[0], color_[1], color_[2]);
   ghostScale.emplace_back(scaleMat_[0][0], scaleMat_[1][1], scaleMat_[2][2]);
+}
+
+void SingleBodyObject::addGhost(Eigen::Vector3d &position, Eigen::Quaterniond &quat, std::vector<float> color, std::vector<float> scale) {
+  Transform ghostTransform;
+  glm::quat quatglm = glm::quat(quat.w(), quat.x(), quat.y(), quat.z());
+  glm::vec3 pos(position(0), position(1), position(2));
+  ghostTransform.SetRot(quatglm);
+  ghostTransform.SetPos(pos);
+  ghosts.push_back(ghostTransform);
+  ghostColor.emplace_back(color[0], color[1], color[2]);
+  ghostScale.emplace_back(scale[0], scale[1], scale[2]);
 }
 
 std::vector<Transform> & SingleBodyObject::getGhosts() {

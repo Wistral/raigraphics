@@ -67,24 +67,26 @@ class SingleBodyObject: public Object {
   unsigned long getVertexNumber();
   bool isVisible() {return visible;}
 
-  unsigned getObIndex() const {return obIndex; };
   unsigned getSelectableObIndex() const {return selectableObIndex; };
-  void setObIndex(unsigned idx) {obIndex = idx; };
   void setSelectableObIndex(unsigned idx) {selectableObIndex = idx; };
 
   void setVisibility(bool visibility) {visible = visibility;}
   void setScale(double scale);
   void setScale(double scale1,double scale2,double scale3);
 
-  void setTempTransform(Transform& trans);
+  void setTempTransform(int i);
 
-  void usingTempTransform(bool utt) {tempTransformOn = utt;};
+  void usingTempTransform(bool utt) { tempTransformOn = utt; };
+
+  void mutexLock() {mtx.lock();}
+  void mutexUnLock() {mtx.unlock();}
 
   void highlight();
   void deHighlight();
 
   virtual void addGhost(Eigen::Vector3d &position);
   virtual void addGhost(Eigen::Vector3d &position, Eigen::Quaterniond &quat);
+  void addGhost(Eigen::Vector3d &position, Eigen::Quaterniond &quat, std::vector<float> color, std::vector<float> scale);
   void clearGhost();
   std::vector<Transform> & getGhosts();
   bool isSelectable() const;
@@ -97,10 +99,12 @@ class SingleBodyObject: public Object {
  protected:
   void registerToGPU();
   Transform transform;
-  Transform tempTransform;
+  Transform transformGhost;
   bool tempTransformOn = false;
   glm::mat4 scaleMat_;
+  glm::mat4 scaleMatGhost_;
   std::vector<float> color_ = {0.7, 0.7, 0.7};
+  std::vector<float> colorGhost_ = {0.7, 0.7, 0.7};
   std::vector<float> amb_m = {0.6, 0.6, 0.6};
   std::vector<float> amb_m_orig = {0.6, 0.6, 0.6};
   std::vector<float> diff_m = {1.0,1.0,1.0};
@@ -118,7 +122,6 @@ class SingleBodyObject: public Object {
   GLuint m_vertexArrayBuffers[NUM_BUFFERS];
   unsigned int m_numIndices;
   std::mutex mtx;
-  unsigned obIndex;
   unsigned selectableObIndex;
 
 //  void drawSnapshot(Camera *camera,  Light *light, float transparency);

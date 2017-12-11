@@ -44,7 +44,7 @@ GLuint Background::loadCubemap(std::vector<std::string>& faces)
   glGenTextures(1, &textureID);
   glActiveTexture(GL_TEXTURE0);
 
-  int width,height;
+  int width, height;
   unsigned char* image;
 
   glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);

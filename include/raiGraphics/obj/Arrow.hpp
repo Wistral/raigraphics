@@ -19,6 +19,7 @@ class Arrow : public SingleBodyObject {
   void addGhostWithVector(Eigen::Vector3d &position, Eigen::Vector3d &directionVector);
   void representVector(Eigen::Vector3d &directionVector);
   void representVector(Eigen::Vector3d &origin, Eigen::Vector3d &directionVector);
+  void addGhostWithVector(Eigen::Vector3d position, Eigen::Vector3d directionVector, Eigen::Vector3f color, Eigen::Vector3f scale);
 
  private:
   Eigen::Quaterniond quaternionForDirectionVector(const Eigen::Vector3d &directionVector) const;
