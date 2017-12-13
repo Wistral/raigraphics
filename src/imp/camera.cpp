@@ -46,7 +46,7 @@ void Camera::update() {
   offset.y = ly * 10;
   offset.z = lz * 10;
 
-  if (mi) {
+  if (mi || !toFollowObj) {
     glm::vec3 alternateUp(1, 0, 0);
     if (relativePos.x * relativePos.x + relativePos.y * relativePos.y < 1e-4)
       pose_ = glm::lookAt(pos, pos + offset, alternateUp);
@@ -88,7 +88,7 @@ void Camera::GetPos(glm::vec3 &position) {
 
 void Camera::Control(SDL_Event e, bool stayAboveZero) {
   std::lock_guard<std::mutex> guad(mtx);
-  if (mi && !keyState[RAI_KEY_LCTRL]) {
+  if (mi && !keyState[RAI_KEY_LCTRL]  || !toFollowObj) {
     float sinYaw = sin(camYaw / 180 * M_PI);
     float cosYaw = cos(camYaw / 180 * M_PI);
     float sinPitch = sin(camPitch / 180 * M_PI);

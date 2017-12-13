@@ -148,7 +148,6 @@ void *RAI_graphics::loop(void *obj) {
   for (auto *fo: font)
     TTF_CloseFont(fo);
   TTF_Quit();
-  delete display;
   delete camera;
   delete shader_background;
   delete shader_basic;
@@ -158,6 +157,7 @@ void *RAI_graphics::loop(void *obj) {
   delete shader_checkerboard;
   delete interactionArrow;
   delete interactionBall;
+  delete display;
 }
 
 void RAI_graphics::init() {
@@ -212,6 +212,14 @@ void RAI_graphics::init() {
     shaders_.erase(shaders_.begin() + pos);
   }
 
+  for (auto *ob: tobeRemovedAndDeleted_objs_) {
+    ob->destroy();
+    ptrdiff_t pos = find(objs_.begin(), objs_.end(), ob) - objs_.begin();
+    objs_.erase(objs_.begin() + pos);
+    shaders_.erase(shaders_.begin() + pos);
+    delete ob;
+  }
+
   for (auto *sob: tobeRemoved_supObjs_) {
     sob->destroy();
     ptrdiff_t pos = find(supObjs_.begin(), supObjs_.end(), sob) - supObjs_.begin();
@@ -223,6 +231,7 @@ void RAI_graphics::init() {
   added_supObjs_.clear();
   tobeRemoved_supObjs_.clear();
   tobeRemoved_objs_.clear();
+  tobeRemovedAndDeleted_objs_.clear();
 }
 
 void RAI_graphics::draw() {
@@ -440,6 +449,11 @@ void RAI_graphics::addCheckerBoard(object::CheckerBoard *back) {
 void RAI_graphics::removeObject(object::SingleBodyObject *obj) {
   std::lock_guard<std::mutex> guard(mtxinit);
   tobeRemoved_objs_.push_back(obj);
+}
+
+void RAI_graphics::removeAndDeleteObject(object::SingleBodyObject *obj) {
+  std::lock_guard<std::mutex> guard(mtxinit);
+  tobeRemovedAndDeleted_objs_.push_back(obj);
 }
 
 void RAI_graphics::removeSuperObject(object::MultiBodyObject *obj) {

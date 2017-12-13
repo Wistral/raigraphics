@@ -60,7 +60,7 @@ class RAI_graphics {
   void addCheckerBoard(object::CheckerBoard *back);
 
   void setFPS(double FPS) { FPS_ = FPS; }
-
+  void removeAndDeleteObject(object::SingleBodyObject *obj);
   void removeObject(object::SingleBodyObject *obj);
   void removeSuperObject(object::MultiBodyObject *obj);
   void setBackgroundColor(float r, float g, float b, float a);
@@ -113,6 +113,8 @@ class RAI_graphics {
   std::vector<object::MultiBodyObject *> added_supObjs_;
   std::vector<object::SingleBodyObject *> tobeRemoved_objs_;
   std::vector<object::MultiBodyObject *> tobeRemoved_supObjs_;
+  std::vector<object::SingleBodyObject *> tobeRemovedAndDeleted_objs_;
+
 
   Display *display = nullptr;
   Shader_basic *shader_basic = nullptr;
