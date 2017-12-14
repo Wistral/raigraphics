@@ -78,28 +78,21 @@ void Mesh::processMesh(aiMesh *mesh, const aiScene *scene) {
   vector3d defaultColor(col.r, col.g, col.b);
 
   for (int i = 0; i < mesh->mNumVertices; i++) {
-    positions.push_back(glm::vec3(mesh->mVertices[i].x*scale_, mesh->mVertices[i].y*scale_, mesh->mVertices[i].z*scale_));
-    normals.push_back(glm::vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z));
+    positions.emplace_back(mesh->mVertices[i].x*scale_, mesh->mVertices[i].y*scale_, mesh->mVertices[i].z*scale_);
+    normals.emplace_back(float(mesh->mNormals[i].x), float(mesh->mNormals[i].y), float(mesh->mNormals[i].z));
 
-    //colors
-    glm::vec3 color;
-
-    if (mesh->mColors[0]) {
-      //!= material color
-      color = glm::vec3(mesh->mColors[0][i].r, mesh->mColors[0][i].g, mesh->mColors[0][i].b);
-    } else {
-      color = glm::vec3(0.5,0.5,0.5);
-    }
-    colorsCoords.push_back(color);
+    if (mesh->mColors[0])
+      colorsCoords.emplace_back(float(mesh->mColors[0][i].r), float(mesh->mColors[0][i].g), float(mesh->mColors[0][i].b));
+    else
+      colorsCoords.emplace_back(0.5f,0.5f,0.5f);
   }
 
   for (int i = 0; i < mesh->mNumFaces; i++) {
     aiFace face = mesh->mFaces[i];
     for (int j = 0; j < face.mNumIndices; j++) //0..2
-    {
       indices.push_back(face.mIndices[j]);
-    }
   }
+
 }
 
 } // object
