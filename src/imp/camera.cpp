@@ -46,7 +46,10 @@ void Camera::update() {
   offset.y = ly * 10;
   offset.z = lz * 10;
 
-  if (mi || !toFollowObj) {
+  if(!toFollowObj)
+    mi = true;
+
+  if (mi) {
     glm::vec3 alternateUp(1, 0, 0);
     if (relativePos.x * relativePos.x + relativePos.y * relativePos.y < 1e-4)
       pose_ = glm::lookAt(pos, pos + offset, alternateUp);
