@@ -106,7 +106,7 @@ void Camera::Control(SDL_Event e, bool stayAboveZero) {
       SDL_GetMouseState(&tmpx, &tmpy);
       camYaw += camAngularSpeed * (tmpx - prevMx);
       camPitch += camAngularSpeed * (tmpy - prevMy);
-      camPitch = std::min(std::max(camPitch, 5.0f), 89.5f);
+      camPitch = std::min(std::max(camPitch, -89.5f), 89.5f);
     }
 
     lockCamera();
