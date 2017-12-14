@@ -36,6 +36,7 @@ void Background::init() {
 void Background::destroy() {
   glDeleteBuffers(1, &skyboxVAO);
   glDeleteVertexArrays(1, &skyboxVAO);
+  glDeleteTextures(1, &cubemapTexture);
 }
 
 GLuint Background::loadCubemap(std::vector<std::string>& faces)
