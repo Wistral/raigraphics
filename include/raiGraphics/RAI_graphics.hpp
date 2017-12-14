@@ -46,6 +46,17 @@ struct CameraProp {
   Eigen::Vector3d relativeDist = Eigen::Vector3d::Constant(1);
 };
 
+enum KeyboardEvent {
+  U = 0,
+  I = 1,
+  O = 2,
+  P = 3,
+  J = 4,
+  K = 5,
+  L = 6,
+  DEL = 7
+};
+
 class RAI_graphics {
  public:
 
@@ -58,6 +69,7 @@ class RAI_graphics {
   void addSuperObject(object::MultiBodyObject *obj);
   void addBackground(object::Background *back);
   void addCheckerBoard(object::CheckerBoard *back);
+  bool getKeyboardEvent(KeyboardEvent ke);
 
   void setFPS(double FPS) { FPS_ = FPS; }
   void removeAndDeleteObject(object::SingleBodyObject *obj);
@@ -161,7 +173,7 @@ class RAI_graphics {
   Eigen::Vector3d interactionForce;
   int autoVideoRecordingNumber=0;
   std::vector<TTF_Font *> font;
-
+  std::vector<bool> keyboardEvent;
   std::vector<bool> menuOn_;
   double actualFPS_=0;
   uint loopcounter=0;

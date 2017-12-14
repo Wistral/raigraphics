@@ -47,7 +47,7 @@ RAI_graphics::RAI_graphics(int windowWidth, int windowHeight) :
   textBoard[6]->setTranslation(windowWidth_ - 205, 10);
   textBoard[6]->setTextWrap(windowWidth_ - 40);
 
-  std::string path("/home/jhwangbo/Documents");
+  keyboardEvent.resize(8, false);
 }
 
 RAI_graphics::~RAI_graphics() {
@@ -311,6 +311,31 @@ void RAI_graphics::draw() {
         for (int togKey = 0; togKey < 10; togKey++)
           if (keyboard()[RAI_KEY_1 + togKey])
             customToggle[togKey] = !customToggle[togKey];
+
+        if(keyboard()[RAI_KEY_U])
+          keyboardEvent[0] = true;
+
+        if(keyboard()[RAI_KEY_I])
+          keyboardEvent[1] = true;
+
+        if(keyboard()[RAI_KEY_O])
+          keyboardEvent[2] = true;
+
+        if(keyboard()[RAI_KEY_P])
+          keyboardEvent[3] = true;
+
+        if(keyboard()[RAI_KEY_J])
+          keyboardEvent[4] = true;
+
+        if(keyboard()[RAI_KEY_K])
+          keyboardEvent[5] = true;
+
+        if(keyboard()[RAI_KEY_L])
+          keyboardEvent[6] = true;
+
+        if(keyboard()[RAI_KEY_DELETE])
+          keyboardEvent[7] = true;
+
         break;
       case SDL_MOUSEWHEEL:
         if(keyboard()[RAI_KEY_LCTRL] && e.wheel.y == 1)
@@ -454,6 +479,14 @@ void RAI_graphics::removeObject(object::SingleBodyObject *obj) {
 void RAI_graphics::removeAndDeleteObject(object::SingleBodyObject *obj) {
   std::lock_guard<std::mutex> guard(mtxinit);
   tobeRemovedAndDeleted_objs_.push_back(obj);
+}
+
+bool RAI_graphics::getKeyboardEvent(KeyboardEvent ke) {
+  if(keyboardEvent[int(ke)]) {
+    keyboardEvent[int(ke)] = false;
+    return true;
+  } else
+    return false;
 }
 
 void RAI_graphics::removeSuperObject(object::MultiBodyObject *obj) {
