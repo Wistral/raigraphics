@@ -592,13 +592,16 @@ void RAI_graphics::drawObj(bool isReflection) {
 
   for (int i = 0; i < objs_.size(); i++) {
     if ((!objs_[i]->isVisible()&&objs_[i]->getGhosts().size()==0)|| (!objs_[i]->reflectable && isReflection)) continue;
-    shaders_[i]->Bind();
-    if(isReflection)
-      shaders_[i]->UpdateForReflection(camera, light, objs_[i], checkerboard);
-    else
-      shaders_[i]->Update(camera, light, objs_[i]);
-    objs_[i]->draw();
-    shaders_[i]->UnBind();
+
+    if(objs_[i]->isVisible()) {
+      shaders_[i]->Bind();
+      if (isReflection)
+        shaders_[i]->UpdateForReflection(camera, light, objs_[i], checkerboard);
+      else
+        shaders_[i]->Update(camera, light, objs_[i]);
+      objs_[i]->draw();
+      shaders_[i]->UnBind();
+    }
 
     // draw ghost
     // TODO code refine
