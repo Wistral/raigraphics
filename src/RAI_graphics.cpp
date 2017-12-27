@@ -213,6 +213,8 @@ void RAI_graphics::init() {
   }
 
   for (auto *ob: tobeRemovedAndDeleted_objs_) {
+    if(camera->getToFollowObj() == ob)
+      camera->unFollowOb();
     ob->destroy();
     ptrdiff_t pos = find(objs_.begin(), objs_.end(), ob) - objs_.begin();
     objs_.erase(objs_.begin() + pos);
@@ -286,7 +288,7 @@ void RAI_graphics::draw() {
       case SDL_MOUSEBUTTONUP: isInteracting_ = false;
         break;
       case SDL_KEYDOWN:
-        if (keyboard()[RAI_KEY_ESCAPE] && highlightedObjId != NO_OBJECT)
+        if (keyboard()[RAI_KEY_ESCAPE] && highlightedObjId != NO_OBJECT && objectsInOrder_[highlightedObjId])
           objectsInOrder_[highlightedObjId]->deHighlight();
 
         if (keyboard()[RAI_KEY_R] && keyboard()[RAI_KEY_LSHIFT])
@@ -361,7 +363,7 @@ void RAI_graphics::draw() {
     camera->follow(objectsInOrder_[objId]);
     interactingObjSelectableId = objectsInOrder_[objId]->getSelectableObIndex();
 
-    if (highlightedObjId != NO_OBJECT)
+    if (highlightedObjId != NO_OBJECT && objectsInOrder_[highlightedObjId])
       objectsInOrder_[highlightedObjId]->deHighlight();
 
     if (highlightedObjId == objId) {

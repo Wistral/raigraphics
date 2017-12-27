@@ -26,6 +26,8 @@ struct Camera {
   void follow(rai_graphics::object::SingleBodyObject* obj);
   void zoomIn();
   void zoomOut();
+  object::SingleBodyObject* getToFollowObj();
+  void unFollowOb();
 
  protected:
  private:

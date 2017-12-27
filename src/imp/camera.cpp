@@ -32,10 +32,11 @@ Camera::Camera(const glm::vec3 &posI, float fov, float aspect, float zNear, floa
 
 void Camera::update() {
   mtx.lock();
-  float sinYaw = sin(camYaw / 180 * M_PI);
-  float cosYaw = cos(camYaw / 180 * M_PI);
-  float sinPitch = sin(camPitch / 180 * M_PI);
-  float cosPitch = cos(camPitch / 180 * M_PI);
+
+  float sinYaw = sin(camYaw / 180.f * M_PI);
+  float cosYaw = cos(camYaw / 180.f * M_PI);
+  float sinPitch = sin(camPitch / 180.f * M_PI);
+  float cosPitch = cos(camPitch / 180.f * M_PI);
 
   float lx = cosYaw * cosPitch;
   float ly = sinYaw * cosPitch;
@@ -91,7 +92,10 @@ void Camera::GetPos(glm::vec3 &position) {
 
 void Camera::Control(SDL_Event e, bool stayAboveZero) {
   std::lock_guard<std::mutex> guad(mtx);
-  if (mi && !keyState[RAI_KEY_LCTRL]  || !toFollowObj) {
+  if(!toFollowObj)
+    mi = true;
+
+  if (mi && !keyState[RAI_KEY_LCTRL]) {
     float sinYaw = sin(camYaw / 180 * M_PI);
     float cosYaw = cos(camYaw / 180 * M_PI);
     float sinPitch = sin(camPitch / 180 * M_PI);
@@ -180,8 +184,6 @@ void Camera::Control(SDL_Event e, bool stayAboveZero) {
       return;
     }
     mi = !mi;
-    camPitch = 0;
-    camYaw = 0;
     switchTime = 0;
   }
 
@@ -218,5 +220,26 @@ void Camera::zoomOut() {
   relativePos.z *= 1.1;
   mtx.unlock();
 }
+
+object::SingleBodyObject* Camera::getToFollowObj() {
+  return toFollowObj;
+}
+
+void Camera::unFollowOb() {
+  mi=true;
+
+  Transform trans;
+  toFollowObj->getTransform(trans);
+  pos = *trans.GetPos() + glm::vec3(relativePos);
+  float xdiff = -relativePos.x;
+  float ydiff = -relativePos.y;
+  float zdiff = -relativePos.z;
+  float horizon = sqrt(xdiff*xdiff + ydiff*ydiff);
+
+  camPitch = std::atan2(zdiff, horizon) / M_PI * 180;
+  camYaw = std::atan2(ydiff, xdiff) / M_PI * 180;
+  toFollowObj = nullptr;
+
+};
 
 } // rai_graphics
