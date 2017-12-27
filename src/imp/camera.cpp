@@ -105,12 +105,24 @@ void Camera::Control(SDL_Event e, bool stayAboveZero) {
     float ly = sinYaw * cosPitch;
     float lz = sinPitch;
 
+    glm::vec3 panUp = glm::normalize(glm::vec3(0,0,1) - glm::dot(glm::vec3(lx, ly, lz), glm::vec3(0,0,1)) / glm::dot(glm::vec3(lx, ly, lz), glm::vec3(lx, ly, lz)) * glm::vec3(lx, ly, lz));
+    glm::vec3 panRight = glm::normalize(glm::cross(panUp, glm::vec3(lx, ly, lz)));
+
     int tmpx = 0, tmpy = 0;
+    SDL_GetMouseState(&tmpx, &tmpy);
+
     if (mousePressedLastTimeStep) {
-      SDL_GetMouseState(&tmpx, &tmpy);
       camYaw += camAngularSpeed * (tmpx - prevMx);
       camPitch += camAngularSpeed * (tmpy - prevMy);
       camPitch = std::min(std::max(camPitch, -89.5f), 89.5f);
+    }
+
+    if (mouseRightPressedLastTimeStep) {
+      pos += camLinearSpeed * (tmpx - prevMx) * 0.2f * panRight;
+      pos += camLinearSpeed * (tmpy - prevMy) * 0.2f * panUp;
+
+      if(stayAboveZero)
+        pos[2] = std::max(0.05f, pos[2]);
     }
 
     lockCamera();
@@ -171,18 +183,23 @@ void Camera::Control(SDL_Event e, bool stayAboveZero) {
   }
 
   Uint32 mbuttonState = SDL_GetMouseState(&prevMx, &prevMy);
-
   if (mbuttonState == SDL_BUTTON_LEFT)
     mousePressedLastTimeStep = true;
-
-  if (mbuttonState == 0)
+  else
     mousePressedLastTimeStep = false;
+
+  if (mbuttonState == SDL_BUTTON_RIGHT || mbuttonState == SDL_BUTTON_X1)
+    mouseRightPressedLastTimeStep = true;
+  else
+    mouseRightPressedLastTimeStep = false;
 
   if (keyState[SDL_SCANCODE_SPACE] && switchTime > 10) {
     if (!toFollowObj) {
       std::cout << "specify which object to follow" << std::endl;
       return;
     }
+    if(!mi)
+      stayHere();
     mi = !mi;
     switchTime = 0;
   }
@@ -227,7 +244,11 @@ object::SingleBodyObject* Camera::getToFollowObj() {
 
 void Camera::unFollowOb() {
   mi=true;
+  stayHere();
+  toFollowObj = nullptr;
+};
 
+void Camera::stayHere() {
   Transform trans;
   toFollowObj->getTransform(trans);
   pos = *trans.GetPos() + glm::vec3(relativePos);
@@ -238,8 +259,7 @@ void Camera::unFollowOb() {
 
   camPitch = std::atan2(zdiff, horizon) / M_PI * 180;
   camYaw = std::atan2(ydiff, xdiff) / M_PI * 180;
-  toFollowObj = nullptr;
+}
 
-};
 
 } // rai_graphics
