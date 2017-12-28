@@ -219,6 +219,8 @@ void RAI_graphics::init() {
     ptrdiff_t pos = find(objs_.begin(), objs_.end(), ob) - objs_.begin();
     objs_.erase(objs_.begin() + pos);
     shaders_.erase(shaders_.begin() + pos);
+    pos = find(objectsInOrder_.begin(), objectsInOrder_.end(), ob) - objectsInOrder_.begin();
+    if(pos != objectsInOrder_.size()) objectsInOrder_[pos] = nullptr;
     delete ob;
   }
 
