@@ -99,6 +99,7 @@ void *RAI_graphics::loop(void *obj) {
 
   textBoard[0]->setFontSize(2);
   textBoard[6]->setFontSize(2);
+  textBoard[7]->setFontSize(2);
   textBoard[5]->setFontSize(2);
 
   for (int i = 0; i < TEXTMENUCOUNT; i++)
@@ -272,8 +273,14 @@ void RAI_graphics::draw() {
   menuText[5][1] = stream.str();
 
   if (keyboard()[RAI_KEY_LCTRL]) {
+    textBoard[6]->setTranslation(windowWidth_ - 205, 10);
     std::stringstream inStr;
     inStr << "Interaction Strength: " << std::setprecision(2) << interactionMagnitude;
+    menuText[6][0] = inStr.str();
+  } else if (keyboard()[RAI_KEY_T]) {
+    textBoard[6]->setTranslation(windowWidth_ - 235, 10);
+    std::stringstream inStr;
+    inStr << "Simulation RealTimeFtr: " << std::setprecision(2) << realtimeFactor;
     menuText[6][0] = inStr.str();
   } else {
     menuText[6][0] = "";
@@ -346,6 +353,10 @@ void RAI_graphics::draw() {
           interactionMagnitude *= 1.2;
         else if (keyboard()[RAI_KEY_LCTRL] && e.wheel.y == -1)
           interactionMagnitude /= 1.2;
+        else if (keyboard()[RAI_KEY_T] && e.wheel.y == 1)
+          realtimeFactor *= 1.2;
+        else if (keyboard()[RAI_KEY_T] && e.wheel.y == -1)
+          realtimeFactor /= 1.2;
         else if (e.wheel.y == 1)
           camera->zoomOut();
         else if (e.wheel.y == -1)
@@ -670,6 +681,10 @@ bool RAI_graphics::getCustomToggleState(int id) {
 
 Eigen::Vector3d &RAI_graphics::getInteractionMagnitude() {
   return interactionForce;
+}
+
+float RAI_graphics::getRealTimeFactor() {
+  return realtimeFactor;
 }
 
 int RAI_graphics::getInteractingObjectID() {
