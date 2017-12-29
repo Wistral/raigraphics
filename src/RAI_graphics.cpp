@@ -278,7 +278,7 @@ void RAI_graphics::draw() {
     inStr << "Interaction Strength: " << std::setprecision(2) << interactionMagnitude;
     menuText[6][0] = inStr.str();
   } else if (keyboard()[RAI_KEY_T]) {
-    textBoard[6]->setTranslation(windowWidth_ - 235, 10);
+    textBoard[6]->setTranslation(windowWidth_ - 240, 10);
     std::stringstream inStr;
     inStr << "Simulation RealTimeFtr: " << std::setprecision(2) << realtimeFactor;
     menuText[6][0] = inStr.str();

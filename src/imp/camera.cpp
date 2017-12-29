@@ -22,7 +22,6 @@ Camera::Camera(const glm::vec3 &posI, float fov, float aspect, float zNear, floa
   forward = glm::vec3(0.0f, 0.0f, 1.0f);
   up = glm::vec3(0.0f, 0.0f, 1.0f);
   projection = glm::perspective(fov, aspect, zNear, zFar);
-
   camPitch = 0;
   camYaw = 0;
   camAngularSpeed = 0.2;
@@ -52,10 +51,7 @@ void Camera::update() {
 
   if (mi) {
     glm::vec3 alternateUp(1, 0, 0);
-    if (relativePos.x * relativePos.x + relativePos.y * relativePos.y < 1e-4)
-      pose_ = glm::lookAt(pos, pos + offset, alternateUp);
-    else
-      pose_ = glm::lookAt(pos, pos + offset, up);
+    pose_ = glm::lookAt(pos, pos + offset, up);
   } else {
     Transform trans;
     toFollowObj->getTransform(trans);
