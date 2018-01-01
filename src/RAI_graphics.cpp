@@ -4,7 +4,7 @@
 
 #include "raiGraphics/RAI_graphics.hpp"
 #include "raiCommon/math/RAI_math.hpp"
-#include "glog/logging.h"
+#include "raiCommon/rai_utils.hpp"
 #include <FreeImage.h>
 #include <thread>
 #include <raiGraphics/obj/Sphere.hpp>
@@ -91,7 +91,7 @@ void *RAI_graphics::loop(void *obj) {
   font[4] = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 30);
   font[5] = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 38);
 
-  LOG_IF(FATAL, font[0] == nullptr) << "Could not find the font file. Run the install script provided.";
+  RAIFATAL_IF(font[0] == nullptr, "Could not find the font file. Run the install script provided.");
 
   /// menus
   for (auto &tb: textBoard)
@@ -302,10 +302,10 @@ void RAI_graphics::draw() {
 
         if (keyboard()[RAI_KEY_R] && keyboard()[RAI_KEY_LSHIFT])
           if (!saveSnapShot) {
-            LOG(INFO) << "Saving video";
+            RAIINFO("Saving video");
             savingSnapshots_private("/tmp", "raiGraphicsAutoRecorder" + std::to_string(autoVideoRecordingNumber++));
           } else {
-            LOG(INFO) << "Starting encoding video";
+            RAIINFO("Starting encoding video");
             images2Video();
           }
         for (int fkey = 0; fkey < TEXTMENUCOUNT - 5; fkey++)
@@ -442,7 +442,7 @@ void RAI_graphics::draw() {
       FreeImage_Unload(image);
       delete[] pixels;
     } else {
-      LOG(INFO) << "RAI is saving video now since it exceeded the time limit";
+      RAIINFO("RAI is saving video now since it exceeded the time limit");
       images2Video();
       saveSnapShot = false;
     }
@@ -452,7 +452,7 @@ void RAI_graphics::draw() {
 
 void RAI_graphics::addObject(object::SingleBodyObject *obj, object::ShaderType type) {
   std::lock_guard<std::mutex> guard(mtxinit);
-  LOG_IF(FATAL, !obj) << "the object is not created yet";
+  RAIFATAL_IF(!obj, "the object is not created yet");
   added_objs_.push_back(obj);
   if (type == object::RAI_SHADER_OBJECT_DEFAULT)
     type = obj->defaultShader;
@@ -466,7 +466,7 @@ void RAI_graphics::addObject(object::SingleBodyObject *obj, object::ShaderType t
 
 void RAI_graphics::addSuperObject(object::MultiBodyObject *obj) {
   std::lock_guard<std::mutex> guard(mtxinit);
-  LOG_IF(FATAL, !obj) << "the object is not created yet";
+  RAIFATAL_IF(!obj, "the object is not created yet");
   added_supObjs_.push_back(obj);
   for (auto &ob: obj->getChildren()) {
     ob->setSelectableObIndex(++selectableIndexToBeAssigned);
@@ -477,7 +477,7 @@ void RAI_graphics::addSuperObject(object::MultiBodyObject *obj) {
 void RAI_graphics::addBackground(object::Background *back) {
   std::lock_guard<std::mutex> guard(mtxinit);
   backgroundChanged = true;
-  LOG_IF(FATAL, !back) << "the object is not created yet";
+  RAIFATAL_IF(!back, "the object is not created yet");
   background = back;
 }
 
@@ -563,7 +563,7 @@ void *RAI_graphics::images2Video_inThread(void *obj) {
   int i = system(command.c_str());
   command = "rm -rf " + image_dir + "/*.bmp";
   i = system(command.c_str());
-  LOG(INFO) << "The video is generated under " + image_dir;
+  RAIINFO("The video is generated under " + image_dir);
   return NULL;
 }
 

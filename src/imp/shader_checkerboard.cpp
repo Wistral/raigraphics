@@ -97,11 +97,11 @@ void Shader_checkerboard::Update(Camera *camera, Light *light, object::CheckerBo
 }
 
 void Shader_checkerboard::Update(Camera *camera,  Light *light, object::SingleBodyObject* obj){
-LOG(FATAL)<<"model specific shader"<<std::endl;
+RAIFATAL("model specific shader");
 }
 
 void Shader_checkerboard::UpdateForReflection(Camera *camera, Light *light, object::SingleBodyObject* obj, object::CheckerBoard* chk){
-  LOG(FATAL) << "cannot draw reflection of itself"<<std::endl;
+  RAIFATAL("cannot draw reflection of itself");
 }
 
 } // rai_graphics

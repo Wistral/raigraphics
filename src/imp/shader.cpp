@@ -2,8 +2,9 @@
 // Created by jhwangbo on 17. 4. 30.
 //
 
-#include <glog/logging.h>
 #include "raiGraphics/imp/shader.hpp"
+
+#include "raiCommon/rai_utils.hpp"
 
 namespace rai_graphics {
 
@@ -20,7 +21,7 @@ std::string Shader::LoadShader(const std::string &fileName) {
       output.append(line + "\n");
     }
   } else {
-    LOG(FATAL)<< "Unable to load shader: " << fileName << std::endl;
+    RAIFATAL("Unable to load shader: " << fileName);
   }
 
   return output;
@@ -41,14 +42,14 @@ void Shader::CheckShaderError(GLuint shader, GLuint flag, bool isProgram, const 
     else
       glGetShaderInfoLog(shader, sizeof(error), NULL, error);
 
-    LOG(FATAL) << errorMessage << ": '" << error << "'";
+    RAIFATAL(errorMessage << ": '" << error << "'");
   }
 }
 
 GLuint Shader::CreateShader(const std::string &text, unsigned int type) {
   GLuint shader = glCreateShader(type);
 
-  LOG_IF(FATAL, shader == 0) << "Error compiling shader type " << type << std::endl;
+  RAIFATAL_IF(shader == 0, "Error compiling shader type " << type);
 
   const GLchar *p[1];
   p[0] = text.c_str();
