@@ -99,6 +99,7 @@ void *RAI_graphics::loop(void *obj) {
 
   textBoard[0]->setFontSize(2);
   textBoard[6]->setFontSize(2);
+  textBoard[7]->setFontSize(2);
   textBoard[5]->setFontSize(2);
 
   for (int i = 0; i < TEXTMENUCOUNT; i++)
@@ -213,10 +214,14 @@ void RAI_graphics::init() {
   }
 
   for (auto *ob: tobeRemovedAndDeleted_objs_) {
+    if(camera->getToFollowObj() == ob)
+      camera->unFollowOb();
     ob->destroy();
     ptrdiff_t pos = find(objs_.begin(), objs_.end(), ob) - objs_.begin();
     objs_.erase(objs_.begin() + pos);
     shaders_.erase(shaders_.begin() + pos);
+    pos = find(objectsInOrder_.begin(), objectsInOrder_.end(), ob) - objectsInOrder_.begin();
+    if(pos != objectsInOrder_.size()) objectsInOrder_[pos] = nullptr;
     delete ob;
   }
 
@@ -268,8 +273,14 @@ void RAI_graphics::draw() {
   menuText[5][1] = stream.str();
 
   if (keyboard()[RAI_KEY_LCTRL]) {
+    textBoard[6]->setTranslation(windowWidth_ - 205, 10);
     std::stringstream inStr;
     inStr << "Interaction Strength: " << std::setprecision(2) << interactionMagnitude;
+    menuText[6][0] = inStr.str();
+  } else if (keyboard()[RAI_KEY_T]) {
+    textBoard[6]->setTranslation(windowWidth_ - 240, 10);
+    std::stringstream inStr;
+    inStr << "Simulation RealTimeFtr: " << std::setprecision(2) << realtimeFactor;
     menuText[6][0] = inStr.str();
   } else {
     menuText[6][0] = "";
@@ -286,7 +297,7 @@ void RAI_graphics::draw() {
       case SDL_MOUSEBUTTONUP: isInteracting_ = false;
         break;
       case SDL_KEYDOWN:
-        if (keyboard()[RAI_KEY_ESCAPE] && highlightedObjId != NO_OBJECT)
+        if (keyboard()[RAI_KEY_ESCAPE] && highlightedObjId != NO_OBJECT && objectsInOrder_[highlightedObjId])
           objectsInOrder_[highlightedObjId]->deHighlight();
 
         if (keyboard()[RAI_KEY_R] && keyboard()[RAI_KEY_LSHIFT])
@@ -342,6 +353,10 @@ void RAI_graphics::draw() {
           interactionMagnitude *= 1.2;
         else if (keyboard()[RAI_KEY_LCTRL] && e.wheel.y == -1)
           interactionMagnitude /= 1.2;
+        else if (keyboard()[RAI_KEY_T] && e.wheel.y == 1)
+          realtimeFactor *= 1.2;
+        else if (keyboard()[RAI_KEY_T] && e.wheel.y == -1)
+          realtimeFactor /= 1.2;
         else if (e.wheel.y == 1)
           camera->zoomOut();
         else if (e.wheel.y == -1)
@@ -361,7 +376,7 @@ void RAI_graphics::draw() {
     camera->follow(objectsInOrder_[objId]);
     interactingObjSelectableId = objectsInOrder_[objId]->getSelectableObIndex();
 
-    if (highlightedObjId != NO_OBJECT)
+    if (highlightedObjId != NO_OBJECT && objectsInOrder_[highlightedObjId])
       objectsInOrder_[highlightedObjId]->deHighlight();
 
     if (highlightedObjId == objId) {
@@ -666,6 +681,10 @@ bool RAI_graphics::getCustomToggleState(int id) {
 
 Eigen::Vector3d &RAI_graphics::getInteractionMagnitude() {
   return interactionForce;
+}
+
+float RAI_graphics::getRealTimeFactor() {
+  return realtimeFactor;
 }
 
 int RAI_graphics::getInteractingObjectID() {
