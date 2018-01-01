@@ -45,7 +45,7 @@ OBJModel::OBJModel(const std::string &fileName) {
       };
     }
   } else {
-    LOG(FATAL) << "Unable to load mesh: " << fileName;
+    RAIFATAL("Unable to load mesh: " << fileName);
   }
 }
 

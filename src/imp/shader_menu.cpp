@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <raiGraphics/obj/Rectangle.hpp>
-#include <glog/logging.h>
+#include "raiCommon/rai_utils.hpp"
 
 namespace rai_graphics {
 
@@ -57,11 +57,11 @@ void Shader_menu::Update(object::Rectangle* obj) {
 }
 
 void Shader_menu::Update(Camera *camera, Light *light, object::SingleBodyObject* obj){
-  LOG(FATAL)<<"unsupported update method";
+  RAIFATAL("unsupported update method");
 }
 
 void Shader_menu::UpdateForReflection(Camera *camera, Light *light, object::SingleBodyObject* obj, object::CheckerBoard* chk){
-  LOG(FATAL) << "cannot draw reflection of text"<<std::endl;
+  RAIFATAL("cannot draw reflection of text");
 }
 
 

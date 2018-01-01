@@ -5,7 +5,7 @@
 #include <SDL2/SDL_system.h>
 #include <SDL2/SDL_ttf.h>
 #include "raiGraphics/obj/Rectangle.hpp"
-#include "glog/logging.h"
+#include "raiCommon/rai_utils.hpp"
 
 namespace rai_graphics {
 namespace object {
@@ -90,7 +90,7 @@ void Rectangle::bindTexture() {
 }
 
 void Rectangle::setFontSize(int size) {
-  LOG_IF(INFO, size<0 || size>5)<< "font size from 0~5 are supported";
+  RAIWARN_IF(size<0 || size>5, "font size from 0~5 are supported");
   fontSize = size%6;
 }
 

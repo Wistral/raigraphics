@@ -3,7 +3,7 @@
 
 #include <raiGraphics/obj/CheckerBoard.hpp>
 #include "shader.hpp"
-#include "glog/logging.h"
+#include "raiCommon/rai_utils.hpp"
 
 namespace rai_graphics {
 

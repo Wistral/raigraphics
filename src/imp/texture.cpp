@@ -1,14 +1,14 @@
 #include "raiGraphics/imp/texture.h"
 #include "raiGraphics/imp/stb_image.h"
 #include <iostream>
-#include <glog/logging.h>
+#include "raiCommon/rai_utils.hpp"
 
 Texture::Texture(const std::string& fileName)
 {
 	int width, height, numComponents;
     unsigned char* data = stbi_load((fileName).c_str(), &width, &height, &numComponents, 4);
 
-    LOG_IF(FATAL, data == NULL) << "Unable to load texture: " << fileName << std::endl;
+    RAIFATAL_IF(data == NULL, "Unable to load texture: " << fileName);
         
     glGenTextures(1, &m_texture);
     glBindTexture(GL_TEXTURE_2D, m_texture);

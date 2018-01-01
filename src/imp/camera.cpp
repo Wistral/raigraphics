@@ -22,7 +22,6 @@ Camera::Camera(const glm::vec3 &posI, float fov, float aspect, float zNear, floa
   forward = glm::vec3(0.0f, 0.0f, 1.0f);
   up = glm::vec3(0.0f, 0.0f, 1.0f);
   projection = glm::perspective(fov, aspect, zNear, zFar);
-
   camPitch = 0;
   camYaw = 0;
   camAngularSpeed = 0.2;
@@ -32,10 +31,11 @@ Camera::Camera(const glm::vec3 &posI, float fov, float aspect, float zNear, floa
 
 void Camera::update() {
   mtx.lock();
-  float sinYaw = sin(camYaw / 180 * M_PI);
-  float cosYaw = cos(camYaw / 180 * M_PI);
-  float sinPitch = sin(camPitch / 180 * M_PI);
-  float cosPitch = cos(camPitch / 180 * M_PI);
+
+  float sinYaw = sin(camYaw / 180.f * M_PI);
+  float cosYaw = cos(camYaw / 180.f * M_PI);
+  float sinPitch = sin(camPitch / 180.f * M_PI);
+  float cosPitch = cos(camPitch / 180.f * M_PI);
 
   float lx = cosYaw * cosPitch;
   float ly = sinYaw * cosPitch;
@@ -51,10 +51,7 @@ void Camera::update() {
 
   if (mi) {
     glm::vec3 alternateUp(1, 0, 0);
-    if (relativePos.x * relativePos.x + relativePos.y * relativePos.y < 1e-4)
-      pose_ = glm::lookAt(pos, pos + offset, alternateUp);
-    else
-      pose_ = glm::lookAt(pos, pos + offset, up);
+    pose_ = glm::lookAt(pos, pos + offset, up);
   } else {
     Transform trans;
     toFollowObj->getTransform(trans);
@@ -91,7 +88,10 @@ void Camera::GetPos(glm::vec3 &position) {
 
 void Camera::Control(SDL_Event e, bool stayAboveZero) {
   std::lock_guard<std::mutex> guad(mtx);
-  if (mi && !keyState[RAI_KEY_LCTRL]  || !toFollowObj) {
+  if(!toFollowObj)
+    mi = true;
+
+  if (mi && !keyState[RAI_KEY_LCTRL]) {
     float sinYaw = sin(camYaw / 180 * M_PI);
     float cosYaw = cos(camYaw / 180 * M_PI);
     float sinPitch = sin(camPitch / 180 * M_PI);
@@ -101,12 +101,24 @@ void Camera::Control(SDL_Event e, bool stayAboveZero) {
     float ly = sinYaw * cosPitch;
     float lz = sinPitch;
 
+    glm::vec3 panUp = glm::normalize(glm::vec3(0,0,1) - glm::dot(glm::vec3(lx, ly, lz), glm::vec3(0,0,1)) / glm::dot(glm::vec3(lx, ly, lz), glm::vec3(lx, ly, lz)) * glm::vec3(lx, ly, lz));
+    glm::vec3 panRight = glm::normalize(glm::cross(panUp, glm::vec3(lx, ly, lz)));
+
     int tmpx = 0, tmpy = 0;
+    SDL_GetMouseState(&tmpx, &tmpy);
+
     if (mousePressedLastTimeStep) {
-      SDL_GetMouseState(&tmpx, &tmpy);
       camYaw += camAngularSpeed * (tmpx - prevMx);
       camPitch += camAngularSpeed * (tmpy - prevMy);
       camPitch = std::min(std::max(camPitch, -89.5f), 89.5f);
+    }
+
+    if (mouseRightPressedLastTimeStep) {
+      pos += camLinearSpeed * (tmpx - prevMx) * 0.2f * panRight;
+      pos += camLinearSpeed * (tmpy - prevMy) * 0.2f * panUp;
+
+      if(stayAboveZero)
+        pos[2] = std::max(0.05f, pos[2]);
     }
 
     lockCamera();
@@ -167,21 +179,24 @@ void Camera::Control(SDL_Event e, bool stayAboveZero) {
   }
 
   Uint32 mbuttonState = SDL_GetMouseState(&prevMx, &prevMy);
-
   if (mbuttonState == SDL_BUTTON_LEFT)
     mousePressedLastTimeStep = true;
-
-  if (mbuttonState == 0)
+  else
     mousePressedLastTimeStep = false;
+
+  if (mbuttonState == SDL_BUTTON_RIGHT || mbuttonState == SDL_BUTTON_X1)
+    mouseRightPressedLastTimeStep = true;
+  else
+    mouseRightPressedLastTimeStep = false;
 
   if (keyState[SDL_SCANCODE_SPACE] && switchTime > 10) {
     if (!toFollowObj) {
       std::cout << "specify which object to follow" << std::endl;
       return;
     }
+    if(!mi)
+      stayHere();
     mi = !mi;
-    camPitch = 0;
-    camYaw = 0;
     switchTime = 0;
   }
 
@@ -218,5 +233,29 @@ void Camera::zoomOut() {
   relativePos.z *= 1.1;
   mtx.unlock();
 }
+
+object::SingleBodyObject* Camera::getToFollowObj() {
+  return toFollowObj;
+}
+
+void Camera::unFollowOb() {
+  mi=true;
+  stayHere();
+  toFollowObj = nullptr;
+};
+
+void Camera::stayHere() {
+  Transform trans;
+  toFollowObj->getTransform(trans);
+  pos = *trans.GetPos() + glm::vec3(relativePos);
+  float xdiff = -relativePos.x;
+  float ydiff = -relativePos.y;
+  float zdiff = -relativePos.z;
+  float horizon = sqrt(xdiff*xdiff + ydiff*ydiff);
+
+  camPitch = std::atan2(zdiff, horizon) / M_PI * 180;
+  camYaw = std::atan2(ydiff, xdiff) / M_PI * 180;
+}
+
 
 } // rai_graphics

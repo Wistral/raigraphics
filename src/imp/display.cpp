@@ -1,7 +1,7 @@
 #include "raiGraphics/imp/display.h"
 #include <GL/glew.h>
 #include <iostream>
-#include <glog/logging.h>
+#include "raiCommon/rai_utils.hpp"
 
 namespace rai_graphics {
 Display::Display(int width, int height, const std::string &title) {
@@ -26,18 +26,18 @@ Display::Display(int width, int height, const std::string &title) {
 
   m_window =
       SDL_CreateWindow(title.c_str(), 0, 0, width, height, SDL_WINDOW_OPENGL);
-  LOG_IF(FATAL, m_window ==NULL) << SDL_GetError();
+  RAIFATAL_IF(m_window ==NULL, SDL_GetError());
   m_renderer = SDL_CreateRenderer(m_window,-1,SDL_RENDERER_SOFTWARE);
-  LOG_IF(FATAL, m_renderer ==NULL) << SDL_GetError();
+  RAIFATAL_IF(m_renderer ==NULL, SDL_GetError());
 //
   m_glContext = SDL_GL_CreateContext(m_window);
-  LOG_IF(FATAL, m_glContext ==NULL) << SDL_GetError();
+  RAIFATAL_IF(m_glContext ==NULL, SDL_GetError());
 
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glewExperimental = GL_TRUE;
   GLenum res = glewInit();
-  LOG_IF(FATAL, res != GLEW_OK) << "Glew failed to initialize!" << " Error: "<<glewGetErrorString(res) << std::endl;
+  RAIFATAL_IF(res != GLEW_OK, "Glew failed to initialize!" << " Error: "<<glewGetErrorString(res));
 
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);

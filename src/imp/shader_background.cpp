@@ -2,7 +2,7 @@
 // Created by jhwangbo on 17. 4. 30.
 //
 #include <raiGraphics/obj/Background.hpp>
-#include <glog/logging.h>
+#include "raiCommon/rai_utils.hpp"
 #include "raiGraphics/imp/shader_background.hpp"
 
 namespace rai_graphics {
@@ -39,7 +39,7 @@ void Shader_background::UnBind() {
 }
 
 void Shader_background::Update(Camera *camera, Light *light, object::SingleBodyObject* obj){
-  LOG(FATAL) << "Shader_background only works with a background object"<<std::endl;
+  RAIFATAL("Shader_background only works with a background object");
 }
 
 void Shader_background::Update(Camera *camera, Light *light, object::Background* obj) {
@@ -58,7 +58,7 @@ void Shader_background::Update(Camera *camera, Light *light, object::Background*
 }
 
 void Shader_background::UpdateForReflection(Camera *camera, Light *light, object::SingleBodyObject* obj, object::CheckerBoard* chk){
-  LOG(FATAL) << "cannot draw reflection for background yet"<<std::endl;
+  RAIFATAL("cannot draw reflection for background yet");
 }
 
 

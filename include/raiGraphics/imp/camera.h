@@ -26,9 +26,13 @@ struct Camera {
   void follow(rai_graphics::object::SingleBodyObject* obj);
   void zoomIn();
   void zoomOut();
+  object::SingleBodyObject* getToFollowObj();
+  void unFollowOb();
 
  protected:
  private:
+
+  void stayHere();
 
   object::SingleBodyObject* toFollowObj = nullptr;
   glm::vec4 relativePos;
@@ -42,6 +46,8 @@ struct Camera {
   bool mi = true;
   void lockCamera();
   bool mousePressedLastTimeStep = false;
+  bool mouseRightPressedLastTimeStep = false;
+
   int prevMx = -1, prevMy = -1;
   std::mutex mtx;
   glm::mat4 projection;

@@ -17,7 +17,7 @@ namespace object {
 Mesh::Mesh(const std::string& fileName, float scale) {
   selectable_ = true;
 
-  LOG_IF(FATAL, !fileexists(fileName))<< "could not find the mesh file"<<std::endl;
+  RAIFATAL_IF(!fileexists(fileName),"could not find the mesh file"<<std::endl);
   Assimp::Importer importer;
   const aiScene *scene = importer.ReadFile(fileName.c_str(),
                                            aiProcess_GenSmoothNormals | aiProcess_Triangulate

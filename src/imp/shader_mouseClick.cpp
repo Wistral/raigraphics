@@ -1,7 +1,7 @@
 #include "raiGraphics/imp/shader_mouseClick.h"
 #include <iostream>
 #include <fstream>
-#include <glog/logging.h>
+#include <raiCommon/rai_utils.hpp>
 
 namespace rai_graphics {
 
@@ -43,7 +43,7 @@ void Shader_mouseClick::UnBind() {
 }
 
 void Shader_mouseClick::Update(Camera *camera, Light *light, object::SingleBodyObject* obj) {
-  LOG(FATAL)<<"unused method";
+  RAIFATAL("unused method");
 }
 
 void Shader_mouseClick::Update(Camera *camera, object::SingleBodyObject* obj) {
@@ -70,7 +70,7 @@ void Shader_mouseClick::Update(Camera *camera, object::SingleBodyObject* obj) {
 }
 
 void Shader_mouseClick::UpdateForReflection(Camera *camera, Light *light, object::SingleBodyObject* obj, object::CheckerBoard* chk){
-  LOG(FATAL) << "cannot draw reflection of text"<<std::endl;
+  RAIFATAL("cannot draw reflection of text");
 }
 
 } // rai_graphics
