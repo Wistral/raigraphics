@@ -42,10 +42,10 @@ class ANYmal : public MultiBodyObject {
   Mesh shank_lh;
   Mesh shank_rh;
 
-//  Mesh foot_lf;
-//  Mesh foot_rf;
-//  Mesh foot_lh;
-//  Mesh foot_rh;
+  Mesh adapter_lf;
+  Mesh adapter_rf;
+  Mesh adapter_lh;
+  Mesh adapter_rh;
 
   Sphere foot_lf;
   Sphere foot_rf;
