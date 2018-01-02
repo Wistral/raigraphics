@@ -11,7 +11,6 @@ namespace rai_graphics {
 namespace object {
 
 Background::Background(std::string filename, std::string filetype) {
-  std::cout<<std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT"))+ "/res/"<<filename<<std::endl;
   faces.push_back(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT"))+ "/res/" +filename + "_right."+filetype);
   faces.push_back(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT"))+ "/res/" +filename + "_left."+filetype);
   faces.push_back(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT"))+ "/res/" +filename + "_front."+filetype);
