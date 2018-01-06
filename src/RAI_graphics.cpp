@@ -457,10 +457,7 @@ void RAI_graphics::addObject(object::SingleBodyObject *obj, object::ShaderType t
   if (type == object::RAI_SHADER_OBJECT_DEFAULT)
     type = obj->defaultShader;
   added_shaders_.push_back(type);
-
-//  if(obj->isSelectable())
-    obj->setSelectableObIndex(++selectableIndexToBeAssigned);
-
+  obj->setSelectableObIndex(++selectableIndexToBeAssigned);
   objectsInOrder_.push_back(obj);
 }
 

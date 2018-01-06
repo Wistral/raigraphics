@@ -63,8 +63,7 @@ class SingleBodyObject: public Object {
   void getLightPropDiff(std::vector<float>& diff);
   void getLightPropSpec(std::vector<float>& spec);
   void getShiness(float& shine);
-  const float *getVertexPositions() const;
-  unsigned long getVertexNumber();
+  const std::vector<glm::vec3>& getVertexPositions() const;
   bool isVisible() {return visible;}
 
   unsigned getSelectableObIndex() const {return selectableObIndex; };

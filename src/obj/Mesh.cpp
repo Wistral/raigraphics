@@ -22,21 +22,19 @@ Mesh::Mesh(const std::string& fileName, float scale) {
   const aiScene *scene = importer.ReadFile(fileName.c_str(),
                                            aiProcess_GenSmoothNormals | aiProcess_Triangulate
                                                | aiProcess_CalcTangentSpace | aiProcess_FlipUVs);
-  if (scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
-    std::cout << "The file wasn't successfuly opened " << fileName << std::endl;
-    return;
-  }
+  RAIFATAL_IF(scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode, "ThIS file wasn't successfully opened: " << fileName);
   scale_ = scale;
   recursiveProcess(scene->mRootNode, scene);
-  com = glm::vec3(0,0,0);
 
+  com = glm::vec3(0,0,0);
   for(auto& pos: positions)
     com += pos;
-
   com /= positions.size();
 }
 
 Mesh::Mesh(Vertex *vertices, unsigned int numVertices, unsigned int *indicesL, unsigned int numIndices) {
+  selectable_ = true;
+
   for (unsigned int i = 0; i < numVertices; i++) {
     positions.push_back(*vertices[i].GetPos());
     texCoords.push_back(*vertices[i].GetTexCoord());
@@ -45,9 +43,16 @@ Mesh::Mesh(Vertex *vertices, unsigned int numVertices, unsigned int *indicesL, u
 
   for (unsigned int i = 0; i < numIndices; i++)
     indices.push_back(indicesL[i]);
+
+  com = glm::vec3(0,0,0);
+  for(auto& pos: positions)
+    com += pos;
+  com /= positions.size();
 }
 
 Mesh::Mesh(const float *vertices, unsigned int numVertices, const unsigned int *indicesL, unsigned int numIndices) {
+  selectable_ = true;
+
   for (unsigned int i = 0; i < numVertices; i++) {
     glm::vec3 vertexVector(vertices[i * 4], vertices[i * 4 + 1], vertices[i * 4 + 2]);
     positions.push_back(vertexVector);
@@ -55,6 +60,16 @@ Mesh::Mesh(const float *vertices, unsigned int numVertices, const unsigned int *
 
   for (unsigned int i = 0; i < numIndices; i++)
     indices.push_back(indicesL[i]);
+
+  for (unsigned int i = 0; i < numIndices/3; i++) {
+    normals.push_back(glm::cross(positions[indices[i*3]] - positions[indices[i*3 + 1]], positions[indices[i*3 + 1]] - positions[indices[i*3 + 2]]));
+    normals.back() = glm::normalize(normals.back());
+  }
+
+  com = glm::vec3(0,0,0);
+  for(auto& pos: positions)
+    com += pos;
+  com /= positions.size();
 }
 
 Mesh::~Mesh() {}

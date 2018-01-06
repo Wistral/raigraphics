@@ -164,13 +164,10 @@ void SingleBodyObject::getShiness(float& shine) {
   shine = shininess;
 }
 
-const float *SingleBodyObject::getVertexPositions() const {
-  return &positions[0].x;
+const std::vector<glm::vec3>& SingleBodyObject::getVertexPositions() const {
+  return positions;
 }
 
-unsigned long SingleBodyObject::getVertexNumber() {
-  return positions.size();
-}
 void SingleBodyObject::registerToGPU() {
   m_numIndices = indices.size();
 
