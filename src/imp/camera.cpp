@@ -116,9 +116,6 @@ void Camera::Control(SDL_Event e, bool stayAboveZero) {
     if (mouseRightPressedLastTimeStep) {
       pos += camLinearSpeed * (tmpx - prevMx) * 0.2f * panRight;
       pos += camLinearSpeed * (tmpy - prevMy) * 0.2f * panUp;
-
-      if(stayAboveZero)
-        pos[2] = std::max(0.05f, pos[2]);
     }
 
     lockCamera();
@@ -140,7 +137,6 @@ void Camera::Control(SDL_Event e, bool stayAboveZero) {
       pos += right;
     }
 
-    pos[2] = std::max(pos[2], 0.1f);
     if (keyState[SDL_SCANCODE_KP_PLUS] || keyState[SDL_SCANCODE_P])
       camLinearSpeed *= 1.05;
 
@@ -157,8 +153,8 @@ void Camera::Control(SDL_Event e, bool stayAboveZero) {
       SDL_GetMouseState(&tmpx, &tmpy);
       relativePos = glm::rotate(glm::radians((prevMx - tmpx) * 0.13f), glm::vec3(0, 0, 1)) * relativePos;
       relativePos = glm::rotate(glm::radians((prevMy - tmpy) * 0.13f), glm::vec3(rotationPitcAxis)) * relativePos;
-      if(stayAboveZero)
-        relativePos[2] = std::max(0.05f, relativePos[2]);
+//      if(stayAboveZero)
+//        relativePos[2] = std::max(0.05f, relativePos[2]);
     }
 
     if (switchTime > 3) {
