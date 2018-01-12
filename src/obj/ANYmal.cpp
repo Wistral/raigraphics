@@ -83,10 +83,10 @@ ANYmal::ANYmal():
   rai::Math::MathFunc::rotateHTabout_x_axis(defaultPose_[11], M_PI);
   rai::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[11], 0.5*M_PI);
 
-  rai::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[3], -M_PI*0.09);
-  rai::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[6], -M_PI*0.09);
-  rai::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[9], M_PI*0.91);
-  rai::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[12], M_PI*0.91);
+//  rai::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[3], -M_PI*0.09);
+//  rai::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[6], -M_PI*0.09);
+  rai::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[9], M_PI*1);
+  rai::Math::MathFunc::rotateHTabout_y_axis(defaultPose_[12], M_PI*1);
 
   defaultPose_[17](0,3) = 0.1;
   defaultPose_[17](1,3) = -0.02;
