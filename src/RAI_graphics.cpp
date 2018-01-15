@@ -9,7 +9,6 @@
 #include <thread>
 #include <raiGraphics/obj/Sphere.hpp>
 #include <SDL2/SDL_ttf.h>
-#include "GL/glut.h"
 #include <sstream> // stringstream
 #include <iomanip>
 
