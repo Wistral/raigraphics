@@ -104,12 +104,8 @@ int main() {
   graphics.start();
 
   // exit test app when keyboard 'Q' key pressed
-  while(1)
-  {
-    if (graphics.keyboard()[RAI_KEY_Q]) {
-      break;
-    }
-  }
+  while(!graphics.isQuitting())
+    usleep(1);
 
   graphics.end();
 

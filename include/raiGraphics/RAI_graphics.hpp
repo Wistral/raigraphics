@@ -96,6 +96,9 @@ class RAI_graphics {
   bool isReady(){
     return isGraphicsReady;
   }
+  bool isQuitting(){
+    return isQuiting;
+  }
 
  private:
   void *loop(void *obj);
@@ -179,6 +182,7 @@ class RAI_graphics {
   double actualFPS_=0;
   uint loopcounter=0;
   bool isGraphicsReady=false;
+  bool isQuiting=false;
   enum {
     RAI_MAIN_MENU = 0,
     RAI_KEY_BOARD_HELP,

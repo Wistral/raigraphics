@@ -287,6 +287,9 @@ void RAI_graphics::draw() {
 
   while (SDL_PollEvent(&e)) {
     switch (e.type) {
+      case SDL_QUIT:
+        isQuiting = true;
+        break;
       case SDL_MOUSEBUTTONDOWN:
         if (e.button.clicks == 2 && !keyboard()[RAI_KEY_LCTRL])
           objId = readObjIdx();
@@ -345,6 +348,9 @@ void RAI_graphics::draw() {
 
         if(keyboard()[RAI_KEY_DELETE])
           keyboardEvent[7] = true;
+
+        if(keyboard()[RAI_KEY_Q])
+          isQuiting = true;
 
         break;
       case SDL_MOUSEWHEEL:
