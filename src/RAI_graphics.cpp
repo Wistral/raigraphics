@@ -678,7 +678,8 @@ bool RAI_graphics::isInteracting() {
 }
 
 bool RAI_graphics::getCustomToggleState(int id) {
-  return customToggle[id];
+  RAIFATAL_IF(id<0 || id>10, "Available toggle keys: 0~10")
+  return (id==0) ? customToggle[9] : customToggle[id-1];
 }
 
 Eigen::Vector3d &RAI_graphics::getInteractionMagnitude() {
