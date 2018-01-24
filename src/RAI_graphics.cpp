@@ -68,6 +68,7 @@ void RAI_graphics::end() {
 void *RAI_graphics::loop(void *obj) {
   display = new Display(windowWidth_, windowHeight_, "RAI simulator");
   camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), 70.0f, (float) windowWidth_ / (float) windowHeight_, 0.01f, 10000.0f);
+  light = new Light;
   shader_basic = new Shader_basic;
   shader_flat = new Shader_flat;
   shader_background = new Shader_background;
@@ -104,7 +105,6 @@ void *RAI_graphics::loop(void *obj) {
   for (int i = 0; i < TEXTMENUCOUNT; i++)
     textBoard[i]->writeText(font, menuText[i][0]);
 
-  light = new Light;
 
   while (true) {
     if (mtx.try_lock()) {
@@ -149,6 +149,7 @@ void *RAI_graphics::loop(void *obj) {
     TTF_CloseFont(fo);
   TTF_Quit();
   delete camera;
+  delete light;
   delete shader_background;
   delete shader_basic;
   delete shader_flat;
