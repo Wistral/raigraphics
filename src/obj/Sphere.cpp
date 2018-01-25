@@ -10,7 +10,7 @@ namespace object {
 Sphere::Sphere(float radius, bool isSelectable) {
   com = glm::vec3(0,0,0);
 
-  int rings = 20;
+  int rings = 12;
 
   float const R = 1. / (float) (rings - 1);
   float const S = 1. / (float) (rings - 1);

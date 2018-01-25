@@ -525,6 +525,11 @@ void RAI_graphics::setLightProp(LightProp &prop) {
   lightPropChanged = true;
 }
 
+void RAI_graphics::setAntiAliasing(int aa) {
+  RAIFATAL_IF(aa>8 || aa<1, "AntiAliasing should be between 1 and 8")
+  SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, aa);
+}
+
 void RAI_graphics::setCameraProp(CameraProp &prop) {
   cameraProp = prop;
   cameraPropChanged = true;

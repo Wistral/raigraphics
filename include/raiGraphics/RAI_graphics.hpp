@@ -77,6 +77,7 @@ class RAI_graphics {
   void removeSuperObject(object::MultiBodyObject *obj);
   void setBackgroundColor(float r, float g, float b, float a);
   void setLightProp(LightProp &prop);
+  void setAntiAliasing(int aa);
   void setCameraProp(CameraProp &prop);
 
   void savingSnapshots(std::string logDirectory, std::string fileName);
