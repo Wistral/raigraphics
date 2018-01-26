@@ -93,8 +93,11 @@ class RAI_graphics {
   float getRealTimeFactor();
   void changeMenuText(int menuId, bool isOnText, std::string mt);
   void changeMenuPosition(int menuId, int x, int y);
+  void setMenuPositionNextToCursor(int menuId);
   void changeMenuWordWrap(int menuId, int wr);
-  bool isReady(){
+  void changeMenuFontSize(int menuId, int size);
+
+    bool isReady(){
     return isGraphicsReady;
   }
   bool isQuitting(){
@@ -151,6 +154,8 @@ class RAI_graphics {
   Camera *camera = nullptr;
   Light *light = nullptr;
   int windowWidth_, windowHeight_;
+  double cameraDepth_;
+
   SDL_Event e;
   bool freeCamMode;
   float clearColor[4] = {1.0f, 1.0f, 1.0f, 1.0f};

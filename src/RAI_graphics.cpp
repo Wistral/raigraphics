@@ -46,6 +46,8 @@ RAI_graphics::RAI_graphics(int windowWidth, int windowHeight) :
   textBoard[6]->setTranslation(windowWidth_ - 205, 10);
   textBoard[6]->setTextWrap(windowWidth_ - 40);
 
+  textBoard[8]->setTextWrap(windowWidth_ - 40); /// next to cursor
+
   keyboardEvent.resize(8, false);
 }
 
@@ -67,7 +69,8 @@ void RAI_graphics::end() {
 
 void *RAI_graphics::loop(void *obj) {
   display = new Display(windowWidth_, windowHeight_, "RAI simulator");
-  camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), 70.0f, (float) windowWidth_ / (float) windowHeight_, 0.01f, 10000.0f);
+  camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::radians(60.0f), (float) windowWidth_ / (float) windowHeight_, 0.01f, 10000.0f);
+  cameraDepth_ = windowHeight_ / 2.0 / tan(30.0/180.0*M_PI);
   light = new Light;
   shader_basic = new Shader_basic;
   shader_flat = new Shader_flat;
@@ -75,7 +78,7 @@ void *RAI_graphics::loop(void *obj) {
   shader_mouseClick = new Shader_mouseClick;
   shader_menu = new Shader_menu;
   shader_checkerboard = new Shader_checkerboard;
-  interactionArrow = new object::Arrow(0.03, 0.06, 1, 0.3);
+  interactionArrow = new object::Arrow(0.02, 0.04, 0.8, 0.2);
   interactionArrow->setColor({1, 0, 0});
   interactionBall = new object::Sphere(1, false);
   interactionBall->setColor({1, 0, 0});
@@ -297,7 +300,8 @@ void RAI_graphics::draw() {
         else if (e.button.clicks == 1 && keyboard()[RAI_KEY_LCTRL] && readObjIdx() == highlightedObjId)
           startInteraction = isInteracting_ = true;
         break;
-      case SDL_MOUSEBUTTONUP: isInteracting_ = false;
+      case SDL_MOUSEBUTTONUP:
+        isInteracting_ = false;
         break;
       case SDL_KEYDOWN:
         if (keyboard()[RAI_KEY_ESCAPE] && highlightedObjId != NO_OBJECT && objectsInOrder_[highlightedObjId])
@@ -311,14 +315,14 @@ void RAI_graphics::draw() {
             RAIINFO("Starting encoding video");
             images2Video();
           }
-        for (int fkey = 0; fkey < TEXTMENUCOUNT - 5; fkey++)
-          if (keyboard()[RAI_KEY_F1 + fkey])
-            if (menuTextToggle[fkey] = !menuTextToggle[fkey])
-              textBoard[fkey]->writeText(font, menuText[fkey][1]);
-            else
-              textBoard[fkey]->writeText(font, menuText[fkey][0]);
+//        for (int fkey = 0; fkey < TEXTMENUCOUNT - 5; fkey++)
+//          if (keyboard()[RAI_KEY_F1 + fkey])
+//            if (menuTextToggle[fkey] = !menuTextToggle[fkey])
+//              textBoard[fkey]->writeText(font, menuText[fkey][1]);
+//            else
+//              textBoard[fkey]->writeText(font, menuText[fkey][0]);
 
-        for (int fkey = 5; fkey < TEXTMENUCOUNT; fkey++)
+        for (int fkey = 0; fkey < TEXTMENUCOUNT; fkey++)
           if (keyboard()[RAI_KEY_F1 + fkey])
             menuTextToggle[fkey] = !menuTextToggle[fkey];
 
@@ -372,7 +376,7 @@ void RAI_graphics::draw() {
   }
   loopcounter++;
 
-  for (int fkey = 5; fkey < TEXTMENUCOUNT; fkey++)
+  for (int fkey = 0; fkey < TEXTMENUCOUNT; fkey++)
     if (menuTextToggle[fkey])
       textBoard[fkey]->writeText(font, menuText[fkey][1]);
     else
@@ -644,25 +648,32 @@ void RAI_graphics::drawObj(bool isReflection) {
 
 void RAI_graphics::computeMousePull() {
   int tx, ty;
-  SDL_GetMouseState(&tx, &ty);
-  tx -= interStartingX;
-  ty -= interStartingY;
   Transform objTrans;
   glm::mat4 cameraT;
-  glm::vec3 cameraPos, objectPos, diffPos, arrowEnd3;
-  objectsInOrder_[highlightedObjId]->getTransform(objTrans);
-  glm::vec4 arrowOrigin = objTrans.GetModel() * glm::vec4(objectsInOrder_[highlightedObjId]->com, 1);
+  glm::vec3 cameraPos, objectPos, diffPos, arrowEnd3norm, arrowEnd3;
   camera->GetPose(cameraT);
   camera->GetPos(cameraPos);
+
+  objectsInOrder_[highlightedObjId]->getTransform(objTrans);
+  glm::vec4 arrowOrigin = objTrans.GetModel() * glm::vec4(objectsInOrder_[highlightedObjId]->com, 1);
+  glm::vec4 arrowOrigin_cam = cameraT * arrowOrigin;
+
+  SDL_GetMouseState(&tx, &ty);
+  tx -= windowWidth_/2.0;
+  ty -= windowHeight_/2.0;
+
   diffPos = cameraPos - *objTrans.GetPos();
   float normDiff = glm::l2Norm(diffPos);
-  interactionArrow->setScale(normDiff / 800.0f * sqrt(float(tx * tx + ty * ty)));
-  glm::vec4 arrowEnd = glm::inverse(cameraT) * glm::vec4(tx, -ty, 0, 0);
-  arrowEnd3 = glm::normalize(glm::vec3(arrowEnd));
-  glm::vec3 axis = glm::cross(arrowEnd3, glm::vec3(1, 0, 0));
+  glm::vec4 arrowEnd(-tx/cameraDepth_*arrowOrigin_cam[2], ty/cameraDepth_*arrowOrigin_cam[2], arrowOrigin_cam[2], 1);
+  glm::vec4 arrowEnd4 = glm::inverse(cameraT) * arrowEnd;
+  arrowEnd3 = glm::vec3(arrowEnd4-arrowOrigin);
+  arrowEnd3norm = glm::normalize(arrowEnd3);
+  interactionArrow->setScale(glm::l2Norm(arrowEnd3));
+
+  glm::vec3 axis = glm::cross(arrowEnd3norm, glm::vec3(1, 0, 0));
+  double angle = acos(arrowEnd3norm[0]);
   axis = glm::normalize(axis);
   Eigen::Vector3d axisE(axis.x, axis.y, axis.z);
-  double angle = acos(arrowEnd3[0]);
   Eigen::Vector3d arrowPosE(arrowOrigin[0], arrowOrigin[1], arrowOrigin[2]);
   interactionArrow->setPos(arrowPosE);
   Eigen::Vector4d quat = rai::Math::MathFunc::angleAxisToQuat(-angle, axisE);
@@ -671,12 +682,10 @@ void RAI_graphics::computeMousePull() {
   shader_basic->Update(camera, light, interactionArrow);
   interactionArrow->draw();
   shader_basic->UnBind();
-  interactionForce << arrowEnd.x, arrowEnd.y, arrowEnd.z;
-  if(interactionForce.norm() > 1e-5)
-    interactionForce /= interactionForce.norm();
-  else
+  interactionForce << arrowEnd3.x, arrowEnd3.y, arrowEnd3.z;
+  if(interactionForce.norm() < 1e-5)
     interactionForce.setZero();
-  interactionForce *= sqrt(float(tx * tx + ty * ty)) * interactionMagnitude;
+  interactionForce /= arrowOrigin_cam[2] / -interactionMagnitude;
 }
 
 bool RAI_graphics::isInteracting() {
@@ -708,8 +717,18 @@ void RAI_graphics::changeMenuPosition(int menuId, int x, int y) {
   textBoard[menuId]->setTranslation(x, y);
 }
 
+void RAI_graphics::setMenuPositionNextToCursor(int menuId) {
+  int x,y;
+  SDL_GetMouseState(&x, &y);
+  textBoard[menuId]->setTranslation(x+5, windowHeight_-y-5);
+}
+
 void RAI_graphics::changeMenuWordWrap(int menuId, int wr) {
   textBoard[menuId]->setTextWrap(wr);
+}
+
+void RAI_graphics::changeMenuFontSize(int menuId, int size) {
+  textBoard[menuId]->setFontSize(size);
 }
 
 } // rai_graphics

@@ -52,6 +52,10 @@ set(RAI_GRAPHICS_OPENGL_LINK ${TARGETS_LIB_NAME} glut GLU GL GLEW SDL2 SDL2_ttf 
 add_executable(testRAIGraphics raiGraphicsTest.cpp)
 target_link_libraries(testRAIGraphics ${RAI_GRAPHICS_OPENGL_LINK})
 
+# executable
+add_executable(testRAIGraphics2 raiGraphicsTest2.cpp)
+target_link_libraries(testRAIGraphics2 ${RAI_GRAPHICS_OPENGL_LINK})
+
 # --------------------------------------------------------------------
 # package raiGraphics
 export(PACKAGE ${PROJECT_NAME})

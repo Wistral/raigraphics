@@ -25,7 +25,7 @@ int main() {
   object::Cylinder blueCylinder(1, 2, true);
   object::Capsule yellowCapsule(1, 2, true);
   object::Background background("sky");
-  object::CheckerBoard grnd(4, 500, 500, 0.05, {0,0,0}, {1,1,1});
+  object::CheckerBoard grnd(5, 500, 500, 0.05, {0,0,0}, {1,1,1});
   Eigen::Vector3d bodyFrameOrigin(0.0, 0.0, 3.0);
   Eigen::Quaterniond bodyFrameQuat(1, 0, 0, 0);
   object::CoordinateFrame inertiaFrame(bodyFrameOrigin, bodyFrameQuat);
