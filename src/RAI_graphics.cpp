@@ -387,9 +387,9 @@ void RAI_graphics::draw() {
       camera->follow(objectsInOrder_[objId]);
     interactingObjSelectableId = objectsInOrder_[objId]->getSelectableObIndex();
 
-    if (highlightedObjId != NO_OBJECT && highlightedObjId != objId && objectsInOrder_[highlightedObjId])
+    if (highlightedObjId != NO_OBJECT && objectsInOrder_[highlightedObjId]) {
       objectsInOrder_[highlightedObjId]->deHighlight();
-
+    }
     highlightedObjId = objId;
     objectsInOrder_[objId]->highlight();
   }
