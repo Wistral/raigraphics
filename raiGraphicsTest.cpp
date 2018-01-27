@@ -25,7 +25,7 @@ int main() {
   object::Cylinder blueCylinder(1, 2, true);
   object::Capsule yellowCapsule(1, 2, true);
   object::Background background("sky");
-  object::CheckerBoard grnd(5, 500, 500, 0.05, {0,0,0}, {1,1,1});
+  object::CheckerBoard grnd(5, 100, 100, 0.05, {0,0,0}, {1,1,1});
   Eigen::Vector3d bodyFrameOrigin(0.0, 0.0, 3.0);
   Eigen::Quaterniond bodyFrameQuat(1, 0, 0, 0);
   object::CoordinateFrame inertiaFrame(bodyFrameOrigin, bodyFrameQuat);
@@ -69,7 +69,7 @@ int main() {
   Eigen::Vector3d directionVector(0.0, 0.0, 1.0);
   directionArrow.representVector(directionVector);
 
-  graphics.addBackground(&background);
+//  graphics.addBackground(&background);
   graphics.addCheckerBoard(&grnd);
   graphics.addObject(&whiteSphere);
   graphics.addObject(&redCone);
@@ -82,6 +82,8 @@ int main() {
   graphics.addSuperObject(&bodyFrame2);
   graphics.addSuperObject(&bodyFrame3);
   graphics.addSuperObject(&bodyFrame4);
+  grnd.gridMode = true;
+  grnd.setColor({0.3,0,0});
 
   // ghost objects
   Eigen::Vector3d ghostVector1; ghostVector1 << 10, 0, 3;

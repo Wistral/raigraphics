@@ -14,6 +14,7 @@
 #include "raiGraphics/imp/display.h"
 #include "raiGraphics/imp/shader_basic.h"
 #include "raiGraphics/imp/shader_flat.h"
+#include "raiGraphics/imp/shader_line.h"
 #include "raiGraphics/imp/shader_mouseClick.h"
 #include "raiGraphics/imp/shader_background.hpp"
 #include "raiGraphics/imp/shader_menu.h"
@@ -141,6 +142,7 @@ class RAI_graphics {
   Shader_flat *shader_flat = nullptr;
   Shader_background *shader_background = nullptr;
   Shader_mouseClick *shader_mouseClick = nullptr;
+  Shader_line *shader_line = nullptr;
   Shader_menu *shader_menu = nullptr;
   Shader_checkerboard *shader_checkerboard = nullptr;
 
@@ -158,7 +160,7 @@ class RAI_graphics {
 
   SDL_Event e;
   bool freeCamMode;
-  float clearColor[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+  float clearColor[4] = {1.0f, 1.0f, 1.0f, 0.0f};
   double FPS_ = 60.0;
   std::string image_dir, videoFileName;
   StopWatch watch;

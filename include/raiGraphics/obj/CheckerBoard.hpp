@@ -15,10 +15,12 @@ class CheckerBoard : public SingleBodyObject {
  public:
 
   CheckerBoard(float gridSize, float width, float length, float reflectanceI, std::vector<float> color1={0,0,0}, std::vector<float> color2={1,1,1});
+  void drawGridLines();
 
   glm::vec3 col1, col2;
   float gridSize_;
   float width, length;
+  bool gridMode = false;
 };
 
 } // object

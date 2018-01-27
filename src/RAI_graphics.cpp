@@ -70,12 +70,13 @@ void RAI_graphics::end() {
 void *RAI_graphics::loop(void *obj) {
   display = new Display(windowWidth_, windowHeight_, "RAI simulator");
   camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::radians(60.0f), (float) windowWidth_ / (float) windowHeight_, 0.01f, 10000.0f);
-  cameraDepth_ = windowHeight_ / 2.0 / tan(30.0/180.0*M_PI);
+  cameraDepth_ = windowHeight_ / 2.0 / tan(30.0 / 180.0 * M_PI);
   light = new Light;
   shader_basic = new Shader_basic;
   shader_flat = new Shader_flat;
   shader_background = new Shader_background;
   shader_mouseClick = new Shader_mouseClick;
+  shader_line = new Shader_line;
   shader_menu = new Shader_menu;
   shader_checkerboard = new Shader_checkerboard;
   interactionArrow = new object::Arrow(0.02, 0.04, 0.8, 0.2);
@@ -107,7 +108,6 @@ void *RAI_graphics::loop(void *obj) {
 
   for (int i = 0; i < TEXTMENUCOUNT; i++)
     textBoard[i]->writeText(font, menuText[i][0]);
-
 
   while (true) {
     if (mtx.try_lock()) {
@@ -156,6 +156,7 @@ void *RAI_graphics::loop(void *obj) {
   delete shader_background;
   delete shader_basic;
   delete shader_flat;
+  delete shader_line;
   delete shader_mouseClick;
   delete shader_menu;
   delete shader_checkerboard;
@@ -217,14 +218,14 @@ void RAI_graphics::init() {
   }
 
   for (auto *ob: tobeRemovedAndDeleted_objs_) {
-    if(camera->getToFollowObj() == ob)
+    if (camera->getToFollowObj() == ob)
       camera->unFollowOb();
     ob->destroy();
     ptrdiff_t pos = find(objs_.begin(), objs_.end(), ob) - objs_.begin();
     objs_.erase(objs_.begin() + pos);
     shaders_.erase(shaders_.begin() + pos);
     pos = find(objectsInOrder_.begin(), objectsInOrder_.end(), ob) - objectsInOrder_.begin();
-    if(pos != objectsInOrder_.size()) objectsInOrder_[pos] = nullptr;
+    if (pos != objectsInOrder_.size()) objectsInOrder_[pos] = nullptr;
     delete ob;
   }
 
@@ -269,6 +270,7 @@ void RAI_graphics::draw() {
   /// UI
   static const int NO_OBJECT = 16646655;
   bool startInteraction = false;
+  bool focus = false;
   int objId = NO_OBJECT;
 
   std::stringstream stream;
@@ -291,17 +293,18 @@ void RAI_graphics::draw() {
 
   while (SDL_PollEvent(&e)) {
     switch (e.type) {
-      case SDL_QUIT:
-        isQuiting = true;
+      case SDL_QUIT:isQuiting = true;
         break;
       case SDL_MOUSEBUTTONDOWN:
-        if (e.button.clicks == 2 && !keyboard()[RAI_KEY_LCTRL])
+        if (e.button.clicks == 2 && !keyboard()[RAI_KEY_LCTRL]) {
           objId = readObjIdx();
-        else if (e.button.clicks == 1 && keyboard()[RAI_KEY_LCTRL] && readObjIdx() == highlightedObjId)
+          focus = true;
+        } else if (e.button.clicks == 1 && keyboard()[RAI_KEY_LCTRL] && readObjIdx() == highlightedObjId)
           startInteraction = isInteracting_ = true;
+        else if (e.button.clicks == 1)
+          objId = readObjIdx();
         break;
-      case SDL_MOUSEBUTTONUP:
-        isInteracting_ = false;
+      case SDL_MOUSEBUTTONUP:isInteracting_ = false;
         break;
       case SDL_KEYDOWN:
         if (keyboard()[RAI_KEY_ESCAPE] && highlightedObjId != NO_OBJECT && objectsInOrder_[highlightedObjId])
@@ -330,36 +333,36 @@ void RAI_graphics::draw() {
           if (keyboard()[RAI_KEY_1 + togKey])
             customToggle[togKey] = !customToggle[togKey];
 
-        if(keyboard()[RAI_KEY_U])
+        if (keyboard()[RAI_KEY_U])
           keyboardEvent[0] = true;
 
-        if(keyboard()[RAI_KEY_I])
+        if (keyboard()[RAI_KEY_I])
           keyboardEvent[1] = true;
 
-        if(keyboard()[RAI_KEY_O])
+        if (keyboard()[RAI_KEY_O])
           keyboardEvent[2] = true;
 
-        if(keyboard()[RAI_KEY_P])
+        if (keyboard()[RAI_KEY_P])
           keyboardEvent[3] = true;
 
-        if(keyboard()[RAI_KEY_J])
+        if (keyboard()[RAI_KEY_J])
           keyboardEvent[4] = true;
 
-        if(keyboard()[RAI_KEY_K])
+        if (keyboard()[RAI_KEY_K])
           keyboardEvent[5] = true;
 
-        if(keyboard()[RAI_KEY_L])
+        if (keyboard()[RAI_KEY_L])
           keyboardEvent[6] = true;
 
-        if(keyboard()[RAI_KEY_DELETE])
+        if (keyboard()[RAI_KEY_DELETE])
           keyboardEvent[7] = true;
 
-        if(keyboard()[RAI_KEY_Q])
+        if (keyboard()[RAI_KEY_Q])
           isQuiting = true;
 
         break;
       case SDL_MOUSEWHEEL:
-        if(keyboard()[RAI_KEY_LCTRL] && e.wheel.y == 1)
+        if (keyboard()[RAI_KEY_LCTRL] && e.wheel.y == 1)
           interactionMagnitude *= 1.2;
         else if (keyboard()[RAI_KEY_LCTRL] && e.wheel.y == -1)
           interactionMagnitude /= 1.2;
@@ -383,22 +386,20 @@ void RAI_graphics::draw() {
       textBoard[fkey]->writeText(font, menuText[fkey][0]);
 
   if (objId != NO_OBJECT && objId != 0) {
-    camera->follow(objectsInOrder_[objId]);
+    if (focus)
+      camera->follow(objectsInOrder_[objId]);
     interactingObjSelectableId = objectsInOrder_[objId]->getSelectableObIndex();
 
-    if (highlightedObjId != NO_OBJECT && objectsInOrder_[highlightedObjId])
+    if (highlightedObjId != NO_OBJECT && highlightedObjId != objId && objectsInOrder_[highlightedObjId])
       objectsInOrder_[highlightedObjId]->deHighlight();
 
-    if (highlightedObjId == objId) {
-      highlightedObjId = NO_OBJECT;
-    } else {
-      highlightedObjId = objId;
-      objectsInOrder_[objId]->highlight();
-    }
+    highlightedObjId = objId;
+    objectsInOrder_[objId]->highlight();
   }
 
   /// clear images that was generated for mouse clicks
-  display->Clear(0, 0, 0, 0);
+  display->Clear(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+
   /// update camera with events
   camera->Control(e, true);
   camera->update();
@@ -411,11 +412,18 @@ void RAI_graphics::draw() {
 
   /// draw checkerboard and reflections
   if (checkerboard) {
-    drawObj(true);
-    shader_checkerboard->Bind();
-    shader_checkerboard->Update(camera, light, checkerboard);
-    checkerboard->draw();
-    shader_checkerboard->UnBind();
+    if (!checkerboard->gridMode) {
+      drawObj(true);
+      shader_checkerboard->Bind();
+      shader_checkerboard->Update(camera, light, checkerboard);
+      checkerboard->draw();
+      shader_checkerboard->UnBind();
+    } else {
+      shader_line->Bind();
+      shader_line->Update(camera, light, checkerboard);
+      checkerboard->drawGridLines();
+      shader_line->UnBind();
+    }
   }
 
   /// draw the real objects
@@ -504,7 +512,7 @@ void RAI_graphics::removeAndDeleteObject(object::SingleBodyObject *obj) {
 }
 
 bool RAI_graphics::getKeyboardEvent(KeyboardEvent ke) {
-  if(keyboardEvent[int(ke)]) {
+  if (keyboardEvent[int(ke)]) {
     keyboardEvent[int(ke)] = false;
     return true;
   } else
@@ -530,7 +538,7 @@ void RAI_graphics::setLightProp(LightProp &prop) {
 }
 
 void RAI_graphics::setAntiAliasing(int aa) {
-  RAIFATAL_IF(aa>8 || aa<1, "AntiAliasing should be between 1 and 8")
+  RAIFATAL_IF(aa > 8 || aa < 1, "AntiAliasing should be between 1 and 8")
   SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, aa);
 }
 
@@ -614,13 +622,13 @@ void RAI_graphics::drawObj(bool isReflection) {
   for (auto *sob: supObjs_)
     if (sob->isVisible() && isReflection)
       sob->draw(camera, light, 1.0, checkerboard);
-    else if(sob->isVisible())
+    else if (sob->isVisible())
       sob->draw(camera, light, 1.0);
 
   for (int i = 0; i < objs_.size(); i++) {
-    if ((!objs_[i]->isVisible()&&objs_[i]->getGhosts().size()==0)|| (!objs_[i]->reflectable && isReflection)) continue;
+    if ((!objs_[i]->isVisible() && objs_[i]->getGhosts().size() == 0) || (!objs_[i]->reflectable && isReflection)) continue;
 
-    if(objs_[i]->isVisible()) {
+    if (objs_[i]->isVisible()) {
       shaders_[i]->Bind();
       if (isReflection)
         shaders_[i]->UpdateForReflection(camera, light, objs_[i], checkerboard);
@@ -634,7 +642,7 @@ void RAI_graphics::drawObj(bool isReflection) {
     // TODO code refine
     objs_[i]->mutexLock();
     objs_[i]->usingTempTransform(true);
-    for (int j=0; j<objs_[i]->getGhosts().size(); j++) {
+    for (int j = 0; j < objs_[i]->getGhosts().size(); j++) {
       objs_[i]->setTempTransform(j);
       shaders_[i]->Bind();
       shaders_[i]->Update(camera, light, objs_[i]);
@@ -659,14 +667,14 @@ void RAI_graphics::computeMousePull() {
   glm::vec4 arrowOrigin_cam = cameraT * arrowOrigin;
 
   SDL_GetMouseState(&tx, &ty);
-  tx -= windowWidth_/2.0;
-  ty -= windowHeight_/2.0;
+  tx -= windowWidth_ / 2.0;
+  ty -= windowHeight_ / 2.0;
 
   diffPos = cameraPos - *objTrans.GetPos();
   float normDiff = glm::l2Norm(diffPos);
-  glm::vec4 arrowEnd(-tx/cameraDepth_*arrowOrigin_cam[2], ty/cameraDepth_*arrowOrigin_cam[2], arrowOrigin_cam[2], 1);
+  glm::vec4 arrowEnd(-tx / cameraDepth_ * arrowOrigin_cam[2], ty / cameraDepth_ * arrowOrigin_cam[2], arrowOrigin_cam[2], 1);
   glm::vec4 arrowEnd4 = glm::inverse(cameraT) * arrowEnd;
-  arrowEnd3 = glm::vec3(arrowEnd4-arrowOrigin);
+  arrowEnd3 = glm::vec3(arrowEnd4 - arrowOrigin);
   arrowEnd3norm = glm::normalize(arrowEnd3);
   interactionArrow->setScale(glm::l2Norm(arrowEnd3));
 
@@ -683,7 +691,7 @@ void RAI_graphics::computeMousePull() {
   interactionArrow->draw();
   shader_basic->UnBind();
   interactionForce << arrowEnd3.x, arrowEnd3.y, arrowEnd3.z;
-  if(interactionForce.norm() < 1e-5)
+  if (interactionForce.norm() < 1e-5)
     interactionForce.setZero();
   interactionForce /= arrowOrigin_cam[2] / -interactionMagnitude;
 }
@@ -693,8 +701,8 @@ bool RAI_graphics::isInteracting() {
 }
 
 bool RAI_graphics::getCustomToggleState(int id) {
-  RAIFATAL_IF(id<0 || id>10, "Available toggle keys: 0~10")
-  return (id==0) ? customToggle[9] : customToggle[id-1];
+  RAIFATAL_IF(id < 0 || id > 10, "Available toggle keys: 0~10")
+  return (id == 0) ? customToggle[9] : customToggle[id - 1];
 }
 
 Eigen::Vector3d &RAI_graphics::getInteractionMagnitude() {
@@ -718,9 +726,9 @@ void RAI_graphics::changeMenuPosition(int menuId, int x, int y) {
 }
 
 void RAI_graphics::setMenuPositionNextToCursor(int menuId) {
-  int x,y;
+  int x, y;
   SDL_GetMouseState(&x, &y);
-  textBoard[menuId]->setTranslation(x+5, windowHeight_-y-5);
+  textBoard[menuId]->setTranslation(x + 5, windowHeight_ - y - 5);
 }
 
 void RAI_graphics::changeMenuWordWrap(int menuId, int wr) {

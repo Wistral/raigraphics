@@ -39,6 +39,25 @@ CheckerBoard::CheckerBoard(float gridSize,
 }
 
 
+void CheckerBoard::drawGridLines() {
+  glLineWidth(1.0);
+  // Call only once for all remaining points
+  glBegin(GL_LINES);
+  // All lines lie in the xy plane.
+  for(int i=0; i<width/gridSize_+1; i++) {
+    glVertex3f(-width/2.0 + gridSize_*i, -length/2.0, 0.0);    // First endpoint of line
+    glVertex3f(-width/2.0 + gridSize_*i, length/2.0, 0.0);    // Second endpoint of line
+  }
+
+  // Done drawing points
+  for(int i=0; i<length/gridSize_+1; i++) {
+    glVertex3f(-width/2.0f, -length/2.0f + gridSize_*i, 0.0);    // First endpoint of line
+    glVertex3f(width/2.0f, -length/2.0f + gridSize_*i, 0.0);    // Second endpoint of line
+  }
+  glEnd();
+}
+
+
 
 } // object
 } // rai_graphics
