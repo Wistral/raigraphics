@@ -40,7 +40,7 @@ CheckerBoard::CheckerBoard(float gridSize,
 
 
 void CheckerBoard::drawGridLines() {
-  glLineWidth(1.0);
+  glLineWidth(gridLineWidth);
   // Call only once for all remaining points
   glBegin(GL_LINES);
   // All lines lie in the xy plane.
@@ -55,6 +55,10 @@ void CheckerBoard::drawGridLines() {
     glVertex3f(width/2.0f, -length/2.0f + gridSize_*i, 0.0);    // Second endpoint of line
   }
   glEnd();
+}
+
+void CheckerBoard::setGridLineWidth(float width) {
+  gridLineWidth = width;
 }
 
 
