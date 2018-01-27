@@ -382,7 +382,7 @@ void RAI_graphics::draw() {
     else
       textBoard[fkey]->writeText(font, menuText[fkey][0]);
 
-  if (objId != NO_OBJECT && objId != 0) {
+  if (objId != NO_OBJECT && objId != 0 && objId < objectsInOrder_.size()) {
     if (focus)
       camera->follow(objectsInOrder_[objId]);
     interactingObjSelectableId = objectsInOrder_[objId]->getSelectableObIndex();
