@@ -245,6 +245,7 @@ void RAI_graphics::init() {
 
 void RAI_graphics::draw() {
 
+  /// clear images that was generated for mouse clicks
   display->Clear(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
 
   /// draw obj with monotone for mouse click inputs
@@ -318,12 +319,6 @@ void RAI_graphics::draw() {
             RAIINFO("Starting encoding video");
             images2Video();
           }
-//        for (int fkey = 0; fkey < TEXTMENUCOUNT - 5; fkey++)
-//          if (keyboard()[RAI_KEY_F1 + fkey])
-//            if (menuTextToggle[fkey] = !menuTextToggle[fkey])
-//              textBoard[fkey]->writeText(font, menuText[fkey][1]);
-//            else
-//              textBoard[fkey]->writeText(font, menuText[fkey][0]);
 
         for (int fkey = 0; fkey < TEXTMENUCOUNT; fkey++)
           if (keyboard()[RAI_KEY_F1 + fkey])
@@ -397,8 +392,7 @@ void RAI_graphics::draw() {
     objectsInOrder_[objId]->highlight();
   }
 
-  /// clear images that was generated for mouse clicks
-  display->Clear(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+  display->Clear(1,1,1,0);
 
   /// update camera with events
   camera->Control(e, true);
@@ -460,7 +454,7 @@ void RAI_graphics::draw() {
       FreeImage_Unload(image);
       delete[] pixels;
     } else {
-      RAIINFO("RAI is saving video now since it exceeded the time limit");
+      RAIWARN("RAI is saving video now since it exceeded the time limit");
       images2Video();
       saveSnapShot = false;
     }
