@@ -49,6 +49,8 @@ RAI_graphics::RAI_graphics(int windowWidth, int windowHeight) :
   textBoard[8]->setTextWrap(windowWidth_ - 40); /// next to cursor
 
   keyboardEvent.resize(8, false);
+
+  interactionForce.setZero();
 }
 
 RAI_graphics::~RAI_graphics() {
