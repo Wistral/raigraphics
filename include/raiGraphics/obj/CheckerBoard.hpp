@@ -22,7 +22,7 @@ class CheckerBoard : public SingleBodyObject {
   float gridSize_;
   float width, length;
   bool gridMode = false;
-  float gridLineWidth;
+  float gridLineWidth=1.0f;
 };
 
 } // object
