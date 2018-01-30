@@ -416,7 +416,9 @@ void RAI_graphics::draw() {
       shader_checkerboard->UnBind();
     } else {
       shader_line->Bind();
-      shader_line->Update(camera, light, checkerboard);
+      std::vector<float> color;
+      checkerboard->getColor(color);
+      shader_line->Update(camera, light, color);
       checkerboard->drawGridLines();
       shader_line->UnBind();
     }
@@ -440,6 +442,15 @@ void RAI_graphics::draw() {
     textBoard[tbId]->bindTexture();
     textBoard[tbId]->draw();
     shader_menu->UnBind();
+  }
+
+  /// line primitives
+  for(auto& ln: lines_){
+    shader_line->Bind();
+    shader_line->Update(camera, light, ln.color);
+    ln.draw();
+    shader_line->UnBind();
+
   }
 
   if (saveSnapShot) {
@@ -473,6 +484,11 @@ void RAI_graphics::addObject(object::SingleBodyObject *obj, object::ShaderType t
   added_shaders_.push_back(type);
   obj->setSelectableObIndex(++selectableIndexToBeAssigned);
   objectsInOrder_.push_back(obj);
+}
+
+object::Lines* RAI_graphics::addLineSet() {
+  lines_.emplace_back();
+  return &lines_.back();
 }
 
 void RAI_graphics::addSuperObject(object::MultiBodyObject *obj) {

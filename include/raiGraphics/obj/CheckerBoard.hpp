@@ -17,6 +17,7 @@ class CheckerBoard : public SingleBodyObject {
   CheckerBoard(float gridSize, float width, float length, float reflectanceI, std::vector<float> color1={0,0,0}, std::vector<float> color2={1,1,1});
   void drawGridLines();
   void setGridLineWidth(float width);
+  void setBoardColor(std::vector<float> firstColor, std::vector<float> secondColor);
 
   glm::vec3 col1, col2;
   float gridSize_;

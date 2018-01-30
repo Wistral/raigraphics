@@ -39,9 +39,9 @@ struct Vertex {
 
 class Mesh : public SingleBodyObject {
  public:
-  Mesh(const std::string& fileName, float scale=1.0f);
-  Mesh(Vertex *vertices, unsigned int numVertices, unsigned int *indices, unsigned int numIndices);
-  Mesh(const float *vertices, unsigned int numVertices, const unsigned int *indicesL, unsigned int numIndices);
+  Mesh(const std::string& fileName, float scale=1.0f, std::string texture="");
+  Mesh(Vertex *vertices, unsigned int numVertices, unsigned int *indices, unsigned int numIndices, std::string texture="");
+  Mesh(const float *vertices, unsigned int numVertices, const unsigned int *indicesL, unsigned int numIndices, std::string texture="");
 
   void draw(Light& light);
 

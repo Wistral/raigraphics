@@ -13,7 +13,8 @@ class Shader_line : public Shader {
   virtual std::string shaderFileName();
   void Bind();
   void UnBind();
-  void Update(Camera *camera,  Light *light, object::SingleBodyObject* obj);
+  void Update(Camera *camera, Light *light, std::vector<float>& clr);
+  void Update(Camera *camera, Light *light, object::SingleBodyObject* obj){}
   void UpdateForReflection(Camera *camera, Light *light, object::SingleBodyObject* obj, object::CheckerBoard* chk){};
 
  protected:

@@ -89,6 +89,7 @@ class SingleBodyObject: public Object {
   void clearGhost();
   std::vector<Transform> & getGhosts();
   bool isSelectable() const;
+  bool loadTexture();
 
   ShaderType defaultShader = object::RAI_SHADER_BASIC;
 

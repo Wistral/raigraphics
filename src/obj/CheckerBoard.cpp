@@ -61,6 +61,11 @@ void CheckerBoard::setGridLineWidth(float width) {
   gridLineWidth = width;
 }
 
+void CheckerBoard::setBoardColor(std::vector<float> firstColor, std::vector<float> secondColor) {
+  col1 = {firstColor[0], firstColor[1], firstColor[2]};
+  col2 = {secondColor[0], secondColor[1], secondColor[2]};
+}
+
 
 
 } // object

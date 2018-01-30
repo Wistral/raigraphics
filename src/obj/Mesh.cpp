@@ -14,7 +14,7 @@ inline bool fileexists (const std::string& name) {
 namespace rai_graphics {
 namespace object {
 
-Mesh::Mesh(const std::string& fileName, float scale) {
+Mesh::Mesh(const std::string& fileName, float scale, std::string texture) {
   selectable_ = true;
 
   RAIFATAL_IF(!fileexists(fileName),"could not find the mesh file"<<std::endl);
@@ -32,7 +32,7 @@ Mesh::Mesh(const std::string& fileName, float scale) {
   com /= positions.size();
 }
 
-Mesh::Mesh(Vertex *vertices, unsigned int numVertices, unsigned int *indicesL, unsigned int numIndices) {
+Mesh::Mesh(Vertex *vertices, unsigned int numVertices, unsigned int *indicesL, unsigned int numIndices, std::string texture) {
   selectable_ = true;
 
   for (unsigned int i = 0; i < numVertices; i++) {
@@ -50,7 +50,7 @@ Mesh::Mesh(Vertex *vertices, unsigned int numVertices, unsigned int *indicesL, u
   com /= positions.size();
 }
 
-Mesh::Mesh(const float *vertices, unsigned int numVertices, const unsigned int *indicesL, unsigned int numIndices) {
+Mesh::Mesh(const float *vertices, unsigned int numVertices, const unsigned int *indicesL, unsigned int numIndices, std::string texture) {
   selectable_ = true;
 
   for (unsigned int i = 0; i < numVertices; i++) {

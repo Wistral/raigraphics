@@ -45,9 +45,7 @@ void Shader_line::UnBind() {
 }
 
 
-void Shader_line::Update(Camera *camera, Light *light, object::SingleBodyObject* obj) {
-  std::vector<float> clr;
-  obj->getColor(clr);
+void Shader_line::Update(Camera *camera, Light *light, std::vector<float>& clr) {
   glm::mat4 MVP;
   camera->GetVP(MVP);
   glUniformMatrix4fv(glGetUniformLocation(m_program, "MVP"), 1, GL_FALSE, &MVP[0][0]);
