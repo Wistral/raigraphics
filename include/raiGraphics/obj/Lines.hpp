@@ -12,6 +12,7 @@ namespace object {
 class Lines {
 
  public:
+  Lines();
   void setColor(float r, float g, float b);
   void draw();
   void clear();

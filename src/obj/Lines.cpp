@@ -9,6 +9,11 @@
 namespace rai_graphics {
 namespace object {
 
+  Lines::Lines() {
+    color = {1,1,1};
+    lineWidth=2.0f;
+  }
+
   void Lines::setColor(float r, float g, float b) {
     color = {r,g,b};
   }
