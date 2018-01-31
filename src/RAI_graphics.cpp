@@ -447,8 +447,8 @@ void RAI_graphics::draw() {
   /// line primitives
   for(auto& ln: lines_){
     shader_line->Bind();
-    shader_line->Update(camera, light, ln.color);
-    ln.draw();
+    shader_line->Update(camera, light, ln->color);
+    ln->draw();
     shader_line->UnBind();
 
   }
@@ -487,8 +487,8 @@ void RAI_graphics::addObject(object::SingleBodyObject *obj, object::ShaderType t
 }
 
 object::Lines* RAI_graphics::addLineSet() {
-  lines_.emplace_back();
-  return &lines_.back();
+  lines_.emplace_back(new object::Lines);
+  return lines_.back().get();
 }
 
 void RAI_graphics::addSuperObject(object::MultiBodyObject *obj) {

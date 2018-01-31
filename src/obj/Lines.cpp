@@ -19,6 +19,7 @@ namespace object {
   }
 
   void Lines::draw() {
+    drawMutex_.lock();
     RAIFATAL_IF(lines.size()%6 != 0, "the number of line points is not even");
 
     glLineWidth(lineWidth);
@@ -29,6 +30,7 @@ namespace object {
       glVertex3f(lines[i+3], lines[i+4], lines[i+5]);    // Second endpoint of line
     }
     glEnd();
+    drawMutex_.unlock();
   }
 
   void Lines::clear() {

@@ -137,8 +137,7 @@ class RAI_graphics {
   std::vector<object::SingleBodyObject *> tobeRemoved_objs_;
   std::vector<object::MultiBodyObject *> tobeRemoved_supObjs_;
   std::vector<object::SingleBodyObject *> tobeRemovedAndDeleted_objs_;
-
-  std::vector<object::Lines> lines_;
+  std::vector<std::unique_ptr<object::Lines> > lines_;
 
 
   Display *display = nullptr;
