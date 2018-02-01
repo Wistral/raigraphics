@@ -69,6 +69,7 @@ class RAI_graphics {
 
   void addObject(object::SingleBodyObject *obj, object::ShaderType type = object::RAI_SHADER_OBJECT_DEFAULT);
   object::Lines* addLineSet();
+  void removeLineSet(object::Lines* lineset);
   void addSuperObject(object::MultiBodyObject *obj);
   void addBackground(object::Background *back);
   void addCheckerBoard(object::CheckerBoard *back);
@@ -137,7 +138,7 @@ class RAI_graphics {
   std::vector<object::SingleBodyObject *> tobeRemoved_objs_;
   std::vector<object::MultiBodyObject *> tobeRemoved_supObjs_;
   std::vector<object::SingleBodyObject *> tobeRemovedAndDeleted_objs_;
-  std::vector<std::unique_ptr<object::Lines> > lines_;
+  std::vector<object::Lines*> lines_;
 
 
   Display *display = nullptr;

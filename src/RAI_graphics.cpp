@@ -152,6 +152,10 @@ void *RAI_graphics::loop(void *obj) {
 
   for (auto *fo: font)
     TTF_CloseFont(fo);
+
+  for(auto* ln: lines_)
+    delete ln;
+
   TTF_Quit();
   delete camera;
   delete light;
@@ -487,8 +491,17 @@ void RAI_graphics::addObject(object::SingleBodyObject *obj, object::ShaderType t
 }
 
 object::Lines* RAI_graphics::addLineSet() {
-  lines_.emplace_back(new object::Lines);
-  return lines_.back().get();
+  lines_.push_back(new object::Lines);
+  return lines_.back();
+}
+
+void RAI_graphics::removeLineSet(object::Lines* lineset) {
+  for(int i=0; i<lines_.size(); i++)
+    if(lines_[i]==lineset) {
+      delete lines_[i];
+      lines_[i] = lines_.back();
+      lines_.pop_back();
+    }
 }
 
 void RAI_graphics::addSuperObject(object::MultiBodyObject *obj) {
