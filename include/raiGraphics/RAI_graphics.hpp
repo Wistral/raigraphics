@@ -10,6 +10,7 @@
 #include "raiGraphics/obj/MultiBodyObject.hpp"
 #include "raiGraphics/obj/Sphere.hpp"
 #include "raiGraphics/obj/Rectangle.hpp"
+#include "raiGraphics/obj/Box.hpp"
 
 #include "raiGraphics/imp/display.h"
 #include "raiGraphics/imp/shader_basic.h"
