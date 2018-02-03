@@ -26,7 +26,7 @@ void main()
 	gl_Position = MVP * vec4(position, 1.0);
 	position0 =  (Normal* vec4(position, 1.0)).xyz;
 	texCoord0 = texCoord;
-	colorCoord0 = colorMono;
+	colorCoord0 = colorCoord;
 	normal0 = (Normal * vec4(normal, 0.0)).xyz;
 	camPos = cameraPos;
 	vec4 position_w = Normal * vec4(position, 1.0);

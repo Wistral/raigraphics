@@ -71,7 +71,7 @@ void RAI_graphics::end() {
 
 void *RAI_graphics::loop(void *obj) {
   display = new Display(windowWidth_, windowHeight_, "RAI simulator");
-  camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::radians(60.0f), (float) windowWidth_ / (float) windowHeight_, 0.01f, 10000.0f);
+  camera = new Camera(glm::vec3(-15.0f, 0.0f, 5.0f), glm::radians(60.0f), (float) windowWidth_ / (float) windowHeight_, 0.01f, 10000.0f);
   cameraDepth_ = windowHeight_ / 2.0 / tan(30.0 / 180.0 * M_PI);
   light = new Light;
   shader_basic = new Shader_basic;

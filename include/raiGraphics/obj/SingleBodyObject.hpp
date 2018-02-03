@@ -101,6 +101,7 @@ class SingleBodyObject: public Object {
   Transform transform;
   Transform transformGhost;
   bool tempTransformOn = false;
+  bool hasColorCoord = false;
   glm::mat4 scaleMat_;
   glm::mat4 scaleMatGhost_;
   std::vector<float> color_ = {0.7, 0.7, 0.7};

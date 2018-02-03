@@ -100,6 +100,8 @@ void Mesh::processMesh(aiMesh *mesh, const aiScene *scene) {
       colorsCoords.emplace_back(float(mesh->mColors[0][i].r), float(mesh->mColors[0][i].g), float(mesh->mColors[0][i].b));
     else
       colorsCoords.emplace_back(0.5f,0.5f,0.5f);
+
+    hasColorCoord = colorsCoords.size() == normals.size();
   }
 
   for (int i = 0; i < mesh->mNumFaces; i++) {
