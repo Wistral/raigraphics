@@ -95,13 +95,13 @@ class SingleBodyObject: public Object {
 
   bool reflectable = true;
   glm::vec3 com;
+  bool hasColorCoord = false;
 
  protected:
   void registerToGPU();
   Transform transform;
   Transform transformGhost;
   bool tempTransformOn = false;
-  bool hasColorCoord = false;
   glm::mat4 scaleMat_;
   glm::mat4 scaleMatGhost_;
   std::vector<float> color_ = {0.7, 0.7, 0.7};

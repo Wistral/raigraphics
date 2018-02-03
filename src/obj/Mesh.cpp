@@ -25,6 +25,9 @@ Mesh::Mesh(const std::string& fileName, float scale, std::string texture) {
   RAIFATAL_IF(scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode, "ThIS file wasn't successfully opened: " << fileName);
   scale_ = scale;
   recursiveProcess(scene->mRootNode, scene);
+  hasColorCoord = colorsCoords.size() == normals.size();
+  std::cout<<"colorsCoords.size() "<<colorsCoords.size()<<"\n";
+  std::cout<<"normals.size() "<<normals.size()<<"\n";
 
   com = glm::vec3(0,0,0);
   for(auto& pos: positions)
@@ -85,6 +88,7 @@ void Mesh::recursiveProcess(aiNode *node, const aiScene *scene) {
   for (int i = 0; i < node->mNumChildren; i++) {
     recursiveProcess(node->mChildren[i], scene);
   }
+
 }
 void Mesh::processMesh(aiMesh *mesh, const aiScene *scene) {
   aiColor4D col;
@@ -100,8 +104,6 @@ void Mesh::processMesh(aiMesh *mesh, const aiScene *scene) {
       colorsCoords.emplace_back(float(mesh->mColors[0][i].r), float(mesh->mColors[0][i].g), float(mesh->mColors[0][i].b));
     else
       colorsCoords.emplace_back(0.5f,0.5f,0.5f);
-
-    hasColorCoord = colorsCoords.size() == normals.size();
   }
 
   for (int i = 0; i < mesh->mNumFaces; i++) {

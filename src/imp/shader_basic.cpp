@@ -107,6 +107,8 @@ void Shader_basic::Update(Camera *camera, Light *light, object::SingleBodyObject
   glUniform3f(glGetUniformLocation(m_program, "lspecular"), specl[0], specl[1], specl[2]);
   glUniform1f(glGetUniformLocation(m_program, "shininess"), shine);    //shininess
   glUniform1f(glGetUniformLocation(m_program, "transparency"), obj->getTransparency());
+  glUniform1f(glGetUniformLocation(m_program, "hasColorCoord"), obj->hasColorCoord);
+
 }
 
 void Shader_basic::UpdateForReflection(Camera *camera, Light *light, object::SingleBodyObject *obj, object::CheckerBoard *chk) {

@@ -15,13 +15,13 @@ int main() {
   urdfPath += "/res/ANYmal/anymal_base.dae";
 
   // graphical primitives
-  object::CheckerBoard grnd(5, 500, 500, 0.05, {0,0,0}, {1,1,1});
+  object::CheckerBoard grnd(1, 500, 500, 0.05, {0,0,0}, {1,1,1});
   object::Mesh body(urdfPath, 0.001, "");
   LightProp lprop;
   lprop.pos_light = {10.0, 0.0, 10.0};
   CameraProp cprop;
   cprop.toFollow = &body;
-  Eigen::Vector3d relPos; relPos << 15, 15, 15;
+  Eigen::Vector3d relPos; relPos << 1,1,1;
   cprop.relativeDist = relPos;
 
   graphics.addCheckerBoard(&grnd);
