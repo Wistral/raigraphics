@@ -61,4 +61,12 @@ void Display::SwapBuffers() {
   SDL_GL_SwapWindow(m_window);
 }
 
+void Display::HideWindow() {
+  SDL_HideWindow(m_window);
+}
+
+void Display::ShowWindow() {
+  SDL_ShowWindow(m_window);
+}
+
 } // rai_graphics

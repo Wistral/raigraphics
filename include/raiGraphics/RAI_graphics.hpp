@@ -106,12 +106,14 @@ class RAI_graphics {
   void changeMenuWordWrap(int menuId, int wr);
   void changeMenuFontSize(int menuId, int size);
 
-    bool isReady(){
-    return isGraphicsReady;
-  }
-  bool isQuitting(){
-    return isQuiting;
-  }
+  bool isReady(){ return isGraphicsReady; }
+  bool isQuitting(){ return isQuiting; }
+  void pauseVisualization() {visRunning=false;}
+  void resumeVisualization() {visRunning=true;}
+
+  void hideWindow();
+  void showWindow();
+
 
  private:
   void *loop(void *obj);
@@ -174,6 +176,7 @@ class RAI_graphics {
   std::string image_dir, videoFileName;
   StopWatch watch;
   bool terminate = false;
+  bool visRunning = true;
   std::mutex mtx;           // mutex for critical section
   std::mutex mtxLoop;           // mutex for critical section
   std::mutex mtxinit;           // mutex for critical section

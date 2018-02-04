@@ -12,6 +12,8 @@ class Display {
 
   void Clear(float r, float g, float b, float a);
   void SwapBuffers();
+  void HideWindow();
+  void ShowWindow();
 
   virtual ~Display();
   SDL_Window *m_window;

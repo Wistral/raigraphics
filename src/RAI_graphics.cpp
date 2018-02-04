@@ -120,8 +120,10 @@ void *RAI_graphics::loop(void *obj) {
       mtxinit.unlock();
       draw();
       mtx.unlock();
-      double elapse = watch.measure();
       if (terminate) break;
+      while(!visRunning)
+        usleep(50000);
+      double elapse = watch.measure();
       usleep(std::max((1.0 / FPS_ - elapse) * 1e6, 0.0));
       elapse = watch.measure();
       actualFPS_ = 1.0 / elapse;
@@ -762,6 +764,16 @@ void RAI_graphics::changeMenuWordWrap(int menuId, int wr) {
 
 void RAI_graphics::changeMenuFontSize(int menuId, int size) {
   textBoard[menuId]->setFontSize(size);
+}
+
+void RAI_graphics::hideWindow() {
+  pauseVisualization();
+  display->HideWindow();
+}
+
+void RAI_graphics::showWindow() {
+  resumeVisualization();
+  display->ShowWindow();
 }
 
 } // rai_graphics
