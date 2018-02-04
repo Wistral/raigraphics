@@ -35,8 +35,8 @@ void main()
 
         float scont=pow(max(0.0,dot(surf2view,reflection)),shininess);
         vec3 specular=scont*lspecular*mspecular;
-        color = colorMono;
-        gl_FragColor=vec4(color * (ambient+diffuse+specular)*att,transparency);  //<- don't forget the paranthesis (ambient+diffuse+specular)
+        colorMono = colorMono;
+        gl_FragColor=vec4(colorMono * (ambient+diffuse+specular)*att,transparency);  //<- don't forget the paranthesis (ambient+diffuse+specular)
 
 
 }
