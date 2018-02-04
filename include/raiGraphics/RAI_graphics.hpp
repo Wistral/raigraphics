@@ -14,6 +14,7 @@
 #include "raiGraphics/obj/Cone.hpp"
 #include "raiGraphics/obj/Cylinder.hpp"
 #include "raiGraphics/obj/Mesh.hpp"
+#include "raiGraphics/obj/Capsule.hpp"
 
 #include "raiGraphics/imp/display.h"
 #include "raiGraphics/imp/shader_basic.h"
