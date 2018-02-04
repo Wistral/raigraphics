@@ -32,11 +32,6 @@ int main() {
   graphics.setCameraProp(cprop);
   graphics.setLightProp(lprop);
   graphics.start();
-
-  usleep(2000000);
-  graphics.hideWindow();
-  usleep(2000000);
-  graphics.showWindow();
   // exit test app when keyboard 'Q' key pressed
   while(!graphics.isQuitting())
     usleep(1);
