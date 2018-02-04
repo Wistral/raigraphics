@@ -26,9 +26,6 @@ Mesh::Mesh(const std::string& fileName, float scale, std::string texture) {
   scale_ = scale;
   recursiveProcess(scene->mRootNode, scene);
   hasColorCoord = colorsCoords.size() == normals.size();
-  std::cout<<"colorsCoords.size() "<<colorsCoords.size()<<"\n";
-  std::cout<<"normals.size() "<<normals.size()<<"\n";
-
   com = glm::vec3(0,0,0);
   for(auto& pos: positions)
     com += pos;
