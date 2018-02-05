@@ -14,8 +14,8 @@ inline bool fileexists (const std::string& name) {
 namespace rai_graphics {
 namespace object {
 
-Mesh::Mesh(const std::string& fileName, float scale, std::string texture) {
-  selectable_ = true;
+Mesh::Mesh(const std::string& fileName, float scale, std::string texture, bool selectable) {
+  selectable_ = selectable;
 
   RAIFATAL_IF(!fileexists(fileName),"could not find the mesh file"<<std::endl);
   Assimp::Importer importer;
@@ -32,8 +32,8 @@ Mesh::Mesh(const std::string& fileName, float scale, std::string texture) {
   com /= positions.size();
 }
 
-Mesh::Mesh(Vertex *vertices, unsigned int numVertices, unsigned int *indicesL, unsigned int numIndices, std::string texture) {
-  selectable_ = true;
+Mesh::Mesh(Vertex *vertices, unsigned int numVertices, unsigned int *indicesL, unsigned int numIndices, std::string texture, bool selectable) {
+  selectable_ = selectable;
 
   for (unsigned int i = 0; i < numVertices; i++) {
     positions.push_back(*vertices[i].GetPos());
@@ -50,8 +50,8 @@ Mesh::Mesh(Vertex *vertices, unsigned int numVertices, unsigned int *indicesL, u
   com /= positions.size();
 }
 
-Mesh::Mesh(const float *vertices, unsigned int numVertices, const unsigned int *indicesL, unsigned int numIndices, std::string texture) {
-  selectable_ = true;
+Mesh::Mesh(const float *vertices, unsigned int numVertices, const unsigned int *indicesL, unsigned int numIndices, std::string texture, bool selectable) {
+  selectable_ = selectable;
 
   for (unsigned int i = 0; i < numVertices; i++) {
     glm::vec3 vertexVector(vertices[i * 4], vertices[i * 4 + 1], vertices[i * 4 + 2]);
