@@ -5,7 +5,6 @@
 #include "raiGraphics/RAI_graphics.hpp"
 #include "raiCommon/math/RAI_math.hpp"
 #include "raiCommon/rai_utils.hpp"
-#include <FreeImage.h>
 #include <thread>
 #include <raiGraphics/obj/Sphere.hpp>
 #include <SDL2/SDL_ttf.h>
@@ -583,13 +582,13 @@ void RAI_graphics::savingSnapshots_private(std::string logDirectory, std::string
   videoFileName = fileName;
   saveSnapShot = true;
   std::string command =
-      "ffmpeg -r 60 -f rawvideo -pix_fmt rgba -s "+ std::to_string(windowWidth_) + "x" + std::to_string(windowHeight_) +" -i "
-          "-vf vflip "+ image_dir + "/" + videoFileName + ".mp4";
+      "ffmpeg -r 60 -f rawvideo -pix_fmt rgba -s "+ std::to_string(windowWidth_) + "x" + std::to_string(windowHeight_) +" -i - -preset fast -y -pix_fmt yuv420p -crf 21 "
+          "-vf vflip "+ image_dir + "/" + videoFileName + ".mp4 >nul 2>&1";
 
 //      "ffmpeg -r 60 -i " + image_dir + "/%07d.bmp -s " + std::to_string(windowWidth_) + "x" + std::to_string(windowHeight_) + " -c:v libx264 -crf 1 "
 //          + image_dir + "/" + videoFileName + ".mp4 >nul 2>&1";
   const char* cmd = command.c_str();
-  ffmpeg = popen(cmd, "wb");
+  ffmpeg = popen(cmd, "w");
 
 }
 
