@@ -5,7 +5,6 @@
 #include "raiGraphics/RAI_graphics.hpp"
 #include "raiCommon/math/RAI_math.hpp"
 #include "raiCommon/rai_utils.hpp"
-#include <FreeImage.h>
 #include <thread>
 #include <raiGraphics/obj/Sphere.hpp>
 #include <SDL2/SDL_ttf.h>
@@ -458,6 +457,7 @@ void RAI_graphics::draw() {
     shader_line->UnBind();
 
   }
+  display->SwapBuffers();
 
   if (saveSnapShot) {
     if (imageCounter < 2e3) {
@@ -465,20 +465,16 @@ void RAI_graphics::draw() {
       std::string imageFileName = std::to_string(imageCounter++);
       while (imageFileName.length() < 7)
         imageFileName = "0" + imageFileName;
-      GLubyte *pixels = new GLubyte[3 * windowWidth_ * windowHeight_];
-      glReadPixels(0, 0, windowWidth_, windowHeight_, GL_BGR, GL_UNSIGNED_BYTE, pixels);
-      FIBITMAP *image = FreeImage_ConvertFromRawBits(pixels, windowWidth_, windowHeight_, 3 * windowWidth_, 24,
-                                                     0xFF0000, 0x00FF00, 0x0000FF, false);
-      FreeImage_Save(FIF_BMP, image, (image_dir + "/" + imageFileName + ".bmp").c_str(), 1023);
-      FreeImage_Unload(image);
-      delete[] pixels;
+      int* buffer = new int[windowWidth_*windowHeight_];
+      glReadPixels(0, 0, windowWidth_, windowHeight_, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+      fwrite(buffer, sizeof(int)*windowWidth_*windowHeight_, 1, ffmpeg);
+      delete[] buffer;
     } else {
       RAIWARN("RAI is saving video now since it exceeded the time limit");
       images2Video();
       saveSnapShot = false;
     }
   }
-  display->SwapBuffers();
 }
 
 void RAI_graphics::addObject(object::SingleBodyObject *obj, object::ShaderType type) {
@@ -585,6 +581,15 @@ void RAI_graphics::savingSnapshots_private(std::string logDirectory, std::string
   imageCounter = 0;
   videoFileName = fileName;
   saveSnapShot = true;
+  std::string command =
+      "ffmpeg -r 60 -f rawvideo -pix_fmt rgba -s "+ std::to_string(windowWidth_) + "x" + std::to_string(windowHeight_) +" -i - -preset fast -y -pix_fmt yuv420p -crf 21 "
+          "-vf vflip "+ image_dir + "/" + videoFileName + ".mp4 >nul 2>&1";
+
+//      "ffmpeg -r 60 -i " + image_dir + "/%07d.bmp -s " + std::to_string(windowWidth_) + "x" + std::to_string(windowHeight_) + " -c:v libx264 -crf 1 "
+//          + image_dir + "/" + videoFileName + ".mp4 >nul 2>&1";
+  const char* cmd = command.c_str();
+  ffmpeg = popen(cmd, "w");
+
 }
 
 void RAI_graphics::images2Video() {
@@ -600,16 +605,7 @@ void RAI_graphics::images2Video() {
 }
 
 void *RAI_graphics::images2Video_inThread(void *obj) {
-  std::string
-    command =
-    "ffmpeg -r 60 -i " + image_dir + "/%07d.bmp -s " + std::to_string(windowWidth_) + "x" + std::to_string(windowHeight_) + " -c:v libx264 -crf 1 "
-      + image_dir + "/" + videoFileName + ".mp4 >nul 2>&1";
-  std::ifstream f((image_dir + "/" + videoFileName + ".mp4").c_str());
-  if (f.good())
-    int i = system(("rm " + image_dir + "/" + videoFileName + ".mp4").c_str());
-  int i = system(command.c_str());
-  command = "rm -rf " + image_dir + "/*.bmp";
-  i = system(command.c_str());
+  pclose(ffmpeg);
   RAIINFO("The video is generated under " + image_dir);
   return NULL;
 }
