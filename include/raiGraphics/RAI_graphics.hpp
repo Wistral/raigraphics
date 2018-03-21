@@ -32,6 +32,10 @@
 #include <raiGraphics/obj/Lines.hpp>
 #include "SDL2/SDL_ttf.h"
 #include "SDL2/SDL.h"
+#include <stdio.h>
+#include <cstdlib>
+#include <cstdio>
+#include <iostream>
 
 namespace rai_graphics {
 
@@ -207,7 +211,7 @@ class RAI_graphics {
     RAI_MAIN_MENU = 0,
     RAI_KEY_BOARD_HELP,
   };
-
+  FILE* ffmpeg;
 
 };
 
