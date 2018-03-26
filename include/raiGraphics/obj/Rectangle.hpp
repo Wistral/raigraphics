@@ -22,7 +22,7 @@ class Rectangle: public SingleBodyObject {
 
   void setTextWrap(int tw);
 
-  void writeText(std::vector<TTF_Font *>& font, std::string& txt);
+  void writeText(const std::vector<TTF_Font *>& font, const std::string& txt);
 
   /// from 1-5
   void setFontSize(int size);
