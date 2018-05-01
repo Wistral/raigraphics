@@ -94,7 +94,9 @@ class RAI_graphics {
   void setCameraProp(CameraProp &prop);
 
   void savingSnapshots(std::string logDirectory, std::string fileName);
+  void saveVideo();
   void images2Video();
+
 
   const Uint8* keyboard();
   const MouseInput* mouse();

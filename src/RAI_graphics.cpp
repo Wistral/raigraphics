@@ -592,6 +592,10 @@ void RAI_graphics::savingSnapshots_private(std::string logDirectory, std::string
 
 }
 
+void RAI_graphics::saveVideo() {
+  imageCounter = 1000000u;
+}
+
 void RAI_graphics::images2Video() {
   std::lock_guard<std::mutex> guard(mtxCamera);
   saveSnapShot = false;
