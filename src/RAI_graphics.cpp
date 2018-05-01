@@ -582,7 +582,7 @@ void RAI_graphics::savingSnapshots_private(std::string logDirectory, std::string
   videoFileName = fileName;
   saveSnapShot = true;
   std::string command =
-      "ffmpeg -r 60 -f rawvideo -pix_fmt rgba -s "+ std::to_string(windowWidth_) + "x" + std::to_string(windowHeight_) +" -i - -preset fast -y -pix_fmt yuv420p -crf 21 "
+      "ffmpeg -r 60 -f rawvideo -pix_fmt rgba -s "+ std::to_string(windowWidth_) + "x" + std::to_string(windowHeight_) +" -i - -threads 0 -preset fast -y -pix_fmt yuv420p -crf 21 "
           "-vf vflip "+ image_dir + "/" + videoFileName + ".mp4 >nul 2>&1";
 
 //      "ffmpeg -r 60 -i " + image_dir + "/%07d.bmp -s " + std::to_string(windowWidth_) + "x" + std::to_string(windowHeight_) + " -c:v libx264 -crf 1 "
@@ -600,8 +600,9 @@ void RAI_graphics::images2Video() {
   Thread2Ptr t = &RAI_graphics::images2Video_inThread;
   PthreadPtr p = *(PthreadPtr *) &t;
   pthread_t tid;
-  if (pthread_create(&tid, 0, p, this) == 0)
-    pthread_detach(tid);
+  images2Video_inThread(this);
+//  if (pthread_create(&tid, 0, p, this) == 0)
+//    pthread_detach(tid);
 }
 
 void *RAI_graphics::images2Video_inThread(void *obj) {
