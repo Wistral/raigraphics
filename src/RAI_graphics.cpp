@@ -459,6 +459,9 @@ void RAI_graphics::draw() {
   }
   display->SwapBuffers();
 
+  if(saveVideo_)
+    images2Video();
+
   if (saveSnapShot) {
     if (imageCounter < 2e3) {
       areThereimagesTosave = true;
@@ -593,7 +596,7 @@ void RAI_graphics::savingSnapshots_private(std::string logDirectory, std::string
 }
 
 void RAI_graphics::saveVideo() {
-  imageCounter = 1000000u;
+  saveVideo_ = true;
 }
 
 void RAI_graphics::images2Video() {
@@ -601,9 +604,7 @@ void RAI_graphics::images2Video() {
   saveSnapShot = false;
   if (!areThereimagesTosave) return;
   areThereimagesTosave = false;
-  Thread2Ptr t = &RAI_graphics::images2Video_inThread;
-  PthreadPtr p = *(PthreadPtr *) &t;
-  pthread_t tid;
+  saveVideo_ = false;
   images2Video_inThread(this);
 //  if (pthread_create(&tid, 0, p, this) == 0)
 //    pthread_detach(tid);

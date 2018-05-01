@@ -170,6 +170,7 @@ class RAI_graphics {
   unsigned imageCounter = 0;
   bool areThereimagesTosave = false;
   bool saveSnapShot = false;
+  bool saveVideo_ = false;
   Camera *camera = nullptr;
   Light *light = nullptr;
   int windowWidth_, windowHeight_;
