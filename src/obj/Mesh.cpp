@@ -6,6 +6,8 @@
 #include "raiGraphics/imp/vector3d.h"
 #include "SDL2/SDL_image.h"
 
+std::unordered_map<std::string, rai_graphics::object::Mesh*> rai_graphics::object::Mesh::meshFiles_;
+
 inline bool fileexists (const std::string& name) {
   struct stat buffer;
   return (stat (name.c_str(), &buffer) == 0);
@@ -16,6 +18,18 @@ namespace object {
 
 Mesh::Mesh(const std::string& fileName, float scale, std::string texture, bool selectable) {
   selectable_ = selectable;
+
+  auto search = meshFiles_.find(fileName);
+
+  if(search != meshFiles_.end()) {
+    positions = search->second->positions;
+    normals = search->second->normals;
+    texCoords = search->second->texCoords;
+    indices = search->second->indices;
+    return;
+  }
+
+  meshFiles_[fileName] = this;
 
   RAIFATAL_IF(!fileexists(fileName),"could not find the mesh file"<<std::endl);
   Assimp::Importer importer;

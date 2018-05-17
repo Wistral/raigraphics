@@ -1,5 +1,7 @@
-#ifndef MESH_INCLUDED_H
-#define MESH_INCLUDED_H
+#ifndef RAIG_MESH_INCLUDED_H
+#define RAIG_MESH_INCLUDED_H
+
+#include <unordered_map>
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
@@ -42,7 +44,6 @@ class Mesh : public SingleBodyObject {
   Mesh(const std::string& fileName, float scale=1.0f, std::string texture="", bool selectable=true);
   Mesh(Vertex *vertices, unsigned int numVertices, unsigned int *indices, unsigned int numIndices, std::string texture="", bool selectable=true);
   Mesh(const float *vertices, unsigned int numVertices, const unsigned int *indicesL, unsigned int numIndices, std::string texture="", bool selectable=true);
-
   void draw(Light& light);
 
   virtual ~Mesh();
@@ -57,6 +58,8 @@ class Mesh : public SingleBodyObject {
   void recursiveProcess(aiNode* node,const aiScene* scene);
   void processMesh(aiMesh* mesh,const aiScene* scene);
 
+  static std::unordered_map<std::string, Mesh*> meshFiles_;
+
  public:
 
   float scale_;
@@ -64,5 +67,7 @@ class Mesh : public SingleBodyObject {
 
 } // object
 } // rai_graphics
+
+
 
 #endif
