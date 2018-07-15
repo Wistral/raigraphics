@@ -6,7 +6,7 @@
 #include "raiGraphics/imp/vector3d.h"
 #include "SDL2/SDL_image.h"
 
-std::unordered_map<std::string, rai_graphics::object::Mesh*> rai_graphics::object::Mesh::meshFiles_;
+std::unordered_map<std::string, rai_graphics::object::Mesh::MeshSpec> rai_graphics::object::Mesh::meshFiles_;
 
 inline bool fileexists (const std::string& name) {
   struct stat buffer;
@@ -22,14 +22,14 @@ Mesh::Mesh(const std::string& fileName, float scale, std::string texture, bool s
   auto search = meshFiles_.find(fileName);
 
   if(search != meshFiles_.end()) {
-    positions = search->second->positions;
-    normals = search->second->normals;
-    texCoords = search->second->texCoords;
-    indices = search->second->indices;
+    positions = search->second.positions;
+    normals = search->second.normals;
+    texCoords = search->second.texCoords;
+    indices = search->second.indices;
     return;
   }
 
-  meshFiles_[fileName] = this;
+  meshFiles_[fileName] = MeshSpec();
 
   RAIFATAL_IF(!fileexists(fileName),"could not find the mesh file"<<std::endl);
   Assimp::Importer importer;
@@ -44,6 +44,12 @@ Mesh::Mesh(const std::string& fileName, float scale, std::string texture, bool s
   for(auto& pos: positions)
     com += pos;
   com /= positions.size();
+
+  meshFiles_[fileName].positions = positions;
+  meshFiles_[fileName].normals = normals;
+  meshFiles_[fileName].texCoords = texCoords;
+  meshFiles_[fileName].indices = indices;
+
 }
 
 Mesh::Mesh(Vertex *vertices, unsigned int numVertices, unsigned int *indicesL, unsigned int numIndices, std::string texture, bool selectable) {

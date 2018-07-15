@@ -118,6 +118,7 @@ class SingleBodyObject: public Object {
   std::vector<glm::vec2> texCoords;
   std::vector<glm::vec3> normals;
   std::vector<unsigned int> indices;
+
   static const unsigned int NUM_BUFFERS = 5;
   GLuint m_vertexArrayObject;
   GLuint m_vertexArrayBuffers[NUM_BUFFERS];

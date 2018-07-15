@@ -58,7 +58,15 @@ class Mesh : public SingleBodyObject {
   void recursiveProcess(aiNode* node,const aiScene* scene);
   void processMesh(aiMesh* mesh,const aiScene* scene);
 
-  static std::unordered_map<std::string, Mesh*> meshFiles_;
+  struct MeshSpec {
+    std::vector<glm::vec3> positions;
+    std::vector<glm::vec2> texCoords;
+    std::vector<glm::vec3> normals;
+    std::vector<unsigned int> indices;
+  };
+
+  static std::unordered_map<std::string, MeshSpec> meshFiles_;
+  std::string meshFileName_;
 
  public:
 

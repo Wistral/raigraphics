@@ -455,7 +455,6 @@ void RAI_graphics::draw() {
     shader_line->Update(camera, light, ln->color);
     ln->draw();
     shader_line->UnBind();
-
   }
   display->SwapBuffers();
 
