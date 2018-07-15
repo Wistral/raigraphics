@@ -14,6 +14,8 @@ namespace object {
 class Arrow : public SingleBodyObject {
 
  public:
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
   Arrow(float r1, float r2, float l1, float l2);
 
   void addGhostWithVector(Eigen::Vector3d &position, Eigen::Vector3d &directionVector);
