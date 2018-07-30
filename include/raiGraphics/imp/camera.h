@@ -35,7 +35,7 @@ struct Camera {
   void stayHere();
 
   object::SingleBodyObject* toFollowObj = nullptr;
-  glm::vec4 relativePos;
+  glm::vec4 relativePos = {10.f,10.f,10.f,1.f};
   glm::mat4 vp_, pose_;
 
   vector3d loc;

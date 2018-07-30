@@ -301,7 +301,8 @@ void RAI_graphics::draw() {
 
   while (SDL_PollEvent(&e)) {
     switch (e.type) {
-      case SDL_QUIT:isQuiting = true;
+      case SDL_QUIT:
+        isQuiting = true;
         break;
       case SDL_MOUSEBUTTONDOWN:
         if (e.button.clicks == 2 && !keyboard()[RAI_KEY_LCTRL]) {
@@ -312,7 +313,8 @@ void RAI_graphics::draw() {
         else if (e.button.clicks == 1)
           objId = readObjIdx();
         break;
-      case SDL_MOUSEBUTTONUP:isInteracting_ = false;
+      case SDL_MOUSEBUTTONUP:
+        isInteracting_ = false;
         break;
       case SDL_KEYDOWN:
         if (keyboard()[RAI_KEY_ESCAPE] && highlightedObjId != NO_OBJECT && objectsInOrder_[highlightedObjId])
