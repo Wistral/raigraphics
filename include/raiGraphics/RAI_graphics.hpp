@@ -117,12 +117,6 @@ class RAI_graphics {
   bool isQuitting(){ return isQuiting; }
   void pauseVisualization() {visRunning=false;}
   void resumeVisualization() {visRunning=true;}
-
-  void setCameraPose(const Eigen::Vector3d& pos_in, float yaw_in, float pitch_in) {
-    if(camera)
-      camera->setPose(pos_in, yaw_in, pitch_in);
-  }
-
   void hideWindow();
   void showWindow();
 

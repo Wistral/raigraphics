@@ -199,15 +199,6 @@ void Camera::Control(SDL_Event e, bool stayAboveZero) {
   switchTime++;
 }
 
-void Camera::setPose(const Eigen::Vector3d& pos_in, float yaw_in, float pitch_in) {
-  mi = true;
-  pos[0] = pos_in[0];
-  pos[1] = pos_in[1];
-  pos[2] = pos_in[2];
-  camYaw = yaw_in;
-  camPitch = pitch_in;
-}
-
 void Camera::follow(object::SingleBodyObject *obj, Eigen::Vector3d pos) {
   mtx.lock();
   toFollowObj = obj;
