@@ -193,6 +193,8 @@ void RAI_graphics::init() {
   if (cameraPropChanged) {
     if (cameraProp.toFollow)
       camera->follow(cameraProp.toFollow, cameraProp.relativeDist);
+    else
+      camera->setPose(cameraProp.relativeDist, cameraProp.yaw, cameraProp.pitch);
     cameraPropChanged = false;
   }
   mtxCamera.unlock();

@@ -24,6 +24,7 @@ struct Camera {
   void Control(SDL_Event e, bool stayAboveZero);
   void follow(rai_graphics::object::SingleBodyObject* obj, Eigen::Vector3d pos);
   void follow(rai_graphics::object::SingleBodyObject* obj);
+  void setPose(const Eigen::Vector3d& pos, float yaw_in, float pitch_in);
   void zoomIn();
   void zoomOut();
   object::SingleBodyObject* getToFollowObj();

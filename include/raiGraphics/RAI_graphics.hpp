@@ -55,6 +55,7 @@ struct MouseInput {
 struct CameraProp {
   object::SingleBodyObject *toFollow = nullptr;
   Eigen::Vector3d relativeDist = Eigen::Vector3d::Constant(1);
+  float yaw = 0.f, pitch = 0.f;
 };
 
 enum KeyboardEvent {
@@ -116,6 +117,11 @@ class RAI_graphics {
   bool isQuitting(){ return isQuiting; }
   void pauseVisualization() {visRunning=false;}
   void resumeVisualization() {visRunning=true;}
+
+  void setCameraPose(const Eigen::Vector3d& pos_in, float yaw_in, float pitch_in) {
+    if(camera)
+      camera->setPose(pos_in, yaw_in, pitch_in);
+  }
 
   void hideWindow();
   void showWindow();
