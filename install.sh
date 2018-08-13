@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 echo 'export RAI_GRAPHICS_OPENGL_ROOT='$PWD'' >> ~/.bashrc
 sudo apt-get install -qq libglew-dev libsdl2-dev libglm-dev libassimp-dev libsoil-dev libsdl2-ttf-dev
 
