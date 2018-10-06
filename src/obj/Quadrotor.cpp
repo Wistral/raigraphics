@@ -2,6 +2,7 @@
 // Created by jhwangbo on 17. 5. 3.
 //
 #include <raiCommon/math/RAI_math.hpp>
+#include "raiGraphics/config.hpp"
 #include "raiGraphics/obj/Quadrotor.hpp"
 #include "raiCommon/TypeDef.hpp"
 
@@ -9,12 +10,12 @@ namespace rai_graphics {
 namespace object {
 
 Quadrotor::Quadrotor(float scale):
-    base(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/Quadrotor/CAD_AscTec_Hummingbird.dae", scale*0.003),
-    prop1(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/Quadrotor/propeller_ccw.dae", scale*0.3),
-    prop2(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/Quadrotor/propeller_cw.dae", scale*0.3),
-    prop3(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/Quadrotor/propeller_ccw.dae", scale*0.3),
-    prop4(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/Quadrotor/propeller_cw.dae", scale*0.3),
-    brain(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/Quadrotor/RLBrain_Assembly.dae", scale*0.003){
+    base(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/Quadrotor/CAD_AscTec_Hummingbird.dae", scale*0.003),
+    prop1(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/Quadrotor/propeller_ccw.dae", scale*0.3),
+    prop2(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/Quadrotor/propeller_cw.dae", scale*0.3),
+    prop3(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/Quadrotor/propeller_ccw.dae", scale*0.3),
+    prop4(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/Quadrotor/propeller_cw.dae", scale*0.3),
+    brain(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/Quadrotor/RLBrain_Assembly.dae", scale*0.003){
 
   objs.push_back(&base);
   objs.push_back(&prop1);

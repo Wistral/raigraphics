@@ -1,6 +1,7 @@
 //
 // Created by jhwangbo on 17. 4. 30.
 //
+#include "raiGraphics/config.hpp"
 #include <raiGraphics/obj/Background.hpp>
 #include "raiCommon/rai_utils.hpp"
 #include "raiGraphics/imp/shader_background.hpp"
@@ -9,8 +10,8 @@ namespace rai_graphics {
 
 Shader_background::Shader_background() {
   m_program = glCreateProgram();
-  m_shaders[0] = CreateShader(LoadShader(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/cubeMapShader.vs"), GL_VERTEX_SHADER);
-  m_shaders[1] = CreateShader(LoadShader(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/cubeMapShader.fs"), GL_FRAGMENT_SHADER);
+  m_shaders[0] = CreateShader(LoadShader(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/cubeMapShader.vs"), GL_VERTEX_SHADER);
+  m_shaders[1] = CreateShader(LoadShader(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/cubeMapShader.fs"), GL_FRAGMENT_SHADER);
 
   for (unsigned int i = 0; i < NUM_SHADERS; i++)
     glAttachShader(m_program, m_shaders[i]);

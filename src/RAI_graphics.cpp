@@ -89,12 +89,12 @@ void *RAI_graphics::loop(void *obj) {
   interactionBall->init();
 
   TTF_Init();
-  font[0] = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 8);
-  font[1] = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 12);
-  font[2] = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 18);
-  font[3] = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 24);
-  font[4] = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 30);
-  font[5] = TTF_OpenFont((std::string(std::getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/FreeSans.ttf").c_str(), 38);
+  font[0] = TTF_OpenFont((std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/FreeSans.ttf").c_str(), 8);
+  font[1] = TTF_OpenFont((std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/FreeSans.ttf").c_str(), 12);
+  font[2] = TTF_OpenFont((std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/FreeSans.ttf").c_str(), 18);
+  font[3] = TTF_OpenFont((std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/FreeSans.ttf").c_str(), 24);
+  font[4] = TTF_OpenFont((std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/FreeSans.ttf").c_str(), 30);
+  font[5] = TTF_OpenFont((std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/FreeSans.ttf").c_str(), 38);
 
   RAIFATAL_IF(font[0] == nullptr, "Could not find the font file. Run the install script provided.");
 

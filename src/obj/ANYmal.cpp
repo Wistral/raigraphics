@@ -1,6 +1,7 @@
 //
 // Created by jhwangbo on 17. 5. 3.
 //
+#include "raiGraphics/config.hpp"
 #include <raiCommon/math/RAI_math.hpp>
 #include "raiGraphics/obj/ANYmal.hpp"
 #include "raiCommon/TypeDef.hpp"
@@ -9,23 +10,23 @@ namespace rai_graphics {
 namespace object {
 
 ANYmal::ANYmal():
-    base(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_base.dae", 0.001),
-    hip_lf(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_hip.dae", 0.001),
-    hip_rf(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_hip.dae", 0.001),
-    hip_lh(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_hip.dae", 0.001),
-    hip_rh(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_hip.dae", 0.001),
-    thigh_lf(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_thigh.dae", 0.001),
-    thigh_rf(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_thigh.dae", 0.001),
-    thigh_lh(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_thigh.dae", 0.001),
-    thigh_rh(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_thigh.dae", 0.001),
-    shank_lf(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_shank_l.dae", 0.001),
-    shank_rf(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_shank_r.dae", 0.001),
-    shank_lh(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_shank_l.dae", 0.001),
-    shank_rh(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_shank_r.dae", 0.001),
-    adapter_lf(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_adapter.dae", 0.001),
-    adapter_rf(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_adapter.dae", 0.001),
-    adapter_lh(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_adapter.dae", 0.001),
-    adapter_rh(std::string(getenv("RAI_GRAPHICS_OPENGL_ROOT")) + "/res/ANYmal/anymal_adapter.dae", 0.001),
+    base(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/ANYmal/anymal_base.dae", 0.001),
+    hip_lf(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/ANYmal/anymal_hip.dae", 0.001),
+    hip_rf(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/ANYmal/anymal_hip.dae", 0.001),
+    hip_lh(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/ANYmal/anymal_hip.dae", 0.001),
+    hip_rh(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/ANYmal/anymal_hip.dae", 0.001),
+    thigh_lf(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/ANYmal/anymal_thigh.dae", 0.001),
+    thigh_rf(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/ANYmal/anymal_thigh.dae", 0.001),
+    thigh_lh(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/ANYmal/anymal_thigh.dae", 0.001),
+    thigh_rh(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/ANYmal/anymal_thigh.dae", 0.001),
+    shank_lf(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/ANYmal/anymal_shank_l.dae", 0.001),
+    shank_rf(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/ANYmal/anymal_shank_r.dae", 0.001),
+    shank_lh(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/ANYmal/anymal_shank_l.dae", 0.001),
+    shank_rh(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/ANYmal/anymal_shank_r.dae", 0.001),
+    adapter_lf(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/ANYmal/anymal_adapter.dae", 0.001),
+    adapter_rf(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/ANYmal/anymal_adapter.dae", 0.001),
+    adapter_lh(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/ANYmal/anymal_adapter.dae", 0.001),
+    adapter_rh(std::string(RAI_GRAPHICS_ROOT_PATH) + "/res/ANYmal/anymal_adapter.dae", 0.001),
     foot_lf(0.035),
     foot_rf(0.035),
     foot_lh(0.035),

@@ -67,6 +67,10 @@ set(CONF_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/include")
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/${CONFIG_FILE_NAME}.in
         ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_FILE_NAME} @ONLY)
 
+# create config.hpp
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.hpp.in
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/raiGraphics/config.hpp @ONLY)
+
 # install package
 install(TARGETS                 ${TARGETS_LIB_NAME}
         EXPORT                  ${TARGETS_EXPORT_NAME}

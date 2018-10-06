@@ -16,6 +16,7 @@ cmake-build-default
 build/
 
 *Config.cmake
+include/raiGraphics/config.hpp
 
 # User-specific stuff:
 .idea/workspace.xml

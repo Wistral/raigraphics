@@ -4,6 +4,8 @@
 
 #ifndef PROJECT_RAI_GRAPHICS_HPP
 #define PROJECT_RAI_GRAPHICS_HPP
+#include "raiGraphics/config.hpp"
+
 #include "raiGraphics/RAI_keyboard.hpp"
 #include "raiGraphics/obj/Background.hpp"
 #include "raiGraphics/obj/SingleBodyObject.hpp"
