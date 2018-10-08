@@ -1,12 +1,24 @@
 #!/usr/bin/env bash
+set -xe
 
-echo 'export RAI_GRAPHICS_OPENGL_ROOT='$PWD'' >> ~/.bashrc
-sudo apt-get install -qq libglew-dev libsdl2-dev libglm-dev libassimp-dev libsoil-dev libsdl2-ttf-dev libsdl2-image-dev
+APT_GET_FLAGS="-y -qq"
 
-### Check Ubuntu version
 version=$(lsb_release -r | awk '{ print $2 }')
 yrelease=$( echo "$version" | cut -d. -f1 )
 mrelease=$( echo "$version" | cut -d. -f2 )
+
+##########################
+
+sudo apt-get install $APT_GET_FLAGS \
+    libglew-dev \
+    libsdl2-dev \
+    libglm-dev \
+    libassimp-dev \
+    libsoil-dev \
+    libsdl2-ttf-dev \
+    libsdl2-image-dev
+
+##########################
 
 # ffmpeg
 if [ "$yrelease" -eq "16" ]; then

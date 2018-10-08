@@ -3,7 +3,9 @@ add_definitions(-std=c++11 -pthread -g)
 include(GNUInstallDirs)
 set(CMAKE_CXX_COMPILER "/usr/bin/g++-7")
 
-project(raiGraphicsOpengl)
+project(raigraphics)
+option(BUILD_SHARED_LIBS "Build the shared library" OFF)
+option(INSTALL_LIBS "Build the shared library" OFF)
 
 # --------------------------------------------------------------------
 # install path
@@ -43,11 +45,19 @@ include_directories(${RAI_COMMON_INCLUDE_DIR})
 # include directory
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-# link libraries
-add_library(${TARGETS_LIB_NAME}
-        SHARED ${SOURCE_FILES} ${HEADER_FILES})
+# add libraries
+if(BUILD_SHARED_LIBS)
+    add_library(${TARGETS_LIB_NAME}
+            SHARED ${SOURCE_FILES} ${HEADER_FILES})
+else(BUILD_SHARED_LIBS)
+    add_library(${TARGETS_LIB_NAME}
+            STATIC ${SOURCE_FILES} ${HEADER_FILES})
+endif(BUILD_SHARED_LIBS)
+
+# link library
 set(RAI_GRAPHICS_OPENGL_LINK ${TARGETS_LIB_NAME} GL GLEW SDL2 SDL2_ttf assimp SOIL pthread ${raiCommon_LIBRARIES})
 
+# --------------------------------------------------------------------
 # executable
 add_executable(testRAIGraphics raiGraphicsTest.cpp)
 target_link_libraries(testRAIGraphics ${RAI_GRAPHICS_OPENGL_LINK})
@@ -57,28 +67,32 @@ add_executable(testRAIGraphics2 raiGraphicsTest2.cpp)
 target_link_libraries(testRAIGraphics2 ${RAI_GRAPHICS_OPENGL_LINK})
 
 # --------------------------------------------------------------------
-# package raiGraphics
-export(PACKAGE ${PROJECT_NAME})
+# install
+if(INSTALL_LIBS)
+    # package raiGraphics
+    export(PACKAGE ${PROJECT_NAME})
 
-# build tree
-set(CONF_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/include")
+    # build tree
+    set(CONF_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
-# create raiGraphicsOpenglConfig.cmake.in
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/${CONFIG_FILE_NAME}.in
-        ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_FILE_NAME} @ONLY)
+    # create raigraphicsConfig.cmake.in
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/${CONFIG_FILE_NAME}.in
+            ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_FILE_NAME} @ONLY)
 
-# create config.hpp
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.hpp.in
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/raiGraphics/config.hpp @ONLY)
+    # create config.hpp
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.hpp.in
+            ${CMAKE_CURRENT_SOURCE_DIR}/include/raiGraphics/config.hpp @ONLY)
 
-# install package
-install(TARGETS                 ${TARGETS_LIB_NAME}
-        EXPORT                  ${TARGETS_EXPORT_NAME}
-        LIBRARY DESTINATION     lib
-        ARCHIVE DESTINATION     lib
-        #        INCLUDES DESTINATION    include
-        )
+    # install package
+    install(TARGETS                 ${TARGETS_LIB_NAME}
+            EXPORT                  ${TARGETS_EXPORT_NAME}
+            LIBRARY DESTINATION     lib
+            ARCHIVE DESTINATION     lib
+            INCLUDES DESTINATION    include
+            )
 
-# install raiGraphicsConfig.cmake file to config cmake path
-install(FILES           ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_FILE_NAME}
-        DESTINATION     ${CMAKE_PACKAGE_INSTALL_DIR})
+    # install raiGraphicsConfig.cmake file to config cmake path
+    install(FILES           ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_FILE_NAME}
+            DESTINATION     ${CMAKE_PACKAGE_INSTALL_DIR})
+
+endif(INSTALL_LIBS)
