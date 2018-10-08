@@ -45,6 +45,10 @@ include_directories(${RAI_COMMON_INCLUDE_DIR})
 # include directory
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
+# create config.hpp
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.hpp.in
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/raiGraphics/config.hpp @ONLY)
+
 # add libraries
 if(BUILD_SHARED_LIBS)
     add_library(${TARGETS_LIB_NAME}
@@ -78,10 +82,6 @@ if(INSTALL_LIBS)
     # create raigraphicsConfig.cmake.in
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${CONFIG_FILE_NAME}.in
             ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_FILE_NAME} @ONLY)
-
-    # create config.hpp
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.hpp.in
-            ${CMAKE_CURRENT_SOURCE_DIR}/include/raiGraphics/config.hpp @ONLY)
 
     # install package
     install(TARGETS                 ${TARGETS_LIB_NAME}
