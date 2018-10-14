@@ -59,8 +59,11 @@ else(BUILD_SHARED_LIBS)
             STATIC ${SOURCE_FILES} ${HEADER_FILES})
 endif(BUILD_SHARED_LIBS)
 
-# link library
-set(RAI_GRAPHICS_OPENGL_LINK ${TARGETS_LIB_NAME} GL GLEW SDL2 SDL2_ttf assimp SOIL pthread ${raiCommon_LIBRARIES})
+# link target library
+target_link_libraries(${TARGETS_LIB_NAME}
+        GL GLEW SDL2 SDL2_ttf assimp SOIL pthread ${raiCommon_LIBRARIES})
+
+set(raigraphics_LINK ${TARGETS_LIB_NAME} GL GLEW SDL2 SDL2_ttf assimp SOIL pthread ${raiCommon_LIBRARIES})
 
 # --------------------------------------------------------------------
 # demos
