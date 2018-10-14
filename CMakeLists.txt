@@ -63,6 +63,7 @@ endif(BUILD_SHARED_LIBS)
 target_link_libraries(${TARGETS_LIB_NAME}
         GL GLEW SDL2 SDL2_ttf assimp SOIL pthread ${raiCommon_LIBRARIES})
 
+# TODO will be deprecated
 set(raigraphics_LINK ${TARGETS_LIB_NAME} GL GLEW SDL2 SDL2_ttf assimp SOIL pthread ${raiCommon_LIBRARIES})
 
 # --------------------------------------------------------------------
