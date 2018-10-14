@@ -5,6 +5,7 @@ set(CMAKE_CXX_COMPILER "/usr/bin/g++-7")
 
 project(raigraphics)
 option(BUILD_SHARED_LIBS "Build the shared library" OFF)
+option(BUILD_DEMOS "Build the demos" ON)
 option(INSTALL_LIBS "Build the shared library" OFF)
 
 # --------------------------------------------------------------------
@@ -62,13 +63,16 @@ endif(BUILD_SHARED_LIBS)
 set(RAI_GRAPHICS_OPENGL_LINK ${TARGETS_LIB_NAME} GL GLEW SDL2 SDL2_ttf assimp SOIL pthread ${raiCommon_LIBRARIES})
 
 # --------------------------------------------------------------------
-# executable
-add_executable(testRAIGraphics raiGraphicsTest.cpp)
-target_link_libraries(testRAIGraphics ${RAI_GRAPHICS_OPENGL_LINK})
+# demos
+if(BUILD_DEMOS)
+    # executable
+    add_executable(testRAIGraphics raiGraphicsTest.cpp)
+    target_link_libraries(testRAIGraphics ${RAI_GRAPHICS_OPENGL_LINK})
 
-# executable
-add_executable(testRAIGraphics2 raiGraphicsTest2.cpp)
-target_link_libraries(testRAIGraphics2 ${RAI_GRAPHICS_OPENGL_LINK})
+    # executable
+    add_executable(testRAIGraphics2 raiGraphicsTest2.cpp)
+    target_link_libraries(testRAIGraphics2 ${RAI_GRAPHICS_OPENGL_LINK})
+endif(BUILD_DEMOS)
 
 # --------------------------------------------------------------------
 # install
