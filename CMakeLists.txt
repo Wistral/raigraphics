@@ -20,7 +20,7 @@ set(RAI_GRAPHICS_OPENGL_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 # names
 set(CONFIG_FILE_NAME ${PROJECT_NAME}Config.cmake)
 set(TARGETS_EXPORT_NAME ${PROJECT_NAME}Targets)
-set(TARGETS_LIB_NAME ${PROJECT_NAME}Lib)
+set(TARGETS_LIB_NAME ${PROJECT_NAME})
 
 # --------------------------------------------------------------------
 # files
