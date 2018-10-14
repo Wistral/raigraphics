@@ -70,11 +70,11 @@ set(raigraphics_LINK ${TARGETS_LIB_NAME} GL GLEW SDL2 SDL2_ttf assimp SOIL pthre
 if(BUILD_DEMOS)
     # executable
     add_executable(testRAIGraphics raiGraphicsTest.cpp)
-    target_link_libraries(testRAIGraphics ${RAI_GRAPHICS_OPENGL_LINK})
+    target_link_libraries(testRAIGraphics ${TARGETS_LIB_NAME})
 
     # executable
     add_executable(testRAIGraphics2 raiGraphicsTest2.cpp)
-    target_link_libraries(testRAIGraphics2 ${RAI_GRAPHICS_OPENGL_LINK})
+    target_link_libraries(testRAIGraphics2 ${TARGETS_LIB_NAME})
 endif(BUILD_DEMOS)
 
 # --------------------------------------------------------------------
