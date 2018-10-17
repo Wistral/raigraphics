@@ -78,17 +78,6 @@ target_link_libraries(${TARGETS_LIB_NAME}
         pthread
         ${raiCommon_LIBRARIES})
 
-set_target_properties(${TARGETS_LIB_NAME}
-        PROPERTIES INTERFACE_LINK_LIBRARIES
-        GL
-        GLEW
-        SDL2
-        SDL2_ttf
-        assimp
-        SOIL
-        pthread
-        ${raiCommon_LIBRARIES})
-
 # --------------------------------------------------------------------
 # demos
 if(BUILD_DEMOS)
