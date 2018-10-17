@@ -37,7 +37,7 @@ file(GLOB_RECURSE
 # package: Eigen3
 find_package( Eigen3 REQUIRED )
 include_directories(SYSTEM ${EIGEN3_INCLUDE_DIR})
-link_directories(/usr/lib)
+#link_directories(/usr/lib)
 
 find_package(raiCommon CONFIG REQUIRED)
 include_directories(${RAI_COMMON_INCLUDE_DIR})
@@ -68,8 +68,18 @@ find_library(assimp NAMES assimp)
 find_library(SOIL NAMES SOIL)
 find_library(pthread NAMES pthread)
 
-target_link_libraries(
-        ${TARGETS_LIB_NAME}
+target_link_libraries(${TARGETS_LIB_NAME}
+        GL
+        GLEW
+        SDL2
+        SDL2_ttf
+        assimp
+        SOIL
+        pthread
+        ${raiCommon_LIBRARIES})
+
+set_target_properties(${TARGETS_LIB_NAME}
+        PROPERTIES IMPORTED_LINK_INTERFACE_LIBRARIES
         GL
         GLEW
         SDL2
