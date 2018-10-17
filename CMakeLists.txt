@@ -35,12 +35,26 @@ file(GLOB_RECURSE
 
 # --------------------------------------------------------------------
 # package: Eigen3
-find_package( Eigen3 REQUIRED )
+find_package( Eigen3 REQUIRED)
 include_directories(SYSTEM ${EIGEN3_INCLUDE_DIR})
-#link_directories(/usr/lib)
 
+# package: raicommon
 find_package(raiCommon CONFIG REQUIRED)
 include_directories(${RAI_COMMON_INCLUDE_DIR})
+
+# system libraries
+SET(SYSTEM_LIBRARIES "GL;GLEW;SDL2;SDL2_ttf;assimp;SOIL;pthread")
+
+foreach(LIB ${SYSTEM_LIBRARIES})
+    find_library(${LIB}_PATH ${LIB})
+
+    if(NOT ${LIB}_PATH)
+        message( FATAL_ERROR "Cannot find ${LIB}" )
+    else()
+        message( STATUS "Found ${LIB}: ${${LIB}_PATH}" )
+    endif()
+endforeach()
+
 
 # --------------------------------------------------------------------
 # include directory
@@ -60,23 +74,14 @@ else(BUILD_SHARED_LIBS)
 endif(BUILD_SHARED_LIBS)
 
 # link target library
-find_library(GL NAMES GL)
-find_library(GLEW NAMES GLEW)
-find_library(SDL2 NAMES SDL2)
-find_library(SDL2_ttf NAMES SDL2_ttf)
-find_library(assimp NAMES assimp)
-find_library(SOIL NAMES SOIL)
-find_library(pthread NAMES pthread)
-
 target_link_libraries(${TARGETS_LIB_NAME}
-        GL
-        GLEW
-        SDL2
-        SDL2_ttf
-        assimp
-        SOIL
-        pthread
+        ${SYSTEM_LIBRARIES}
         ${raiCommon_LIBRARIES})
+get_target_property(
+        ${PROJECT_NAME}_LINK
+        ${TARGETS_LIB_NAME}
+        LINK_LIBRARIES
+)
 
 # --------------------------------------------------------------------
 # demos
