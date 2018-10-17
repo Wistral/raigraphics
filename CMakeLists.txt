@@ -106,8 +106,8 @@ if(INSTALL_LIBS)
     # install package
     install(TARGETS                 ${TARGETS_LIB_NAME}
             EXPORT                  ${TARGETS_EXPORT_NAME}
-            LIBRARY DESTINATION     lib
-            ARCHIVE DESTINATION     lib
+            LIBRARY DESTINATION     ${CMAKE_INSTALL_LIBDIR}
+            ARCHIVE DESTINATION     ${CMAKE_INSTALL_LIBDIR}
             INCLUDES DESTINATION    include
             )
 
