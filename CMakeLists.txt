@@ -60,11 +60,24 @@ else(BUILD_SHARED_LIBS)
 endif(BUILD_SHARED_LIBS)
 
 # link target library
-target_link_libraries(${TARGETS_LIB_NAME}
-        GL GLEW SDL2 SDL2_ttf assimp SOIL pthread ${raiCommon_LIBRARIES})
+find_library(GL NAMES GL)
+find_library(GLEW NAMES GLEW)
+find_library(SDL2 NAMES SDL2)
+find_library(SDL2_ttf NAMES SDL2_ttf)
+find_library(assimp NAMES assimp)
+find_library(SOIL NAMES SOIL)
+find_library(pthread NAMES pthread)
 
-# TODO will be deprecated
-set(raigraphics_LINK ${TARGETS_LIB_NAME} GL GLEW SDL2 SDL2_ttf assimp SOIL pthread ${raiCommon_LIBRARIES})
+target_link_libraries(
+        ${TARGETS_LIB_NAME}
+        GL
+        GLEW
+        SDL2
+        SDL2_ttf
+        assimp
+        SOIL
+        pthread
+        ${raiCommon_LIBRARIES})
 
 # --------------------------------------------------------------------
 # demos
