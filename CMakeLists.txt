@@ -79,7 +79,7 @@ target_link_libraries(${TARGETS_LIB_NAME}
         ${raiCommon_LIBRARIES})
 
 set_target_properties(${TARGETS_LIB_NAME}
-        PROPERTIES IMPORTED_LINK_INTERFACE_LIBRARIES
+        PROPERTIES INTERFACE_LINK_LIBRARIES
         GL
         GLEW
         SDL2
