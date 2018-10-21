@@ -118,6 +118,6 @@ if(INSTALL_LIBS)
 
     # install raiGraphicsConfig.cmake file to config cmake path
     install(FILES           ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_FILE_NAME}
-            DESTINATION     ${CMAKE_PACKAGE_INSTALL_DIR})
+            DESTINATION     ${CMAKE_INSTALL_LIBDIR}/cmake/raigraphics)
 
 endif(INSTALL_LIBS)
