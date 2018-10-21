@@ -82,6 +82,8 @@ get_target_property(
         ${TARGETS_LIB_NAME}
         LINK_LIBRARIES
 )
+set(${PROJECT_NAME}_LINK
+        ${PROJECT_NAME}_LINK;${TARGETS_LIB_NAME})
 
 # --------------------------------------------------------------------
 # demos
