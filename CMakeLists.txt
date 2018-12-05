@@ -6,7 +6,7 @@ set(CMAKE_CXX_COMPILER "/usr/bin/g++-7")
 project(raigraphics)
 option(BUILD_SHARED_LIBS "Build the shared library" OFF)
 option(BUILD_DEMOS "Build the demos" ON)
-option(INSTALL_LIBS "Build the shared library" OFF)
+option(INSTALL_LIBS "Build the shared library" ON)
 
 # --------------------------------------------------------------------
 # install path
