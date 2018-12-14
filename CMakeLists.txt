@@ -77,6 +77,10 @@ else(BUILD_SHARED_LIBS)
 endif(BUILD_SHARED_LIBS)
 
 # link target library
+target_include_directories(${TARGETS_LIB_NAME}
+        PUBLIC
+        ${raiCommon_INCLUDE_DIRS}
+        )
 target_link_libraries(${TARGETS_LIB_NAME}
         ${SYSTEM_LIBRARIES}
         ${raiCommon_LIBRARIES})
