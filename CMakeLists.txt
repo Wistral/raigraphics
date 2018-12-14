@@ -38,8 +38,11 @@ file(GLOB_RECURSE
 find_package( Eigen3 REQUIRED)
 include_directories(SYSTEM ${EIGEN3_INCLUDE_DIR})
 
-# package: raicommon
-find_package(raiCommon CONFIG REQUIRED)
+# package: Boost
+find_package(Boost COMPONENTS thread system filesystem REQUIRED)
+
+# lib (raicommon)
+find_package(raicommon CONFIG REQUIRED)
 include_directories(${RAI_COMMON_INCLUDE_DIR})
 
 # system libraries
