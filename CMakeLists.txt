@@ -111,7 +111,7 @@ if(INSTALL_LIBS)
     export(PACKAGE ${PROJECT_NAME})
 
     # build tree
-    set(CONF_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/include")
+    set(CONF_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/include ${raiCommon_INCLUDE_DIRS}")
 
     # create raigraphicsConfig.cmake.in
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${CONFIG_FILE_NAME}.in
