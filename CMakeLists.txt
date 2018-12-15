@@ -35,15 +35,13 @@ file(GLOB_RECURSE
 
 # --------------------------------------------------------------------
 # package: Eigen3
-find_package( Eigen3 REQUIRED)
-include_directories(SYSTEM ${EIGEN3_INCLUDE_DIR})
+find_package(Eigen3 REQUIRED)
 
 # package: Boost
 find_package(Boost COMPONENTS thread system filesystem REQUIRED)
 
 # lib (raicommon)
 find_package(raicommon CONFIG REQUIRED)
-include_directories(${RAI_COMMON_INCLUDE_DIR})
 
 # system libraries
 SET(SYSTEM_LIBRARIES "GL;GLEW;SDL2;SDL2_ttf;assimp;SOIL;pthread")
@@ -70,25 +68,38 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.hpp.in
 # add libraries
 if(BUILD_SHARED_LIBS)
     add_library(${TARGETS_LIB_NAME}
-            SHARED ${SOURCE_FILES} ${HEADER_FILES})
+            SHARED
+            ${SOURCE_FILES}
+            ${HEADER_FILES}
+            )
 else(BUILD_SHARED_LIBS)
     add_library(${TARGETS_LIB_NAME}
-            STATIC ${SOURCE_FILES} ${HEADER_FILES})
+            STATIC
+            ${SOURCE_FILES}
+            ${HEADER_FILES}
+            )
 endif(BUILD_SHARED_LIBS)
 
 # link target library
 target_include_directories(${TARGETS_LIB_NAME}
+        SYSTEM
         PUBLIC
         ${raiCommon_INCLUDE_DIRS}
+        ${EIGEN3_INCLUDE_DIR}
         )
+
 target_link_libraries(${TARGETS_LIB_NAME}
         ${SYSTEM_LIBRARIES}
-        ${raiCommon_LIBRARIES})
+        ${Boost_LIBRARIES}
+        ${raiCommon_LIBRARIES}
+        )
+
 get_target_property(
         ${PROJECT_NAME}_LINK
         ${TARGETS_LIB_NAME}
         LINK_LIBRARIES
 )
+
 set(${PROJECT_NAME}_LINK
         ${${PROJECT_NAME}_LINK};${TARGETS_LIB_NAME})
 
