@@ -82,7 +82,7 @@ target_include_directories(${TARGETS_LIB_NAME}
         SYSTEM
         PUBLIC
         "include"
-        ${raiCommon_INCLUDE_DIRS}
+        ${raicommon_INCLUDE_DIRS}
         ${EIGEN3_INCLUDE_DIR}
         )
 
@@ -96,7 +96,7 @@ link_directories(
 target_link_libraries(${TARGETS_LIB_NAME}
         ${SYSTEM_LIBRARIES}
         ${Boost_LIBRARIES}
-        ${raiCommon_LIBRARIES}
+        ${raicommon_LIBRARIES}
         )
 
 get_target_property(${PROJECT_NAME}_LINK
