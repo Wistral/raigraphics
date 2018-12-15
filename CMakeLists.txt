@@ -58,9 +58,6 @@ endforeach()
 
 
 # --------------------------------------------------------------------
-# include directory
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 # create config.hpp
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.hpp.in
         ${CMAKE_CURRENT_SOURCE_DIR}/include/raiGraphics/config.hpp @ONLY)
@@ -84,6 +81,7 @@ endif(BUILD_SHARED_LIBS)
 target_include_directories(${TARGETS_LIB_NAME}
         SYSTEM
         PUBLIC
+        "include"
         ${raiCommon_INCLUDE_DIRS}
         ${EIGEN3_INCLUDE_DIR}
         )
