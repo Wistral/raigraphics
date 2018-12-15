@@ -77,7 +77,7 @@ else(BUILD_SHARED_LIBS)
             )
 endif(BUILD_SHARED_LIBS)
 
-# link target library
+# include directories for lib
 target_include_directories(${TARGETS_LIB_NAME}
         SYSTEM
         PUBLIC
@@ -86,17 +86,23 @@ target_include_directories(${TARGETS_LIB_NAME}
         ${EIGEN3_INCLUDE_DIR}
         )
 
+# link directory
+# NOTE it's better to use target_link_directories but cmake 3.5 doesn't support it
+link_directories(
+        ${raicommon_LIBRARIES_DIR}
+)
+
+# link libraries for lib
 target_link_libraries(${TARGETS_LIB_NAME}
         ${SYSTEM_LIBRARIES}
         ${Boost_LIBRARIES}
         ${raiCommon_LIBRARIES}
         )
 
-get_target_property(
-        ${PROJECT_NAME}_LINK
+get_target_property(${PROJECT_NAME}_LINK
         ${TARGETS_LIB_NAME}
         LINK_LIBRARIES
-)
+        )
 
 set(${PROJECT_NAME}_LINK
         ${${PROJECT_NAME}_LINK};${TARGETS_LIB_NAME})
