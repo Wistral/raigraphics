@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.5)
-add_definitions(-std=c++11 -pthread -g)
+add_definitions(-std=c++11 -pthread -g -fPIC)
 include(GNUInstallDirs)
 set(CMAKE_CXX_COMPILER "/usr/bin/g++-7")
 
 project(raigraphics)
 option(BUILD_SHARED_LIBS "Build the shared library" OFF)
-option(BUILD_DEMOS "Build the demos" ON)
+option(BUILD_DEMOS "Build the demos" OFF)
 option(INSTALL_LIBS "Build the shared library" ON)
 
 # --------------------------------------------------------------------
@@ -113,10 +113,6 @@ if(BUILD_DEMOS)
     # executable
     add_executable(testRAIGraphics raiGraphicsTest.cpp)
     target_link_libraries(testRAIGraphics ${TARGETS_LIB_NAME})
-
-    # executable
-    add_executable(testRAIGraphics2 raiGraphicsTest2.cpp)
-    target_link_libraries(testRAIGraphics2 ${TARGETS_LIB_NAME})
 endif(BUILD_DEMOS)
 
 # --------------------------------------------------------------------

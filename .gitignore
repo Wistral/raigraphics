@@ -24,3 +24,6 @@ include/raiGraphics/config.hpp
 .idea/dictionaries
 .idea/vcs.xml
 .idea/jsLibraryMappings.xml
+
+# virtual env
+.env
