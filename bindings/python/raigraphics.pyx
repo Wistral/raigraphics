@@ -4,6 +4,15 @@ cdef extern from "raiGraphics/obj/Sphere.hpp" namespace "rai_graphics::object":
     cdef cppclass Sphere:
         Sphere(float);
 
+cdef extern from "raiGraphics/obj/Box.hpp" namespace "rai_graphics::object":
+    cdef cppclass Box:
+        Box(float, float, float);
+
+cdef extern from "raiGraphics/obj/Capsule.hpp" namespace "rai_graphics::object":
+    cdef cppclass Capsule:
+        Capsule(float, float);
+
+
 cdef extern from "raiGraphics/RAI_graphics.hpp" namespace "rai_graphics":
     cdef cppclass RAI_graphics:
         RAI_graphics(int, int);
@@ -19,6 +28,15 @@ cdef class PySphere:
 
     def __cinit__(self, float radius):
         self.thisptr = new Sphere(radius)
+
+    def __dealloc__(self):
+        del self.thisptr
+
+cdef class PyBox:
+    cdef Box *thisptr
+
+    def __cinit__(self, float xLength, float yLength, float zLength):
+        self.thisptr = new Box(xLength, yLength, zLength)
 
     def __dealloc__(self):
         del self.thisptr
