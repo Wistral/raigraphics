@@ -14,3 +14,6 @@ install:
 
 script:
   - docker exec raigraphics-docker /bin/bash -c "cd $TRAVIS_BUILD_DIR && ./.ci/build.sh"
+
+notifications:
+  slack: rai-dev:NQfHVfMfVUCpU9IeC7ESuDtW
