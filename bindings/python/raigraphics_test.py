@@ -1,4 +1,4 @@
-from raigraphics import PyRaiGraphics, PySphere, PyCone, PyBox, PyCylinder, PyCapsule, PyCheckerboard
+from pyraigraphics import PyRaiGraphics, PySphere, PyCone, PyBox, PyCylinder, PyCapsule, PyCheckerboard
 from time import sleep
 
 sim = PyRaiGraphics(800, 600)

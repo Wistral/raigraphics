@@ -1,4 +1,6 @@
 *.so
 *.cpp
 
+raigraphics_path.py
+
 build

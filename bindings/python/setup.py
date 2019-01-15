@@ -1,10 +1,10 @@
+import os
+
 from distutils.core import setup
 from distutils.extension import Extension
 from Cython.Build import cythonize
-import os
 
-
-PROJECT_NAME = 'raigraphics'
+PROJECT_NAME = 'pyraigraphics'
 
 # source
 ROOT_DIR = '../../'                 # project root
