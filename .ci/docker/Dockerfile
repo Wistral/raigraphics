@@ -17,9 +17,25 @@ RUN add-apt-repository ppa:ubuntu-toolchain-r/test && \
 RUN apt-get install -y -qq libeigen3-dev libboost-all-dev libglew-dev libglm-dev libsdl2-dev \
 libassimp-dev libsoil-dev libsdl2-ttf-dev
 
-# rai common dependencies
+# raicommon dependencies
 RUN apt-get install -y -qq gnuplot5
 
-# rai graphics dependencies
+# install raicommon
+RUN cd /tmp/ && \
+    git clone https://github.com/eastskykang/raicommon.git
+
+RUN mkdir /tmp/raicommon/build && \
+    cd /tmp/raicommon/build && \
+    cmake ../ && \
+    make install -j4
+
+# raigraphics dependencies
 RUN apt-get install -y -qq libsdl2-image-dev ffmpeg
-ENV RAI_GRAPHICS_OPENGL_ROOT=/root/raigraphics_opengl
+
+# pip install (for python)
+RUN apt-get -y install python3-pip
+
+RUN pip3 install --upgrade pip
+
+# cython install
+RUN pip3 install cython

@@ -1,5 +1,3 @@
-language: c++
-
 sudo: required
 
 os:
@@ -9,7 +7,7 @@ services:
   - docker
 
 install:
-  - docker pull raisim/raigraphics:latest
+  - docker pull donghokang/raigraphics:latest
   - docker run -itd -v $TRAVIS_BUILD_DIR:$TRAVIS_BUILD_DIR --name raigraphics-docker raisim/raigraphics:latest
 
 script:
