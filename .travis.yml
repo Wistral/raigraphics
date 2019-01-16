@@ -12,6 +12,10 @@ before_install:
   - docker pull donghokang/raigraphics:latest
   - docker run -itd -v $TRAVIS_BUILD_DIR:$TRAVIS_BUILD_DIR --name raigraphics-docker donghokang/raigraphics:latest
 
+stages:
+  - build
+  - build_python
+
 jobs:
   include:
     - stage: build
