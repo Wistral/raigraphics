@@ -6,26 +6,28 @@ os:
 services:
   - docker
 
-before_install:
-  - docker pull donghokang/raigraphics:latest
-  - docker run -itd -v $TRAVIS_BUILD_DIR:$TRAVIS_BUILD_DIR --name raigraphics-docker donghokang/raigraphics:latest
+#before_install:
+#  - docker pull donghokang/raigraphics:latest
+#  - docker run -itd -v $TRAVIS_BUILD_DIR:$TRAVIS_BUILD_DIR --name raigraphics-docker donghokang/raigraphics:latest
 
 stages:
+  - docker
   - build
   - build_python
   - deploy_python
 
 jobs:
   include:
+    - stage: docker
+      script:
+        - docker pull donghokang/raigraphics:latest
+        - docker run -itd -v $TRAVIS_BUILD_DIR:$TRAVIS_BUILD_DIR --name raigraphics-docker donghokang/raigraphics:latest
     - stage: build
       script:
         - docker exec raigraphics-docker /bin/bash -c "cd $TRAVIS_BUILD_DIR && ./.ci/build.sh"
     - stage: build_python
       script:
         - docker exec raigraphics-docker /bin/bash -c "cd $TRAVIS_BUILD_DIR && ./.ci/build_python.sh"
-#    - stage: build_python
-#        script:
-#        - docker exec raigraphics-docker /bin/bash -c "cd $TRAVIS_BUILD_DIR && ./.ci/build_python.sh"
 
 notifications:
   slack: rai-dev:NQfHVfMfVUCpU9IeC7ESuDtW
