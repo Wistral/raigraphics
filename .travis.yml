@@ -13,6 +13,7 @@ before_install:
 stages:
   - build
   - build_python
+  - deploy_python
 
 jobs:
   include:
@@ -22,6 +23,9 @@ jobs:
     - stage: build_python
       script:
         - docker exec raigraphics-docker /bin/bash -c "cd $TRAVIS_BUILD_DIR && ./.ci/build_python.sh"
+#    - stage: build_python
+#        script:
+#        - docker exec raigraphics-docker /bin/bash -c "cd $TRAVIS_BUILD_DIR && ./.ci/build_python.sh"
 
 notifications:
   slack: rai-dev:NQfHVfMfVUCpU9IeC7ESuDtW
