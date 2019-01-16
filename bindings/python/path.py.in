@@ -1,9 +1,9 @@
-PROJECT_NAME = 'raigraphics'
+PROJECT_NAME = 'pyraigraphics'
 
 # source
 ROOT_DIR = '@RAI_GRAPHICS_OPENGL_ROOT@'                 # project root
 SRC_DIR = ROOT_DIR                                      # source dir
-HDR_DIR = ROOT_DIR + 'include'                          # header dir
+HDR_DIR = ROOT_DIR + '/include'                          # header dir
 
 # compiler
 COMPILER = '@CMAKE_CXX_COMPILER@'         # compiler path

@@ -5,8 +5,18 @@
 # - Boost_LIBRARIES
 # - SYSTEM_LIBRARIES
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/path.py.in
-        ${CMAKE_CURRENT_SOURCE_DIR}/raigraphics_path.py @ONLY)
+# python >= 3.5 is required
+find_package(PythonInterp 3.5 REQUIRED)
 
-add_custom_target(pyraigraphics
-        COMMAND python setup.py build_ext --inplace)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/path.py.in
+        ${CMAKE_CURRENT_SOURCE_DIR}/pyraigraphics_path.py @ONLY)
+
+add_custom_target(pyraigraphics_build
+        COMMAND ${PYTHON_EXECUTABLE} setup.py build_ext --inplace
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        )
+
+add_custom_target(pyraigraphics_clean
+        COMMAND rm -rf ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/build ${CMAKE_CURRENT_SOURCE_DIR}/*.so
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        )

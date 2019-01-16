@@ -1,6 +1,6 @@
 *.so
 *.cpp
 
-raigraphics_path.py
+pyraigraphics_path.py
 
 build
