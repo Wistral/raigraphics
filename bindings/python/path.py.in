@@ -9,5 +9,6 @@ HDR_DIR = ROOT_DIR + '/include'                          # header dir
 COMPILER = '@CMAKE_CXX_COMPILER@'         # compiler path
 
 # libs
-EIGEN = '@EIGEN3_INCLUDE_DIR@'       # eigen path
-BOOST = '/usr/lib/x86_64-linux-gnu' # boost path
+EIGEN = '@EIGEN3_INCLUDE_DIR@'          # eigen diretory path
+BOOST = '/usr/lib/x86_64-linux-gnu'     # boost lib diretory path
+RAIGRAPHICS = '@RAI_GRAPHICS_PATH@'     # raigraphics lib path

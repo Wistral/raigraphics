@@ -18,7 +18,7 @@ raigraphics_extension = Extension(
         'raigraphics.pyx',
     ],
     libraries=[
-        'raigraphics',
+        pyraigraphics_path.RAIGRAPHICS,
         'GL',
         'GLEW',
         'SDL2',

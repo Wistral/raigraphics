@@ -10,8 +10,18 @@ before_install:
   - docker pull donghokang/raigraphics:latest
   - docker run -itd -v $TRAVIS_BUILD_DIR:$TRAVIS_BUILD_DIR --name raigraphics-docker donghokang/raigraphics:latest
 
-script:
-  - docker exec raigraphics-docker /bin/bash -c "cd $TRAVIS_BUILD_DIR && ./.ci/build.sh"
+stages:
+  - build
+  - build_python
+
+jobs:
+  include:
+    - stage: build
+      script:
+        - docker exec raigraphics-docker /bin/bash -c "cd $TRAVIS_BUILD_DIR && ./.ci/build.sh"
+    - stage: build_python
+      script:
+        - docker exec raigraphics-docker /bin/bash -c "cd $TRAVIS_BUILD_DIR && ./.ci/build_python.sh"
 
 notifications:
   slack: rai-dev:NQfHVfMfVUCpU9IeC7ESuDtW

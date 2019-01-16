@@ -6,7 +6,7 @@ set(CMAKE_CXX_COMPILER "/usr/bin/g++-7")
 project(raigraphics)
 option(BUILD_SHARED_LIBS "Build the shared library" OFF)
 option(BUILD_DEMOS "Build the demos" OFF)
-option(BUILD_PYTHON "Build python library" ON)
+option(BUILD_PYTHON "Build python library" OFF)
 option(INSTALL_LIBS "Build the shared library" ON)
 
 # --------------------------------------------------------------------
