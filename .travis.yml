@@ -1,3 +1,5 @@
+language: c++
+
 sudo: required
 
 os:
@@ -6,22 +8,12 @@ os:
 services:
   - docker
 
-#before_install:
-#  - docker pull donghokang/raigraphics:latest
-#  - docker run -itd -v $TRAVIS_BUILD_DIR:$TRAVIS_BUILD_DIR --name raigraphics-docker donghokang/raigraphics:latest
-
-stages:
-  - docker
-  - build
-  - build_python
-  - deploy_python
+before_install:
+  - docker pull donghokang/raigraphics:latest
+  - docker run -itd -v $TRAVIS_BUILD_DIR:$TRAVIS_BUILD_DIR --name raigraphics-docker donghokang/raigraphics:latest
 
 jobs:
   include:
-    - stage: docker
-      script:
-        - docker pull donghokang/raigraphics:latest
-        - docker run -itd -v $TRAVIS_BUILD_DIR:$TRAVIS_BUILD_DIR --name raigraphics-docker donghokang/raigraphics:latest
     - stage: build
       script:
         - docker exec raigraphics-docker /bin/bash -c "cd $TRAVIS_BUILD_DIR && ./.ci/build.sh"

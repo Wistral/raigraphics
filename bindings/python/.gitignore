@@ -1,6 +1,8 @@
 *.so
 *.cpp
+*.egg-info
 
 pyraigraphics_path.py
 
-build
+build/
+dist/

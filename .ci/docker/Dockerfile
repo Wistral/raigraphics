@@ -38,4 +38,4 @@ RUN apt-get -y install python3-pip
 RUN pip3 install --upgrade pip
 
 # cython install
-RUN pip3 install cython
+RUN pip3 install cython twine
