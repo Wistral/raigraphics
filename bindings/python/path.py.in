@@ -12,3 +12,11 @@ COMPILER = '@CMAKE_CXX_COMPILER@'         # compiler path
 EIGEN = '@EIGEN3_INCLUDE_DIR@'          # eigen diretory path
 BOOST = '/usr/lib/x86_64-linux-gnu'     # boost lib diretory path
 RAIGRAPHICS = '@RAI_GRAPHICS_PATH@'     # raigraphics lib path
+
+LIB_GL = '@GL_PATH@'
+LIB_GLEW = '@GLEW_PATH@'
+LIB_SDL2 = '@SDL2_PATH@'
+LIB_SDL2_ttf = '@SDL2_ttf_PATH@'
+LIB_assimp = '@assimp_PATH@'
+LIB_SOIL = '@SOIL_PATH@'
+LIB_pthread = '@pthread_PATH@'

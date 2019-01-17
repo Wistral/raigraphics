@@ -1,9 +1,12 @@
-cmake_minimum_required(VERSION 3.5)
-add_definitions(-std=c++11 -pthread -g -fPIC)
-include(GNUInstallDirs)
-set(CMAKE_CXX_COMPILER "/usr/bin/g++-7")
-
 project(raigraphics)
+
+cmake_minimum_required(VERSION 3.5)
+
+set(CMAKE_CXX_COMPILER "/usr/bin/g++-7")
+set (CMAKE_CXX_STANDARD 11)
+
+add_definitions(-g -fPIC)
+
 option(BUILD_SHARED_LIBS "Build the shared library" OFF)
 option(BUILD_DEMOS "Build the demos" OFF)
 option(BUILD_PYTHON "Build python library" OFF)
@@ -45,15 +48,23 @@ find_package(Boost COMPONENTS thread system filesystem REQUIRED)
 find_package(raicommon CONFIG REQUIRED)
 
 # system libraries
-SET(SYSTEM_LIBRARIES "GL;GLEW;SDL2;SDL2_ttf;assimp;SOIL;pthread")
+SET(SYSTEM_LIBRARIES_NAME
+        GL
+        GLEW
+        SDL2
+        SDL2_ttf
+        assimp
+        SOIL
+        pthread)
 
-foreach(LIB ${SYSTEM_LIBRARIES})
+foreach(LIB ${SYSTEM_LIBRARIES_NAME})
     find_library(${LIB}_PATH ${LIB})
 
     if(NOT ${LIB}_PATH)
         message( FATAL_ERROR "Cannot find ${LIB}" )
     else()
         message( STATUS "Found ${LIB}: ${${LIB}_PATH}" )
+        list(APPEND FOUND_SYSTEM_LIBRARIES ${${LIB}_PATH})
     endif()
 endforeach()
 
@@ -95,7 +106,7 @@ link_directories(
 
 # link libraries for lib
 target_link_libraries(${TARGETS_LIB_NAME}
-        ${SYSTEM_LIBRARIES}
+        ${FOUND_SYSTEM_LIBRARIES}
         ${Boost_LIBRARIES}
         ${raicommon_LIBRARIES}
         )
@@ -118,6 +129,8 @@ endif(BUILD_DEMOS)
 
 # --------------------------------------------------------------------
 # install
+include(GNUInstallDirs)
+
 if(INSTALL_LIBS)
     # package raiGraphics
     export(PACKAGE ${PROJECT_NAME})
