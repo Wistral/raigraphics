@@ -3,7 +3,7 @@ project(raigraphics)
 cmake_minimum_required(VERSION 3.5)
 
 set(CMAKE_CXX_COMPILER "/usr/bin/g++-7")
-set (CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 11)
 
 add_definitions(-g -fPIC)
 
