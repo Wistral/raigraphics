@@ -1,8 +1,20 @@
 project(raigraphics)
 
 cmake_minimum_required(VERSION 3.5)
+include(GNUInstallDirs)
 
-set(CMAKE_CXX_COMPILER "/usr/bin/g++-7")
+if(UNIX)
+    if(APPLE)
+        # mac os
+        set(CMAKE_CXX_COMPILER "/usr/bin/g++")
+        add_compile_definitions(MACOSX)
+        add_compile_definitions(GLM_ENABLE_EXPERIMENTAL)
+    else()
+        # linux
+        set(CMAKE_CXX_COMPILER "/usr/bin/g++-7")
+    endif()
+endif()
+
 set(CMAKE_CXX_STANDARD 11)
 
 add_definitions(-g -fPIC)
@@ -44,18 +56,48 @@ find_package(Eigen3 REQUIRED)
 # package: Boost
 find_package(Boost COMPONENTS thread system filesystem REQUIRED)
 
+# openGL
+find_package(OpenGL REQUIRED)
+if(UNIX)
+    if(APPLE)
+        # mac os
+        include_directories(${OPENGL_INCLUDE_DIR}/HEADERS)
+    else()
+        # linux
+        include_directories(${OPENGL_INCLUDE_DIR})
+    endif()
+endif()
+
+
 # lib (raicommon)
 find_package(raicommon CONFIG REQUIRED)
 
-# system libraries
-SET(SYSTEM_LIBRARIES_NAME
-        GL
-        GLEW
-        SDL2
-        SDL2_ttf
-        assimp
-        SOIL
-        pthread)
+# other libraries
+if(UNIX)
+    if(APPLE)
+        # mac os
+        set(SYSTEM_LIBRARIES_NAME
+                GLEW
+                SDL2
+                SDL2_ttf
+                assimp
+                SOIL
+                pthread)
+
+        # for SOIL
+        include_directories(/opt/local/include)
+    else()
+        # linux
+        set(SYSTEM_LIBRARIES_NAME
+                GL
+                GLEW
+                SDL2
+                SDL2_ttf
+                assimp
+                SOIL
+                pthread)
+    endif()
+endif()
 
 foreach(LIB ${SYSTEM_LIBRARIES_NAME})
     find_library(${LIB}_PATH ${LIB})
@@ -109,6 +151,7 @@ target_link_libraries(${TARGETS_LIB_NAME}
         ${FOUND_SYSTEM_LIBRARIES}
         ${Boost_LIBRARIES}
         ${raicommon_LIBRARIES}
+        ${OPENGL_gl_LIBRARY}
         )
 
 get_target_property(${PROJECT_NAME}_LINK

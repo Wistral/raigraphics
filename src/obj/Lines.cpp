@@ -3,7 +3,13 @@
 //
 
 #include <raiCommon/utils/rai_message_logger/rai_message.hpp>
+
+#ifdef MACOSX
+#include <gl.h>
+#else
 #include <GL/gl.h>
+#endif
+
 #include "raiGraphics/obj/Lines.hpp"
 
 namespace rai_graphics {

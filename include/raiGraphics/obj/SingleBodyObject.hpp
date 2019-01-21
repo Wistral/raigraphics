@@ -8,8 +8,14 @@
 
 #include "Eigen/Geometry"
 #include <GL/glew.h>
+
+#ifdef MACOSX
+#include <gl.h>
+#include <glu.h>
+#else
 #include <GL/gl.h>
 #include <GL/glu.h>
+#endif
 
 #include "raiGraphics/imp/transform.h"
 #include "raiGraphics/imp/Light.hpp"

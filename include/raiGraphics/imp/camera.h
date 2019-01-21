@@ -7,8 +7,15 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
+
+#ifdef MACOSX
+#include <gl.h>
+#include <glu.h>
+#else
 #include <GL/gl.h>
 #include <GL/glu.h>
+#endif
+
 #include <raiGraphics/obj/SingleBodyObject.hpp>
 #include "vector3d.h"
 
