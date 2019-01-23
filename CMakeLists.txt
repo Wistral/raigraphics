@@ -93,7 +93,6 @@ endif(BUILD_SHARED_LIBS)
 target_include_directories(${TARGETS_LIB_NAME}
         SYSTEM
         PUBLIC
-        "include"
         ${raicommon_INCLUDE_DIRS}
         ${EIGEN3_INCLUDE_DIR}
         )
