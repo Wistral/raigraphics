@@ -117,7 +117,7 @@ get_target_property(${PROJECT_NAME}_LINK
         )
 
 set(${PROJECT_NAME}_LINK
-        ${${PROJECT_NAME}_LINK};${TARGETS_LIB_NAME})
+        ${${PROJECT_NAME}_LINK})
 
 # --------------------------------------------------------------------
 # demos
@@ -139,6 +139,9 @@ if(INSTALL_LIBS)
     set(CONF_INCLUDE_DIRS
             "${CMAKE_CURRENT_SOURCE_DIR}/include"
             "${raicommon_INCLUDE_DIRS}")
+
+    set(CONFIG_LIBRARIES_DIRS
+            ${CMAKE_INSTALL_LIBDIR})
 
     # create raigraphicsConfig.cmake.in
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${CONFIG_FILE_NAME}.in
