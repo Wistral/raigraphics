@@ -129,7 +129,26 @@ endif(BUILD_DEMOS)
 
 # --------------------------------------------------------------------
 # install
+
+# introduce variables:
+# * CMAKE_INSTALL_LIBDIR
+# * CMAKE_INSTALL_BINDIR
+# * CMAKE_INSTALL_INCLUDEDIR
 include(GNUInstallDirs)
+
+# layout. this works for all platforms:
+# * <prefix>/lib*/cmake/<PROJECT-NAME>
+# * <prefix>/lib*/
+# * <prefix>/include/
+set(config_install_dir "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
+set(generated_dir "${CMAKE_CURRENT_BINARY_DIR}/generated")
+
+# configuration
+set(project_config "${generated_dir}/${PROJECT_NAME}Config.cmake")
+set(TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets")
+set(namespace "${PROJECT_NAME}::")
+
+include(CMakePackageConfigHelpers)
 
 if(INSTALL_LIBS)
     # package raiGraphics
@@ -140,21 +159,35 @@ if(INSTALL_LIBS)
             "${CMAKE_CURRENT_SOURCE_DIR}/include"
             "${raicommon_INCLUDE_DIRS}")
 
-    # create raigraphicsConfig.cmake.in
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${CONFIG_FILE_NAME}.in
-            ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_FILE_NAME} @ONLY)
+    set(CONF_LIBRARIES_DIRS "${CMAKE_INSTALL_PREFIX}/lib/")
+    set(CONF_EXPORTED_TARGETS ${TARGETS_LIB_NAME})
+
+    # configure '<PROJECT-NAME>Config.cmake'
+    # use variables:
+    #   * TARGETS_EXPORT_NAME
+    #   * PROJECT_NAME
+    configure_package_config_file(
+            "cmake/Config.cmake.in"
+            "${project_config}"
+            INSTALL_DESTINATION "${config_install_dir}"
+    )
+
+#    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${CONFIG_FILE_NAME}.in
+#            ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_FILE_NAME} @ONLY)
 
     # install package
     install(TARGETS                 ${TARGETS_LIB_NAME}
             EXPORT                  ${TARGETS_EXPORT_NAME}
             LIBRARY DESTINATION     ${CMAKE_INSTALL_LIBDIR}
             ARCHIVE DESTINATION     ${CMAKE_INSTALL_LIBDIR}
-            INCLUDES DESTINATION    include
+            INCLUDES DESTINATION    ${CMAKE_INSTALL_INCLUDEDIR}
             )
 
     # install raiGraphicsConfig.cmake file to config cmake path
-    install(FILES           ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_FILE_NAME}
-            DESTINATION     ${CMAKE_INSTALL_LIBDIR}/cmake/raigraphics)
+    install(EXPORT "${TARGETS_EXPORT_NAME}"
+            NAMESPACE "${namespace}"
+            DESTINATION "${config_install_dir}"
+            )
 
 endif(INSTALL_LIBS)
 
