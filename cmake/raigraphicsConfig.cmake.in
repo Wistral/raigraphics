@@ -5,7 +5,7 @@
 
 set(raigraphics_INCLUDE_DIRS        @CONF_INCLUDE_DIRS@)
 set(raigraphics_LINK                @raigraphics_LINK@)
-set(raigraphics_LIBRARIES_DIR       @CONFIG_LIBRARIES_DIRS@)
+set(raigraphics_LIBRARIES_DIR       @CMAKE_INSTALL_PREFIX@/@CONFIG_LIBRARIES_DIRS@)
 set(raigraphics_EXPORTED_TARGETS    @TARGETS_LIB_NAME@)
 
 # set(RAI_GRAPHICS_OPENGL_EXECUTABLE testRAIGraphics)
