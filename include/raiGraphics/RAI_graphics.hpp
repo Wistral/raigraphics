@@ -38,7 +38,9 @@
 #include <cstdlib>
 #include <cstdio>
 #include <iostream>
+#include <unistd.h>
 
+using uint = unsigned int;
 namespace rai_graphics {
 
 struct LightProp {

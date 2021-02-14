@@ -5,7 +5,13 @@ cmake_minimum_required(VERSION 3.5)
 set(CMAKE_CXX_COMPILER "/usr/bin/g++")
 set(CMAKE_CXX_STANDARD 14)
 
-add_definitions(-g -fPIC)
+
+add_definitions(-g -fPIC -I "/mingw64/include")        
+add_compile_options(
+    "-U__STRICT_ANSI__"
+    "-D_POSIX_THREAD_SAFE_FUNCTIONS"
+    "-Dreadlink(x,y,z)=0"
+)
 
 option(BUILD_SHARED_LIBS "Build the shared library" ON)
 option(BUILD_DEMOS "Build the demos" ON)
@@ -94,6 +100,7 @@ target_include_directories(${TARGETS_LIB_NAME}
         SYSTEM
         PUBLIC
         "include"
+        "/mingw64/include"
         ${raicommon_INCLUDE_DIRS}
         ${EIGEN3_INCLUDE_DIR}
         )
