@@ -2,13 +2,13 @@ project(raigraphics)
 
 cmake_minimum_required(VERSION 3.5)
 
-set(CMAKE_CXX_COMPILER "/usr/bin/g++-7")
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_COMPILER "/usr/bin/g++")
+set(CMAKE_CXX_STANDARD 14)
 
 add_definitions(-g -fPIC)
 
-option(BUILD_SHARED_LIBS "Build the shared library" OFF)
-option(BUILD_DEMOS "Build the demos" OFF)
+option(BUILD_SHARED_LIBS "Build the shared library" ON)
+option(BUILD_DEMOS "Build the demos" ON)
 option(BUILD_PYTHON "Build python library" OFF)
 option(INSTALL_LIBS "Build the shared library" ON)
 
@@ -49,8 +49,8 @@ find_package(raicommon CONFIG REQUIRED)
 
 # system libraries
 SET(SYSTEM_LIBRARIES_NAME
-        GL
-        GLEW
+        opengl32
+        glew32
         SDL2
         SDL2_ttf
         assimp
