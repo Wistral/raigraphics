@@ -1,6 +1,9 @@
 #ifndef TRANSFORM_INCLUDED_H
 #define TRANSFORM_INCLUDED_H
 
+#ifndef GLM_ENABLE_EXPERIMENTAL
+#define GLM_ENABLE_EXPERIMENTAL
+#endif
 #include <glm/glm.hpp>
 #include "glm/gtx/quaternion.hpp"
 #include <glm/gtx/transform.hpp>
