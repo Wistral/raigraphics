@@ -1,6 +1,7 @@
 #ifndef CAMERA_INCLUDED_H
 #define CAMERA_INCLUDED_H
 
+#include "glm_fix.h"
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 #include <cmath>
