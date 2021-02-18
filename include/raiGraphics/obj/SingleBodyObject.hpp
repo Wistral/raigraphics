@@ -51,6 +51,7 @@ class SingleBodyObject: public Object {
   void setTransform(Transform& trans);
   void setLightProp(std::vector<float>& amb, std::vector<float>& diff, std::vector<float>& spec, float shine);
   void setColor(std::vector<float> colorL);
+  inline void setColor(std::initializer_list<float> colorL) { return setColor(std::vector<float> {colorL}); };
   void setTransparency(float transparency);
 
   float getTransparency();

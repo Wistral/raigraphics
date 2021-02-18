@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 11)
 add_definitions(-g -fPIC)
 
 option(BUILD_SHARED_LIBS "Build the shared library" OFF)
-option(BUILD_DEMOS "Build the demos" OFF)
+option(BUILD_DEMOS "Build the demos" ON)
 option(BUILD_PYTHON "Build python library" OFF)
 option(INSTALL_LIBS "Build the shared library" ON)
 
